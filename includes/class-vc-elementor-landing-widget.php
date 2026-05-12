@@ -66,7 +66,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 			array(
 				'label'       => esc_html__( 'Címsor', 'vitacenter-elementor-header' ),
 				'type'        => Controls_Manager::TEXTAREA,
-				'default'     => esc_html__( "Szűrés. Prevenció. Életmód.\nEgyütt a hosszabb életért.", 'vitacenter-elementor-header' ),
+				'default'     => esc_html__( "Szűrés. Prevenció. Egészséges életmód.\nEgyütt a hosszabb életért!", 'vitacenter-elementor-header' ),
 				'label_block' => true,
 			)
 		);
@@ -159,7 +159,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 			array(
 				'label'       => esc_html__( 'Leírás', 'vitacenter-elementor-header' ),
 				'type'        => Controls_Manager::TEXTAREA,
-				'default'     => esc_html__( 'Az IPOP ROHU00259 projekt célja Szatmár megye lakosságának egészségi állapotának javítása, a demográfiai kihívások kezelése és a közösségi alapú egészségügyi ellátás erősítése a megelőzés és a tudatos életmód támogatásával.', 'vitacenter-elementor-header' ),
+				'default'     => esc_html__( 'A „Népesedési folyamatok javítása helyi szinten egészségfejlesztési módszerekkel” elnevezésű IPOP ROHU00259-es számú projekt célja, hogy hozzájáruljon Szatmár megye lakosságának egészségi állapotának javításához, valamint a demográfiai kihívások kezeléséhez. A kezdeményezés a Szatmárnémeti Egészségfejlesztési Iroda létrehozása mellett a megelőzésre, az egészségtudatosság növelésére és a család- és közösségalapú ellátás erősítésére épül.', 'vitacenter-elementor-header' ),
 				'label_block' => true,
 			)
 		);
@@ -211,12 +211,13 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 				'fields'      => $program_repeater->get_controls(),
 				'title_field' => '{{{ program_title }}}',
 				'default'     => array(
-					array( 'program_title' => esc_html__( 'Ciklusoktatás', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Termékenységtudatosság és egészségnevelés fiatal nőknek.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_00 PM (1).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#ciklusoktatas' ) ),
+					array( 'program_title' => esc_html__( 'Ciklusoktatás', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Nőknek szóló termékenységtudatosság.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_00 PM (1).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#ciklusoktatas' ) ),
 					array( 'program_title' => esc_html__( 'Meddőségi tanácsadás', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Komplex, életmód-alapú megközelítés szakmai háttérrel.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_00 PM (2).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#meddosegi-tanacsadas' ) ),
-					array( 'program_title' => esc_html__( 'Egészségfejlesztési Iroda', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Egyéni és csoportos prevenciós tanácsadás.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_00 PM (3).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#efi' ) ),
-					array( 'program_title' => esc_html__( 'Mobil szakorvosi szolgálat', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Helyben elérhető kardiovaszkuláris és nőgyógyászati szűrések.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_01 PM (4).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#mobil-szakorvosi' ) ),
-					array( 'program_title' => esc_html__( 'Életmódtanácsadás', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Személyre szabott támogatás az egyéni egészségtervhez.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_01 PM (5).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#eletmodtanacsadas' ) ),
-					array( 'program_title' => esc_html__( 'Óvodás iskolaérettséget vizsgáló szűrések', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Iskolaérettségi, szenzo-motoros és pszichológiai szűrések.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_01 PM (6).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#ovodas-szuresek' ) ),
+					array( 'program_title' => esc_html__( 'Egészségfejlesztési Iroda', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Az egészséges életmódot, a betegségmegelőzést és a szűrővizsgálatok jelentőségét népszerűsítő tevékenységek.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_00 PM (3).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#efi' ) ),
+					array( 'program_title' => esc_html__( 'Mobil szakorvosi szolgálat', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Helyben elérhető szakvizsgálatok a könnyebb hozzáférésért.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_01 PM (4).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#mobil-szakorvosi' ) ),
+					array( 'program_title' => esc_html__( 'Mobil szűrés', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Helyben elérhető onkológiai szűrések a könnyebb hozzáférésért.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_20_40 PM (2).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#mobil-szures' ) ),
+					array( 'program_title' => esc_html__( 'Életmódtanácsadás', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Személyre szabott támogatás az egészséges életvitel kialakításához.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_01 PM (5).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#eletmodtanacsadas' ) ),
+					array( 'program_title' => esc_html__( 'Óvodás iskolaérettséget vizsgáló szűrések', 'vitacenter-elementor-header' ), 'program_text' => esc_html__( 'Korai felismerés és támogatás a gyermekek fejlődésében.', 'vitacenter-elementor-header' ), 'program_icon' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_01 PM (6).png' ), 'program_link_text' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ), 'program_link' => array( 'url' => '#ovodas-szuresek' ) ),
 				),
 			)
 		);
@@ -232,6 +233,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 		);
 
 		$this->add_control( 'events_title', array( 'label' => esc_html__( 'Szekció címe', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Közelgő események', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'events_intro', array( 'label' => esc_html__( 'Bevezető szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Vegyen részt szűréseinken, workshopjainkon és közösségi programjainkon!', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'events_all_text', array( 'label' => esc_html__( 'Összes link felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Összes esemény megtekintése', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'events_all_link', array( 'label' => esc_html__( 'Összes link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#esemenyek' ) ) );
 		$this->add_control(
@@ -378,7 +380,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 
 		$this->add_control( 'cta_icon', array( 'label' => esc_html__( 'Ikon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::MEDIA, 'default' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_20_41 PM (5).png' ) ) );
 		$this->add_control( 'cta_title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Egészsége nem várhat.', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'cta_text', array( 'label' => esc_html__( 'Szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Foglaljon időpontot, vegyen részt programjainkon, tegyen többet önmagáért és családjáért!', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'cta_text', array( 'label' => esc_html__( 'Szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Jelentkezzen szűréseinkre, tanácsadásainkra vagy közösségi programjainkra.', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'cta_button_text', array( 'label' => esc_html__( 'Gomb felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Jelentkezem', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'cta_button_link', array( 'label' => esc_html__( 'Gomb link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#kapcsolat' ) ) );
 
@@ -411,9 +413,9 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 				'fields'      => $article_repeater->get_controls(),
 				'title_field' => '{{{ article_title }}}',
 				'default'     => array(
-					array( 'article_title' => esc_html__( 'A megelőzés ereje', 'vitacenter-elementor-header' ), 'article_text' => esc_html__( 'Miért fontosak a rendszeres szűrések és a korai felismerés?', 'vitacenter-elementor-header' ), 'article_image' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_20_40 PM (2).png' ) ),
-					array( 'article_title' => esc_html__( 'Egészséges életmód', 'vitacenter-elementor-header' ), 'article_text' => esc_html__( 'Gyakorlati tippek a mindennapokra a jobb közérzetért.', 'vitacenter-elementor-header' ), 'article_image' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_01 PM (5).png' ) ),
-					array( 'article_title' => esc_html__( 'Demográfiai kihívások', 'vitacenter-elementor-header' ), 'article_text' => esc_html__( 'Hogyan támogathatjuk családjainkat és közösségeinket?', 'vitacenter-elementor-header' ), 'article_image' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_20_41 PM (4).png' ) ),
+					array( 'article_title' => esc_html__( 'Prevenció fontossága', 'vitacenter-elementor-header' ), 'article_text' => esc_html__( 'Hasznos tartalmak a megelőzésről, a rendszeres szűrések szerepéről és a korai felismerés jelentőségéről.', 'vitacenter-elementor-header' ), 'article_image' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_20_40 PM (2).png' ) ),
+					array( 'article_title' => esc_html__( 'Demográfiai kihívások', 'vitacenter-elementor-header' ), 'article_text' => esc_html__( 'Ismeretterjesztő anyagok családokról, közösségekről és a helyi egészségfejlesztés szerepéről.', 'vitacenter-elementor-header' ), 'article_image' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_20_41 PM (4).png' ) ),
+					array( 'article_title' => esc_html__( 'Egészséges életmód útmutató', 'vitacenter-elementor-header' ), 'article_text' => esc_html__( 'Gyakorlati tanácsok, letölthető anyagok és GYIK a tudatosabb mindennapokhoz.', 'vitacenter-elementor-header' ), 'article_image' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_01 PM (5).png' ) ),
 				),
 			)
 		);
@@ -621,7 +623,10 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 		<section id="esemenyek" class="vc-landing__section vc-landing__events">
 			<div class="vc-landing__container">
 				<div class="vc-landing__section-head">
-					<h2 class="vc-landing__section-title vc-landing__section-title--left"><?php echo esc_html( $settings['events_title'] ); ?></h2>
+					<div>
+						<h2 class="vc-landing__section-title vc-landing__section-title--left"><?php echo esc_html( $settings['events_title'] ); ?></h2>
+						<?php if ( ! empty( $settings['events_intro'] ) ) : ?><p class="vc-landing__section-lead"><?php echo esc_html( $settings['events_intro'] ); ?></p><?php endif; ?>
+					</div>
 					<?php $this->render_text_link( $settings['events_all_text'], $settings['events_all_link'], 'vc-landing__all-link' ); ?>
 				</div>
 				<div class="vc-landing__event-grid">

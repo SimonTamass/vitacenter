@@ -292,12 +292,20 @@ class VitaCenter_Elementor_Header_Widget extends Widget_Base {
 						'menu_url'   => array( 'url' => '#projekt' ),
 					),
 					array(
-						'menu_label' => esc_html__( 'Programok', 'vitacenter-elementor-header' ),
+						'menu_label' => esc_html__( 'Programjaink', 'vitacenter-elementor-header' ),
 						'menu_url'   => array( 'url' => '#programok' ),
 					),
 					array(
 						'menu_label' => esc_html__( 'Események', 'vitacenter-elementor-header' ),
 						'menu_url'   => array( 'url' => '#esemenyek' ),
+					),
+					array(
+						'menu_label' => esc_html__( 'Fotó- és videógaléria', 'vitacenter-elementor-header' ),
+						'menu_url'   => array( 'url' => '#galeria' ),
+					),
+					array(
+						'menu_label' => esc_html__( 'Partnerek', 'vitacenter-elementor-header' ),
+						'menu_url'   => array( 'url' => '#partnerek' ),
 					),
 					array(
 						'menu_label' => esc_html__( 'Tudástár', 'vitacenter-elementor-header' ),

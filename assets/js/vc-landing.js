@@ -9,7 +9,14 @@
 		'.vc-landing__event-card',
 		'.vc-landing__cta',
 		'.vc-landing__article-card',
-		'.vc-landing__contact-bar'
+		'.vc-landing__contact-bar',
+		'.vc-page-heading',
+		'.vc-page-card',
+		'.vc-stat-card',
+		'.vc-message-grid > div',
+		'.vc-content-panel',
+		'.vc-info-band',
+		'.vc-registration-card'
 	].join(',');
 
 	function initLanding(root) {
@@ -80,5 +87,9 @@
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_cta.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_knowledge.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_contact_footer.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_project_content.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_program_content.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_info_section.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_registration_info.default', bootElementorWidget);
 	}
 }());

@@ -19,6 +19,11 @@ WordPress plugin, amely szerkesztheto Elementor widgeteket ad a VitaCenter oldal
    - `VitaCenter CTA`
    - `VitaCenter Knowledge Cards`
    - `VitaCenter Contact/Footer`
+   - `VitaCenter Legal Footer`
+   - `VitaCenter Project Content`
+   - `VitaCenter Program Content`
+   - `VitaCenter Info Section`
+   - `VitaCenter Registration Info`
 
 Az elso ket widget egyben tartalmazza a regi teljes blokkot. Ha az Elementor
 Navigatorban kulon szerkesztheto, strukturalt felepites kell, az uj kisebb
@@ -50,6 +55,10 @@ widgeteket helyezd egymas ala.
 - Header: kulon `Header Top` es `Header Menu` widget.
 - Landing: kulon hero, projekt intro, programok, esemenyek, CTA, tudastar es
   kapcsolat/footer widget.
+- Footer: kulon `Legal Footer` widget EU nyilatkozattal, copyright sorral,
+  Interreg linkkel es szerkesztheto elerhetosegekkel.
+- Aloldalak: kulon `Project Content`, `Program Content`, `Info Section` es
+  `Registration Info` widgetek a honlap.docx tartalma alapjan.
 - A `VitaCenter Events` widget a The Events Calendar `tribe_events` bejegyzeseit
   olvassa, a `_EventStartDate` mezovel jovobeli datum szerint rendezve.
 - A nagy egyben widgetek megmaradtak kompatibilitas miatt, de uj oldalt inkabb
