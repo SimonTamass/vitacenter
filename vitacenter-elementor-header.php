@@ -1,0 +1,107 @@
+<?php
+/**
+ * Plugin Name: VitaCenter Elementor Header
+ * Description: Elementor widget for the VitaCenter header and navigation.
+ * Version: 1.0.0
+ * Author: VitaCenter
+ * Text Domain: vitacenter-elementor-header
+ * Requires Plugins: elementor
+ * Elementor tested up to: 3.29.0
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.0.0' );
+define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
+define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
+define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
+
+final class VitaCenter_Elementor_Header_Plugin {
+	const MINIMUM_ELEMENTOR_VERSION = '3.5.0';
+
+	public function __construct() {
+		add_action( 'plugins_loaded', array( $this, 'init' ) );
+	}
+
+	public function init() {
+		load_plugin_textdomain( 'vitacenter-elementor-header', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
+		if ( ! did_action( 'elementor/loaded' ) ) {
+			add_action( 'admin_notices', array( $this, 'admin_notice_missing_elementor' ) );
+			return;
+		}
+
+		if ( defined( 'ELEMENTOR_VERSION' ) && ! version_compare( ELEMENTOR_VERSION, self::MINIMUM_ELEMENTOR_VERSION, '>=' ) ) {
+			add_action( 'admin_notices', array( $this, 'admin_notice_minimum_elementor_version' ) );
+			return;
+		}
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
+		add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'register_assets' ) );
+		add_action( 'elementor/frontend/after_register_styles', array( $this, 'register_assets' ) );
+		add_action( 'elementor/frontend/after_register_scripts', array( $this, 'register_assets' ) );
+		add_action( 'elementor/elements/categories_registered', array( $this, 'register_category' ) );
+		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
+	}
+
+	public function register_assets() {
+		wp_register_style(
+			'vc-header',
+			VC_ELEMENTOR_HEADER_URL . 'assets/css/vc-header.css',
+			array(),
+			VC_ELEMENTOR_HEADER_VERSION
+		);
+
+		wp_register_script(
+			'vc-header',
+			VC_ELEMENTOR_HEADER_URL . 'assets/js/vc-header.js',
+			array(),
+			VC_ELEMENTOR_HEADER_VERSION,
+			true
+		);
+	}
+
+	public function register_category( $elements_manager ) {
+		$elements_manager->add_category(
+			'vitacenter',
+			array(
+				'title' => esc_html__( 'VitaCenter', 'vitacenter-elementor-header' ),
+				'icon'  => 'fa fa-plug',
+			)
+		);
+	}
+
+	public function register_widgets( $widgets_manager ) {
+		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-header-widget.php';
+
+		$widgets_manager->register( new VitaCenter_Elementor_Header_Widget() );
+	}
+
+	public function admin_notice_missing_elementor() {
+		if ( ! current_user_can( 'activate_plugins' ) ) {
+			return;
+		}
+
+		echo '<div class="notice notice-warning"><p>';
+		echo esc_html__( 'VitaCenter Elementor Header requires Elementor to be installed and activated.', 'vitacenter-elementor-header' );
+		echo '</p></div>';
+	}
+
+	public function admin_notice_minimum_elementor_version() {
+		if ( ! current_user_can( 'activate_plugins' ) ) {
+			return;
+		}
+
+		echo '<div class="notice notice-warning"><p>';
+		printf(
+			/* translators: %s: Elementor version. */
+			esc_html__( 'VitaCenter Elementor Header requires Elementor version %s or newer.', 'vitacenter-elementor-header' ),
+			esc_html( self::MINIMUM_ELEMENTOR_VERSION )
+		);
+		echo '</p></div>';
+	}
+}
+
+new VitaCenter_Elementor_Header_Plugin();
