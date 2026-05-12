@@ -169,11 +169,6 @@ class VitaCenter_Program_Content_Widget extends VitaCenter_Structured_Widget_Bas
 				'text' => esc_html__( 'A cikluskövetés-oktatás célja a megfelelő egészségügyi ismeretek átadása, különösen a 8-12. osztályos lányok körében, illetve az Egészségfejlesztési Irodába jelentkezőknél. A program a termékenységtudatosságot, a felelős döntéseket és az egészségnevelést támogatja.', 'vitacenter-elementor-header' ),
 			),
 			array(
-				'title' => esc_html__( 'Meddőségi tanácsadás', 'vitacenter-elementor-header' ),
-				'subtitle' => esc_html__( 'Komplex, életmód-alapú megközelítés szakmai háttérrel', 'vitacenter-elementor-header' ),
-				'text' => esc_html__( 'A meddőségi tanácsadás szakmai támogatást nyújt azoknak, akik életmódbeli, prevenciós és egészségfejlesztési szempontból szeretnének tudatosabban felkészülni a gyermekvállalásra.', 'vitacenter-elementor-header' ),
-			),
-			array(
 				'title' => esc_html__( 'Egészségfejlesztési Iroda', 'vitacenter-elementor-header' ),
 				'subtitle' => esc_html__( 'Az egészséges életmódot és a szűrővizsgálatok jelentőségét népszerűsítő tevékenységek', 'vitacenter-elementor-header' ),
 				'text' => esc_html__( 'A megyében hiánypótló egészségügyi tanácsadói iroda az alapellátás szerepének megerősítését, a betegségmegelőzést, a szűréseken való részvétel fontosságát és az egészséges életforma népszerűsítését szolgálja.', 'vitacenter-elementor-header' ),
