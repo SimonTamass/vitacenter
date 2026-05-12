@@ -234,6 +234,109 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 		$this->add_control( 'events_title', array( 'label' => esc_html__( 'Szekció címe', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Közelgő események', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'events_all_text', array( 'label' => esc_html__( 'Összes link felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Összes esemény megtekintése', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'events_all_link', array( 'label' => esc_html__( 'Összes link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#esemenyek' ) ) );
+		$this->add_control(
+			'events_source',
+			array(
+				'label'   => esc_html__( 'Események forrása', 'vitacenter-elementor-header' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'dynamic',
+				'options' => array(
+					'dynamic' => esc_html__( 'Esemény pluginből dinamikusan', 'vitacenter-elementor-header' ),
+					'manual'  => esc_html__( 'Kézi kártyák', 'vitacenter-elementor-header' ),
+				),
+			)
+		);
+		$this->add_control(
+			'events_post_type',
+			array(
+				'label'       => esc_html__( 'Esemény post type', 'vitacenter-elementor-header' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'tribe_events',
+				'options'     => $this->get_event_post_type_options(),
+				'description' => esc_html__( 'The Events Calendar esetén hagyd tribe_events értéken.', 'vitacenter-elementor-header' ),
+				'condition'   => array(
+					'events_source' => 'dynamic',
+				),
+			)
+		);
+		$this->add_control(
+			'events_count',
+			array(
+				'label'     => esc_html__( 'Megjelenített események száma', 'vitacenter-elementor-header' ),
+				'type'      => Controls_Manager::NUMBER,
+				'default'   => 3,
+				'min'       => 1,
+				'max'       => 12,
+				'condition' => array(
+					'events_source' => 'dynamic',
+				),
+			)
+		);
+		$this->add_control(
+			'events_future_only',
+			array(
+				'label'        => esc_html__( 'Csak jövőbeli események', 'vitacenter-elementor-header' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Igen', 'vitacenter-elementor-header' ),
+				'label_off'    => esc_html__( 'Nem', 'vitacenter-elementor-header' ),
+				'return_value' => 'yes',
+				'default'      => 'yes',
+				'condition'    => array(
+					'events_source' => 'dynamic',
+				),
+			)
+		);
+		$this->add_control(
+			'events_date_meta_key',
+			array(
+				'label'       => esc_html__( 'Dátum meta kulcs', 'vitacenter-elementor-header' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => '',
+				'placeholder' => esc_html__( 'Automatikus', 'vitacenter-elementor-header' ),
+				'description' => esc_html__( 'The Events Calendar esetén hagyd üresen vagy használd: _EventStartDate.', 'vitacenter-elementor-header' ),
+				'condition'   => array(
+					'events_source' => 'dynamic',
+				),
+			)
+		);
+		$this->add_control(
+			'events_location_meta_key',
+			array(
+				'label'       => esc_html__( 'Helyszín meta kulcs', 'vitacenter-elementor-header' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => '',
+				'placeholder' => esc_html__( 'Automatikus', 'vitacenter-elementor-header' ),
+				'description' => esc_html__( 'Hagyd üresen automatikus felismeréshez. Támogatott példák: _EventVenueID, _event_location_id, location.', 'vitacenter-elementor-header' ),
+				'condition'   => array(
+					'events_source' => 'dynamic',
+				),
+			)
+		);
+		$this->add_control(
+			'events_dynamic_link_text',
+			array(
+				'label'     => esc_html__( 'Dinamikus kártya link felirat', 'vitacenter-elementor-header' ),
+				'type'      => Controls_Manager::TEXT,
+				'default'   => esc_html__( 'Részletek', 'vitacenter-elementor-header' ),
+				'condition' => array(
+					'events_source' => 'dynamic',
+				),
+			)
+		);
+		$this->add_control(
+			'events_fallback_to_manual',
+			array(
+				'label'        => esc_html__( 'Kézi kártyák használata, ha nincs találat', 'vitacenter-elementor-header' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Igen', 'vitacenter-elementor-header' ),
+				'label_off'    => esc_html__( 'Nem', 'vitacenter-elementor-header' ),
+				'return_value' => 'yes',
+				'default'      => 'yes',
+				'condition'    => array(
+					'events_source' => 'dynamic',
+				),
+			)
+		);
 
 		$event_repeater = new Repeater();
 		$event_repeater->add_control( 'event_image', array( 'label' => esc_html__( 'Kép', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::MEDIA ) );
@@ -252,6 +355,9 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $event_repeater->get_controls(),
 				'title_field' => '{{{ event_title }}}',
+				'condition'   => array(
+					'events_source' => 'manual',
+				),
 				'default'     => array(
 					array( 'event_title' => esc_html__( 'Nyitórendezvény', 'vitacenter-elementor-header' ), 'event_text' => esc_html__( 'A projekt bemutatása, partnerek és közösségi célok.', 'vitacenter-elementor-header' ), 'event_time' => esc_html__( '2025. június 5. 10:00', 'vitacenter-elementor-header' ), 'event_place' => esc_html__( 'Szatmárnémeti, Megyeháza', 'vitacenter-elementor-header' ), 'event_image' => $this->media_default( 'index_hero_vitacenter.jpg' ) ),
 					array( 'event_title' => esc_html__( 'Szűrési napok', 'vitacenter-elementor-header' ), 'event_text' => esc_html__( 'Kihelyezett kardiovaszkuláris és onkológiai szűrések.', 'vitacenter-elementor-header' ), 'event_time' => esc_html__( '2025. június 18-20.', 'vitacenter-elementor-header' ), 'event_place' => esc_html__( 'Nagykároly, Művelődési Ház', 'vitacenter-elementor-header' ), 'event_image' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_42_01 PM (4).png' ) ),
@@ -501,6 +607,16 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 	}
 
 	private function render_events( $settings ) {
+		$source = isset( $settings['events_source'] ) ? $settings['events_source'] : 'dynamic';
+		$events = 'dynamic' === $source ? $this->get_dynamic_events( $settings ) : $this->get_manual_events( $settings );
+
+		if ( empty( $events ) && 'dynamic' === $source && ( ! isset( $settings['events_fallback_to_manual'] ) || 'yes' === $settings['events_fallback_to_manual'] ) ) {
+			$events = $this->get_manual_events( $settings );
+		}
+
+		if ( empty( $events ) ) {
+			return;
+		}
 		?>
 		<section id="esemenyek" class="vc-landing__section vc-landing__events">
 			<div class="vc-landing__container">
@@ -509,19 +625,42 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 					<?php $this->render_text_link( $settings['events_all_text'], $settings['events_all_link'], 'vc-landing__all-link' ); ?>
 				</div>
 				<div class="vc-landing__event-grid">
-					<?php foreach ( $settings['event_items'] as $item ) : ?>
-						<?php $image = $this->get_media_url( $item['event_image'] ); ?>
-						<article class="vc-landing__event-card">
-							<?php if ( $image ) : ?><img class="vc-landing__event-image" src="<?php echo esc_url( $image ); ?>" alt=""><?php endif; ?>
+					<?php foreach ( $events as $item ) : ?>
+						<?php $image = ! empty( $item['image'] ) ? $item['image'] : ''; ?>
+						<article class="vc-landing__event-card <?php echo empty( $image ) ? 'vc-landing__event-card--no-image' : ''; ?>">
+							<?php if ( $image ) : ?>
+								<?php if ( ! empty( $item['url'] ) && '#' !== $item['url'] ) : ?>
+									<a class="vc-landing__event-image-link" href="<?php echo esc_url( $item['url'] ); ?>" aria-label="<?php echo esc_attr( $item['title'] ); ?>">
+										<img class="vc-landing__event-image" src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" loading="lazy">
+									</a>
+								<?php else : ?>
+									<div class="vc-landing__event-image-link">
+										<img class="vc-landing__event-image" src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" loading="lazy">
+									</div>
+								<?php endif; ?>
+							<?php endif; ?>
 							<div class="vc-landing__event-body">
-								<span class="vc-landing__date-badge"><?php echo esc_html( $item['event_date_badge'] ); ?></span>
-								<h3><?php echo esc_html( $item['event_title'] ); ?></h3>
-								<p><?php echo esc_html( $item['event_text'] ); ?></p>
+								<?php if ( ! empty( $item['date_month'] ) || ! empty( $item['date_day'] ) ) : ?>
+									<div class="vc-landing__date-badge">
+										<?php if ( ! empty( $item['date_month'] ) ) : ?><span class="vc-landing__date-month"><?php echo esc_html( $item['date_month'] ); ?></span><?php endif; ?>
+										<?php if ( ! empty( $item['date_day'] ) ) : ?><span class="vc-landing__date-day"><?php echo esc_html( $item['date_day'] ); ?></span><?php endif; ?>
+									</div>
+								<?php elseif ( ! empty( $item['date_badge'] ) ) : ?>
+									<div class="vc-landing__date-badge"><?php echo esc_html( $item['date_badge'] ); ?></div>
+								<?php endif; ?>
+								<h3>
+									<?php if ( ! empty( $item['url'] ) && '#' !== $item['url'] ) : ?>
+										<a href="<?php echo esc_url( $item['url'] ); ?>"><?php echo esc_html( $item['title'] ); ?></a>
+									<?php else : ?>
+										<?php echo esc_html( $item['title'] ); ?>
+									<?php endif; ?>
+								</h3>
+								<?php if ( ! empty( $item['text'] ) ) : ?><p><?php echo esc_html( $item['text'] ); ?></p><?php endif; ?>
 								<ul>
-									<li><?php echo esc_html( $item['event_time'] ); ?></li>
-									<li><?php echo esc_html( $item['event_place'] ); ?></li>
+									<?php if ( ! empty( $item['time'] ) ) : ?><li><?php echo esc_html( $item['time'] ); ?></li><?php endif; ?>
+									<?php if ( ! empty( $item['place'] ) ) : ?><li><?php echo esc_html( $item['place'] ); ?></li><?php endif; ?>
 								</ul>
-								<?php $this->render_text_link( $item['event_link_text'], $item['event_link'], 'vc-landing__small-button' ); ?>
+								<?php $this->render_text_link( $item['link_text'], array( 'url' => $item['url'] ), 'vc-landing__small-button' ); ?>
 							</div>
 						</article>
 					<?php endforeach; ?>
@@ -529,6 +668,423 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 			</div>
 		</section>
 		<?php
+	}
+
+	private function get_manual_events( $settings ) {
+		$events = array();
+		$items  = ! empty( $settings['event_items'] ) && is_array( $settings['event_items'] ) ? $settings['event_items'] : array();
+
+		foreach ( $items as $item ) {
+			$events[] = array(
+				'image'      => $this->get_media_url( isset( $item['event_image'] ) ? $item['event_image'] : array() ),
+				'date_badge' => isset( $item['event_date_badge'] ) ? $item['event_date_badge'] : '',
+				'date_month' => '',
+				'date_day'   => '',
+				'title'      => isset( $item['event_title'] ) ? $item['event_title'] : '',
+				'text'       => isset( $item['event_text'] ) ? $item['event_text'] : '',
+				'time'       => isset( $item['event_time'] ) ? $item['event_time'] : '',
+				'place'      => isset( $item['event_place'] ) ? $item['event_place'] : '',
+				'link_text'  => isset( $item['event_link_text'] ) ? $item['event_link_text'] : esc_html__( 'Részletek', 'vitacenter-elementor-header' ),
+				'url'        => isset( $item['event_link']['url'] ) ? $item['event_link']['url'] : '#',
+			);
+		}
+
+		return $events;
+	}
+
+	private function get_dynamic_events( $settings ) {
+		$post_type = $this->resolve_event_post_type( isset( $settings['events_post_type'] ) ? $settings['events_post_type'] : 'auto' );
+
+		if ( '' === $post_type ) {
+			return array();
+		}
+
+		$count    = max( 1, min( 12, absint( isset( $settings['events_count'] ) ? $settings['events_count'] : 3 ) ) );
+
+		if ( 'tribe_events' === $post_type ) {
+			return $this->get_tribe_events( $settings, $count );
+		}
+
+		$date_key = ! empty( $settings['events_date_meta_key'] ) ? trim( $settings['events_date_meta_key'] ) : $this->get_default_event_date_meta_key( $post_type );
+		$future_only = ! isset( $settings['events_future_only'] ) || 'yes' === $settings['events_future_only'];
+		$args     = array(
+			'post_type'           => $post_type,
+			'post_status'         => 'publish',
+			'posts_per_page'      => max( $count * 4, $count ),
+			'ignore_sticky_posts' => true,
+			'no_found_rows'       => true,
+		);
+
+		if ( $date_key ) {
+			$is_numeric_date  = in_array( $date_key, array( 'evcal_srow', 'evcal_erow' ), true );
+			$args['meta_key'] = $date_key;
+			$args['orderby']  = $is_numeric_date ? 'meta_value_num' : 'meta_value';
+			$args['order']    = 'ASC';
+
+			if ( $future_only ) {
+				$args['meta_query'] = array(
+					array(
+						'key'     => $date_key,
+						'value'   => $is_numeric_date ? current_time( 'timestamp' ) : current_time( 'Y-m-d' ),
+						'compare' => '>=',
+						'type'    => $is_numeric_date ? 'NUMERIC' : 'CHAR',
+					),
+				);
+			}
+		} else {
+			$args['orderby'] = 'date';
+			$args['order']   = 'DESC';
+		}
+
+		$query  = new WP_Query( $args );
+		$events = array();
+
+		foreach ( $query->posts as $post ) {
+			$event = $this->format_dynamic_event( $post, $post_type, $date_key, $settings );
+
+			if ( $future_only && ! empty( $event['timestamp'] ) && $event['timestamp'] < strtotime( 'today', current_time( 'timestamp' ) ) ) {
+				continue;
+			}
+
+			$events[] = $event;
+
+			if ( count( $events ) >= $count ) {
+				break;
+			}
+		}
+
+		wp_reset_postdata();
+
+		return $events;
+	}
+
+	private function get_tribe_events( $settings, $count ) {
+		if ( ! post_type_exists( 'tribe_events' ) ) {
+			return array();
+		}
+
+		$future_only = ! isset( $settings['events_future_only'] ) || 'yes' === $settings['events_future_only'];
+		$today       = current_time( 'Y-m-d H:i:s' );
+		$args        = array(
+			'post_type'           => 'tribe_events',
+			'posts_per_page'      => $count,
+			'post_status'         => 'publish',
+			'meta_key'            => '_EventStartDate',
+			'orderby'             => 'meta_value',
+			'order'               => 'ASC',
+			'ignore_sticky_posts' => true,
+			'no_found_rows'       => true,
+		);
+
+		if ( $future_only ) {
+			$args['meta_query'] = array(
+				array(
+					'key'     => '_EventStartDate',
+					'value'   => $today,
+					'compare' => '>=',
+					'type'    => 'DATETIME',
+				),
+			);
+		}
+
+		$query  = new WP_Query( $args );
+		$events = array();
+
+		foreach ( $query->posts as $post ) {
+			$events[] = $this->format_tribe_event( $post, $settings );
+		}
+
+		wp_reset_postdata();
+
+		return $events;
+	}
+
+	private function format_tribe_event( $post, $settings ) {
+		$event_id      = $post->ID;
+		$start_raw     = get_post_meta( $event_id, '_EventStartDate', true );
+		$end_raw       = get_post_meta( $event_id, '_EventEndDate', true );
+		$start_ts      = ! empty( $start_raw ) && strtotime( $start_raw ) ? strtotime( $start_raw ) : 0;
+		$end_ts        = ! empty( $end_raw ) && strtotime( $end_raw ) ? strtotime( $end_raw ) : 0;
+		$date_day      = '';
+		$date_month    = '';
+		$date_display  = '';
+		$venue         = '';
+		$image         = get_the_post_thumbnail_url( $event_id, 'large' );
+		$excerpt       = get_the_excerpt( $event_id );
+		$fallback      = $this->source_asset_url( 'index_hero_vitacenter.jpg' );
+
+		if ( $start_ts ) {
+			$date_day   = date_i18n( 'j', $start_ts );
+			$month      = date_i18n( 'M', $start_ts );
+			$date_month = function_exists( 'mb_strtoupper' ) ? mb_strtoupper( $month, 'UTF-8' ) : strtoupper( $month );
+
+			if ( function_exists( 'tribe_get_start_date' ) ) {
+				$date_display = tribe_get_start_date( $event_id, false, 'Y. F j. H:i' );
+			} else {
+				$date_display = date_i18n( 'Y. F j. H:i', $start_ts );
+			}
+
+			if ( $end_ts ) {
+				$start_day = date_i18n( 'Y-m-d', $start_ts );
+				$end_day   = date_i18n( 'Y-m-d', $end_ts );
+
+				if ( $start_day !== $end_day ) {
+					$date_display = date_i18n( 'Y. F j.', $start_ts ) . ' - ' . date_i18n( 'j.', $end_ts );
+				}
+			}
+		}
+
+		if ( function_exists( 'tribe_get_venue' ) ) {
+			$venue = tribe_get_venue( $event_id );
+		}
+
+		if ( empty( $venue ) ) {
+			$venue_id = get_post_meta( $event_id, '_EventVenueID', true );
+
+			if ( ! empty( $venue_id ) && is_numeric( $venue_id ) ) {
+				$venue_post = get_post( (int) $venue_id );
+
+				if ( $venue_post && ! is_wp_error( $venue_post ) ) {
+					$venue = $venue_post->post_title;
+				}
+			}
+		}
+
+		if ( empty( $excerpt ) ) {
+			$content = get_post_field( 'post_content', $event_id );
+			$excerpt = wp_trim_words( wp_strip_all_tags( $content ), 14, '...' );
+		} else {
+			$excerpt = wp_trim_words( wp_strip_all_tags( $excerpt ), 14, '...' );
+		}
+
+		return array(
+			'image'      => $image ? $image : $fallback,
+			'date_badge' => '',
+			'date_month' => $date_month,
+			'date_day'   => $date_day,
+			'title'      => get_the_title( $event_id ),
+			'text'       => $excerpt,
+			'time'       => $date_display,
+			'place'      => $venue,
+			'link_text'  => ! empty( $settings['events_dynamic_link_text'] ) ? $settings['events_dynamic_link_text'] : esc_html__( 'Részletek', 'vitacenter-elementor-header' ),
+			'url'        => get_permalink( $event_id ),
+			'timestamp'  => $start_ts,
+		);
+	}
+
+	private function format_dynamic_event( $post, $post_type, $date_key, $settings ) {
+		$post_id        = $post->ID;
+		$date_raw       = $date_key ? get_post_meta( $post_id, $date_key, true ) : $this->get_first_meta_value( $post_id, $this->get_event_date_meta_candidates( $post_type ) );
+		$timestamp      = $this->parse_event_timestamp( $date_raw );
+		$excerpt        = has_excerpt( $post_id ) ? get_the_excerpt( $post_id ) : wp_trim_words( wp_strip_all_tags( strip_shortcodes( $post->post_content ) ), 18 );
+		$fallback_image = $this->source_asset_url( 'index_hero_vitacenter.jpg' );
+		$image          = get_the_post_thumbnail_url( $post_id, 'large' );
+
+		return array(
+			'image'      => $image ? $image : $fallback_image,
+			'date_badge' => $this->format_event_date_badge( $timestamp ),
+			'date_month' => '',
+			'date_day'   => '',
+			'title'      => get_the_title( $post_id ),
+			'text'       => $excerpt,
+			'time'       => $this->format_event_time( $post_id, $post_type, $date_raw, $timestamp ),
+			'place'      => $this->get_event_place( $post_id, $post_type, isset( $settings['events_location_meta_key'] ) ? $settings['events_location_meta_key'] : '' ),
+			'link_text'  => ! empty( $settings['events_dynamic_link_text'] ) ? $settings['events_dynamic_link_text'] : esc_html__( 'Részletek', 'vitacenter-elementor-header' ),
+			'url'        => get_permalink( $post_id ),
+			'timestamp'  => $timestamp,
+		);
+	}
+
+	private function resolve_event_post_type( $selected ) {
+		if ( 'auto' !== $selected && post_type_exists( $selected ) ) {
+			return $selected;
+		}
+
+		foreach ( $this->get_event_post_type_candidates() as $post_type ) {
+			if ( post_type_exists( $post_type ) ) {
+				return $post_type;
+			}
+		}
+
+		return '';
+	}
+
+	private function get_event_post_type_options() {
+		$options = array(
+			'auto' => esc_html__( 'Automatikus felismerés', 'vitacenter-elementor-header' ),
+		);
+		$types  = get_post_types( array( 'public' => true ), 'objects' );
+		$labels = array(
+			'tribe_events' => esc_html__( 'The Events Calendar', 'vitacenter-elementor-header' ),
+			'event'        => esc_html__( 'Event', 'vitacenter-elementor-header' ),
+			'events'       => esc_html__( 'Events', 'vitacenter-elementor-header' ),
+			'mec-events'   => esc_html__( 'Modern Events Calendar', 'vitacenter-elementor-header' ),
+			'ajde_events'  => esc_html__( 'EventON', 'vitacenter-elementor-header' ),
+		);
+
+		foreach ( $this->get_event_post_type_candidates() as $candidate ) {
+			if ( isset( $types[ $candidate ] ) ) {
+				$options[ $candidate ] = $types[ $candidate ]->labels->singular_name . ' (' . $candidate . ')';
+				unset( $types[ $candidate ] );
+			} else {
+				$options[ $candidate ] = $labels[ $candidate ] . ' (' . $candidate . ')';
+			}
+		}
+
+		foreach ( $types as $post_type => $object ) {
+			$options[ $post_type ] = $object->labels->singular_name . ' (' . $post_type . ')';
+		}
+
+		return $options;
+	}
+
+	private function get_event_post_type_candidates() {
+		return array( 'tribe_events', 'event', 'events', 'mec-events', 'ajde_events' );
+	}
+
+	private function get_default_event_date_meta_key( $post_type ) {
+		$map = array(
+			'tribe_events' => '_EventStartDate',
+			'event'        => '_event_start_date',
+			'events'       => '_event_start_date',
+			'mec-events'   => 'mec_start_date',
+			'ajde_events'  => 'evcal_srow',
+		);
+
+		return isset( $map[ $post_type ] ) ? $map[ $post_type ] : '';
+	}
+
+	private function get_event_date_meta_candidates( $post_type ) {
+		$candidates = array( $this->get_default_event_date_meta_key( $post_type ), '_EventStartDate', '_event_start_date', 'mec_start_date', 'event_start_date', 'start_date', 'event_date', 'date', 'evcal_srow' );
+
+		return array_values( array_filter( array_unique( $candidates ) ) );
+	}
+
+	private function get_event_location_meta_candidates( $post_type ) {
+		$candidates = array( '_EventVenueID', '_event_location_id', 'mec_location_id', 'location_id', 'venue_id', '_EventVenue', '_VenueVenue', 'event_location', 'location', 'venue', 'helyszin' );
+
+		if ( 'tribe_events' === $post_type ) {
+			array_unshift( $candidates, '_EventVenueID' );
+		}
+
+		return array_values( array_filter( array_unique( $candidates ) ) );
+	}
+
+	private function get_first_meta_value( $post_id, $keys ) {
+		foreach ( $keys as $key ) {
+			if ( '' === $key ) {
+				continue;
+			}
+
+			$value = get_post_meta( $post_id, $key, true );
+
+			if ( '' !== $value && array() !== $value ) {
+				return $value;
+			}
+		}
+
+		return '';
+	}
+
+	private function get_event_place( $post_id, $post_type, $custom_key = '' ) {
+		$custom_key = trim( $custom_key );
+		$keys       = $custom_key ? array( $custom_key ) : $this->get_event_location_meta_candidates( $post_type );
+
+		foreach ( $keys as $key ) {
+			$value = get_post_meta( $post_id, $key, true );
+
+			if ( '' === $value || array() === $value ) {
+				continue;
+			}
+
+			$place = $this->normalize_event_place_value( $value );
+
+			if ( '' !== $place ) {
+				return $place;
+			}
+		}
+
+		foreach ( array( 'mec_location', 'tribe_venue', 'event_location', 'location' ) as $taxonomy ) {
+			$terms = taxonomy_exists( $taxonomy ) ? get_the_terms( $post_id, $taxonomy ) : false;
+
+			if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+				return $terms[0]->name;
+			}
+		}
+
+		return '';
+	}
+
+	private function normalize_event_place_value( $value ) {
+		if ( is_array( $value ) ) {
+			$value = reset( $value );
+		}
+
+		if ( is_numeric( $value ) ) {
+			$post = get_post( absint( $value ) );
+
+			if ( $post ) {
+				return get_the_title( $post );
+			}
+
+			$term = get_term( absint( $value ) );
+
+			if ( $term && ! is_wp_error( $term ) ) {
+				return $term->name;
+			}
+		}
+
+		return is_scalar( $value ) ? wp_strip_all_tags( (string) $value ) : '';
+	}
+
+	private function parse_event_timestamp( $date_raw ) {
+		if ( empty( $date_raw ) ) {
+			return 0;
+		}
+
+		if ( is_numeric( $date_raw ) ) {
+			return absint( $date_raw );
+		}
+
+		$timestamp = strtotime( (string) $date_raw );
+
+		return $timestamp ? $timestamp : 0;
+	}
+
+	private function format_event_date_badge( $timestamp ) {
+		if ( ! $timestamp ) {
+			return '';
+		}
+
+		$month = date_i18n( 'M', $timestamp );
+
+		return function_exists( 'mb_strtoupper' ) ? mb_strtoupper( $month ) : strtoupper( $month );
+	}
+
+	private function format_event_time( $post_id, $post_type, $date_raw, $timestamp ) {
+		if ( ! $timestamp ) {
+			return '';
+		}
+
+		$time_raw = $this->get_first_meta_value( $post_id, array( '_event_start_time', 'event_start_time', 'start_time' ) );
+		$end_raw  = $this->get_first_meta_value( $post_id, array( '_EventEndDate', '_event_end_date', 'mec_end_date', 'event_end_date', 'end_date' ) );
+		$end_time = $this->get_first_meta_value( $post_id, array( '_event_end_time', 'event_end_time', 'end_time' ) );
+		$has_time = preg_match( '/\d{1,2}:\d{2}/', (string) $date_raw . ' ' . (string) $time_raw );
+
+		if ( $time_raw && ! preg_match( '/\d{1,2}:\d{2}/', (string) $date_raw ) ) {
+			$timestamp = $this->parse_event_timestamp( trim( $date_raw . ' ' . $time_raw ) );
+			$has_time  = true;
+		}
+
+		$format = $has_time ? 'Y. F j. H:i' : 'Y. F j.';
+		$output = date_i18n( $format, $timestamp );
+		$end_ts = $this->parse_event_timestamp( trim( $end_raw . ' ' . $end_time ) );
+
+		if ( $end_ts && $end_ts > $timestamp ) {
+			$output .= date_i18n( 'Y-m-d', $end_ts ) === date_i18n( 'Y-m-d', $timestamp ) && ( $has_time || $end_time ) ? ' - ' . date_i18n( 'H:i', $end_ts ) : ' - ' . date_i18n( $format, $end_ts );
+		}
+
+		return $output;
 	}
 
 	private function render_cta( $settings ) {

@@ -27,7 +27,7 @@ WordPress plugin, amely szerkesztheto Elementor widgeteket ad a VitaCenter oldal
 - Hero kep, cimsor, alcim es CTA gombok.
 - Projekt bemutato blokk es fokuszpontok.
 - Kiemelt programok kartyai.
-- Kozelgo esemenyek kartyai.
+- Kozelgo esemenyek dinamikusan az esemeny plugin postjaibol, kezi fallbackkel.
 - Idopontfoglalasi CTA sav.
 - Tudastar kartyak.
 - Kapcsolati sav es also footer sor.
