@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VitaCenter Elementor Widgets
  * Description: Elementor widgets for the VitaCenter header, navigation, and landing page content.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: VitaCenter
  * Text Domain: vitacenter-elementor-header
  * Requires Plugins: elementor
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VC_ELEMENTOR_HEADER_VERSION', '1.1.0' );
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.2.0' );
 define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
 define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
@@ -91,9 +91,19 @@ final class VitaCenter_Elementor_Header_Plugin {
 	public function register_widgets( $widgets_manager ) {
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-header-widget.php';
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-landing-widget.php';
+		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-structured-widgets.php';
 
 		$widgets_manager->register( new VitaCenter_Elementor_Header_Widget() );
 		$widgets_manager->register( new VitaCenter_Elementor_Landing_Widget() );
+		$widgets_manager->register( new VitaCenter_Header_Top_Widget() );
+		$widgets_manager->register( new VitaCenter_Header_Menu_Widget() );
+		$widgets_manager->register( new VitaCenter_Landing_Hero_Widget() );
+		$widgets_manager->register( new VitaCenter_Landing_Project_Widget() );
+		$widgets_manager->register( new VitaCenter_Landing_Programs_Widget() );
+		$widgets_manager->register( new VitaCenter_Landing_Events_Widget() );
+		$widgets_manager->register( new VitaCenter_Landing_Cta_Widget() );
+		$widgets_manager->register( new VitaCenter_Landing_Knowledge_Widget() );
+		$widgets_manager->register( new VitaCenter_Landing_Contact_Widget() );
 	}
 
 	public function admin_notice_missing_elementor() {

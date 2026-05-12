@@ -392,6 +392,25 @@
 	color: var(--vc-landing-accent);
 }
 
+.vc-landing__plain-link {
+	display: inline-flex;
+	align-items: center;
+	color: #687b80;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1.3;
+	transition: color 180ms ease;
+}
+
+.vc-landing__plain-link i {
+	display: none;
+}
+
+.vc-landing__plain-link:hover,
+.vc-landing__plain-link:focus-visible {
+	color: var(--vc-landing-primary);
+}
+
 .vc-landing__section-head {
 	display: flex;
 	align-items: flex-end;
@@ -408,6 +427,17 @@
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 28px;
+}
+
+.vc-landing__empty {
+	padding: 24px 26px;
+	background: #f4fbfa;
+	border: 1px solid var(--vc-landing-line);
+	border-radius: 8px;
+	color: #52676c;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.45;
 }
 
 .vc-landing__event-card,

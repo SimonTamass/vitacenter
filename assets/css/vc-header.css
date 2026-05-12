@@ -18,6 +18,18 @@
 	top: 0;
 }
 
+.vc-header--structured {
+	box-shadow: none;
+}
+
+.vc-header--top-only {
+	border-bottom: 0;
+}
+
+.vc-header--menu-only {
+	box-shadow: 0 12px 28px rgba(17, 75, 80, 0.04);
+}
+
 .vc-header *,
 .vc-header *::before,
 .vc-header *::after {

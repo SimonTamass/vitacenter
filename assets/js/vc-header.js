@@ -54,5 +54,7 @@
 
 	if (window.elementorFrontend && window.elementorFrontend.hooks) {
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_header_nav.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_header_top.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_header_menu.default', bootElementorWidget);
 	}
 }());
