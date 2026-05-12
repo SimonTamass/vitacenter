@@ -68,6 +68,14 @@ final class VitaCenter_Elementor_Header_Plugin {
 			array(),
 			VC_ELEMENTOR_HEADER_VERSION
 		);
+
+		wp_register_script(
+			'vc-landing',
+			VC_ELEMENTOR_HEADER_URL . 'assets/js/vc-landing.js',
+			array(),
+			VC_ELEMENTOR_HEADER_VERSION,
+			true
+		);
 	}
 
 	public function register_category( $elements_manager ) {

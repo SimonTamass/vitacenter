@@ -34,6 +34,10 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 		return array( 'vc-landing' );
 	}
 
+	public function get_script_depends() {
+		return array( 'vc-landing' );
+	}
+
 	protected function register_controls() {
 		$this->register_content_controls();
 		$this->register_style_controls();
@@ -352,7 +356,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 960, 'max' => 1500 ) ),
-				'default'    => array( 'size' => 1180, 'unit' => 'px' ),
+				'default'    => array( 'size' => 1220, 'unit' => 'px' ),
 				'selectors'  => array( '{{WRAPPER}} .vc-landing__container' => 'max-width: {{SIZE}}{{UNIT}};' ),
 			)
 		);
