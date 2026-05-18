@@ -8,9 +8,7 @@
 	--vc-landing-line: #dceced;
 	--vc-landing-shadow: 0 18px 42px rgba(18, 79, 88, 0.09);
 	--vc-landing-shadow-strong: 0 24px 58px rgba(18, 79, 88, 0.15);
-	--vc-landing-container-width: 1220px;
 	width: 100%;
-	max-width: 100%;
 	background: linear-gradient(180deg, #ffffff 0%, #f8fcfc 48%, #ffffff 100%);
 	color: var(--vc-landing-text);
 	font-family: inherit;
@@ -28,9 +26,7 @@
 }
 
 .vc-landing__container {
-	box-sizing: border-box;
-	width: 100%;
-	max-width: var(--vc-landing-container-width) !important;
+	width: min(100%, 1220px);
 	margin: 0 auto;
 	padding-right: 32px;
 	padding-left: 32px;
