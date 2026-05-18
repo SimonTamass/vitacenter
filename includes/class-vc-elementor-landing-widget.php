@@ -465,7 +465,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 960, 'max' => 1500 ) ),
 				'default'    => array( 'size' => 1220, 'unit' => 'px' ),
-				'selectors'  => array( '{{WRAPPER}} .vc-landing__container' => 'max-width: {{SIZE}}{{UNIT}};' ),
+				'selectors'  => array( '{{WRAPPER}} .vc-landing' => '--vc-landing-container-width: {{SIZE}}{{UNIT}};' ),
 			)
 		);
 
