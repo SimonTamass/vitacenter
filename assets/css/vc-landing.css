@@ -672,8 +672,8 @@
 
 .vc-landing__contact-bar {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1.5fr auto;
-	gap: 30px;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+	gap: 20px 24px;
 	align-items: center;
 	padding: 24px 30px;
 	background: linear-gradient(180deg, #effafa, #eaf6f5);
@@ -687,6 +687,7 @@
 	grid-template-columns: 42px minmax(0, 1fr);
 	gap: 14px;
 	align-items: center;
+	min-width: 0;
 }
 
 .vc-landing__contact-item > span {
@@ -729,6 +730,12 @@
 	color: #53686d;
 	font-size: 14px;
 	line-height: 1.35;
+	overflow-wrap: anywhere;
+}
+
+.vc-landing__contact-bar .vc-landing__button {
+	justify-self: end;
+	min-width: 184px;
 }
 
 .vc-landing__footer {

@@ -44,6 +44,8 @@ final class VitaCenter_Elementor_Header_Plugin {
 		add_action( 'elementor/frontend/after_register_scripts', array( $this, 'register_assets' ) );
 		add_action( 'elementor/elements/categories_registered', array( $this, 'register_category' ) );
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
+		add_action( 'template_redirect', array( $this, 'disable_broken_cookieadmin_banner' ), 0 );
+		add_action( 'wp_footer', array( $this, 'disable_broken_cookieadmin_banner' ), -9999 );
 	}
 
 	public function register_assets() {
@@ -110,6 +112,43 @@ final class VitaCenter_Elementor_Header_Plugin {
 		$widgets_manager->register( new VitaCenter_Program_Content_Widget() );
 		$widgets_manager->register( new VitaCenter_Info_Section_Widget() );
 		$widgets_manager->register( new VitaCenter_Registration_Info_Widget() );
+	}
+
+	public function disable_broken_cookieadmin_banner() {
+		global $wp_filter;
+
+		if ( empty( $wp_filter['wp_footer'] ) || ! is_object( $wp_filter['wp_footer'] ) || empty( $wp_filter['wp_footer']->callbacks ) ) {
+			return;
+		}
+
+		foreach ( $wp_filter['wp_footer']->callbacks as $priority => $callbacks ) {
+			foreach ( $callbacks as $callback ) {
+				if ( empty( $callback['function'] ) ) {
+					continue;
+				}
+
+				$callable = $callback['function'];
+
+				if ( is_string( $callable ) && 'CookieAdmin\\Enduser::cookieadmin_show_banner' === ltrim( $callable, '\\' ) ) {
+					remove_action( 'wp_footer', $callable, $priority );
+					continue;
+				}
+
+				if ( ! is_array( $callable ) ) {
+					continue;
+				}
+
+				if ( empty( $callable[0] ) || empty( $callable[1] ) || 'cookieadmin_show_banner' !== $callable[1] ) {
+					continue;
+				}
+
+				$class_name = is_object( $callable[0] ) ? get_class( $callable[0] ) : ltrim( (string) $callable[0], '\\' );
+
+				if ( 'CookieAdmin\\Enduser' === $class_name ) {
+					remove_action( 'wp_footer', $callable, $priority );
+				}
+			}
+		}
 	}
 
 	public function admin_notice_missing_elementor() {

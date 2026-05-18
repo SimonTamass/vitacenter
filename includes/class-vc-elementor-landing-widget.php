@@ -437,6 +437,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 		$this->add_control( 'contact_address', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Szatmárnémeti, Vasile Lucaciu u. 21.', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'contact_button_text', array( 'label' => esc_html__( 'Kapcsolat gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'contact_button_link', array( 'label' => esc_html__( 'Kapcsolat link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#kapcsolat' ) ) );
+		$this->add_control( 'footer_show_compact', array( 'label' => esc_html__( 'Kis alsó sor mutatása', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => '' ) );
 		$this->add_control( 'footer_copyright', array( 'label' => esc_html__( 'Copyright', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( '© 2025 Egészségfejlesztési Iroda - Szatmár megye', 'vitacenter-elementor-header' ), 'label_block' => true ) );
 		$this->add_control( 'footer_project', array( 'label' => esc_html__( 'Projekt sor', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'IPOP ROHU00259 - Interreg VI-A Románia-Magyarország Program', 'vitacenter-elementor-header' ), 'label_block' => true ) );
 		$this->add_control( 'footer_privacy_text', array( 'label' => esc_html__( 'Adatvédelem felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Adatvédelem', 'vitacenter-elementor-header' ) ) );
@@ -612,7 +613,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 		$normalized       = array();
 		$has_mobil_szures = false;
 
-		foreach ( $items as $item ) {
+		foreach ( $this->repeater_items( $items ) as $item ) {
 			$title = isset( $item['program_title'] ) ? $item['program_title'] : '';
 			$key   = $this->program_key( $title );
 
@@ -637,6 +638,10 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 	}
 
 	private function normalize_program_item( $item ) {
+		if ( ! is_array( $item ) ) {
+			$item = array();
+		}
+
 		$title = isset( $item['program_title'] ) ? $item['program_title'] : '';
 		$key   = $this->program_key( $title );
 
@@ -662,10 +667,10 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 			$item = array_merge( $item, $updates[ $key ] );
 		}
 
-		$item['program_title']     = isset( $item['program_title'] ) ? $item['program_title'] : '';
-		$item['program_text']      = isset( $item['program_text'] ) ? $item['program_text'] : '';
+		$item['program_title']     = isset( $item['program_title'] ) ? $this->plain_text( $item['program_title'] ) : '';
+		$item['program_text']      = isset( $item['program_text'] ) ? $this->plain_text( $item['program_text'] ) : '';
 		$item['program_icon']      = isset( $item['program_icon'] ) ? $item['program_icon'] : array();
-		$item['program_link_text'] = isset( $item['program_link_text'] ) && '' !== $item['program_link_text'] ? $item['program_link_text'] : esc_html__( 'Részletek', 'vitacenter-elementor-header' );
+		$item['program_link_text'] = isset( $item['program_link_text'] ) && '' !== $this->plain_text( $item['program_link_text'] ) ? $this->plain_text( $item['program_link_text'] ) : esc_html__( 'Részletek', 'vitacenter-elementor-header' );
 		$item['program_link']      = isset( $item['program_link'] ) ? $item['program_link'] : array( 'url' => '#' );
 
 		return $item;
@@ -682,6 +687,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 	}
 
 	private function program_key( $title ) {
+		$title = $this->plain_text( $title );
 		$title = function_exists( 'remove_accents' ) ? remove_accents( $title ) : $title;
 		$key   = strtolower( (string) $title );
 		$key   = preg_replace( '/[^a-z0-9]+/', '-', $key );
@@ -1229,6 +1235,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 				'contact_address'       => esc_html__( 'Szatmárnémeti, Vasile Lucaciu u. 21.', 'vitacenter-elementor-header' ),
 				'contact_button_text'   => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ),
 				'contact_button_link'   => array( 'url' => '#kapcsolat' ),
+				'footer_show_compact'   => '',
 				'footer_copyright'      => esc_html__( '© 2025 Egészségfejlesztési Iroda - Szatmár megye', 'vitacenter-elementor-header' ),
 				'footer_project'        => esc_html__( 'IPOP ROHU00259 - Interreg VI-A Románia-Magyarország Program', 'vitacenter-elementor-header' ),
 				'footer_privacy_text'   => esc_html__( 'Adatvédelem', 'vitacenter-elementor-header' ),
@@ -1246,22 +1253,24 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 					<?php $this->render_contact_item( 'pin', $settings['contact_address_label'], $settings['contact_address'] ); ?>
 					<?php $this->render_button( $settings['contact_button_text'], $settings['contact_button_link'], 'vc-landing__button vc-landing__button--outline' ); ?>
 				</div>
-				<footer class="vc-landing__footer">
-					<?php if ( '' !== $settings['footer_copyright'] ) : ?><span><?php echo esc_html( $settings['footer_copyright'] ); ?></span><?php endif; ?>
-					<?php if ( '' !== $settings['footer_project'] ) : ?><span><?php echo esc_html( $settings['footer_project'] ); ?></span><?php endif; ?>
-					<nav>
-						<?php $this->render_plain_link( $settings['footer_privacy_text'], $settings['footer_privacy_link'] ); ?>
-						<?php $this->render_plain_link( $settings['footer_imprint_text'], $settings['footer_imprint_link'] ); ?>
-					</nav>
-				</footer>
+				<?php if ( 'yes' === $this->plain_text( $settings['footer_show_compact'] ) ) : ?>
+					<footer class="vc-landing__footer">
+						<?php if ( '' !== $this->plain_text( $settings['footer_copyright'] ) ) : ?><span><?php echo esc_html( $this->plain_text( $settings['footer_copyright'] ) ); ?></span><?php endif; ?>
+						<?php if ( '' !== $this->plain_text( $settings['footer_project'] ) ) : ?><span><?php echo esc_html( $this->plain_text( $settings['footer_project'] ) ); ?></span><?php endif; ?>
+						<nav>
+							<?php $this->render_plain_link( $settings['footer_privacy_text'], $settings['footer_privacy_link'] ); ?>
+							<?php $this->render_plain_link( $settings['footer_imprint_text'], $settings['footer_imprint_link'] ); ?>
+						</nav>
+					</footer>
+				<?php endif; ?>
 			</div>
 		</section>
 		<?php
 	}
 
 	private function render_contact_item( $type, $label, $value ) {
-		$label = (string) $label;
-		$value = (string) $value;
+		$label = $this->plain_text( $label );
+		$value = $this->plain_text( $value );
 
 		if ( '' === $value ) {
 			return;
@@ -1278,7 +1287,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 	}
 
 	private function render_button( $text, $link, $class ) {
-		$text = (string) $text;
+		$text = $this->plain_text( $text );
 
 		if ( '' === $text ) {
 			return;
@@ -1292,7 +1301,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 	}
 
 	private function render_text_link( $text, $link, $class = 'vc-landing__text-link' ) {
-		$text = (string) $text;
+		$text = $this->plain_text( $text );
 
 		if ( '' === $text ) {
 			return;
@@ -1306,7 +1315,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 	}
 
 	private function render_plain_link( $text, $link ) {
-		$text = (string) $text;
+		$text = $this->plain_text( $text );
 
 		if ( '' === $text ) {
 			return;
@@ -1317,7 +1326,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 	}
 
 	private function format_multiline( $text ) {
-		return nl2br( esc_html( $text ) );
+		return nl2br( esc_html( $this->plain_text( $text ) ) );
 	}
 
 	private function media_default( $file_name ) {
@@ -1325,23 +1334,27 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 	}
 
 	private function get_media_url( $media, $fallback_file = '' ) {
+		if ( ! is_array( $media ) ) {
+			return $fallback_file ? $this->source_asset_url( $fallback_file ) : '';
+		}
+
 		if ( ! empty( $media['url'] ) ) {
-			return $media['url'];
+			return $this->plain_text( $media['url'] );
 		}
 
 		return $fallback_file ? $this->source_asset_url( $fallback_file ) : '';
 	}
 
 	private function source_asset_url( $file_name ) {
-		return VC_ELEMENTOR_HEADER_URL . 'source/' . rawurlencode( $file_name );
+		return VC_ELEMENTOR_HEADER_URL . 'source/' . rawurlencode( $this->plain_text( $file_name ) );
 	}
 
 	private function get_url_attributes( $url_control ) {
 		if ( ! is_array( $url_control ) ) {
-			$url_control = array( 'url' => (string) $url_control );
+			$url_control = array( 'url' => $this->plain_text( $url_control ) );
 		}
 
-		$url = isset( $url_control['url'] ) ? $url_control['url'] : '#';
+		$url = isset( $url_control['url'] ) ? $this->plain_text( $url_control['url'] ) : '#';
 
 		if ( '' === $url ) {
 			$url = '#';
@@ -1364,5 +1377,28 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 		}
 
 		return implode( ' ', $attributes );
+	}
+
+	private function plain_text( $value ) {
+		if ( is_scalar( $value ) || null === $value ) {
+			return trim( (string) $value );
+		}
+
+		return '';
+	}
+
+	private function repeater_items( $items ) {
+		if ( ! is_array( $items ) ) {
+			return array();
+		}
+
+		return array_values(
+			array_filter(
+				$items,
+				static function ( $item ) {
+					return is_array( $item );
+				}
+			)
+		);
 	}
 }
