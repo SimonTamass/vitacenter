@@ -22,7 +22,15 @@
 		'.vc-project-page__highlight',
 		'.vc-project-page__panel',
 		'.vc-project-page__program-card',
-		'.vc-project-page__strategy'
+		'.vc-project-page__strategy',
+		'.vc-mobile-specialist__hero-copy',
+		'.vc-mobile-specialist__visual',
+		'.vc-mobile-specialist__card',
+		'.vc-mobile-specialist__screening',
+		'.vc-mobile-specialist__message',
+		'.vc-mobile-specialist__side-card',
+		'.vc-mobile-specialist__useful',
+		'.vc-mobile-specialist__cta'
 	].join(',');
 
 	var projectStickyPages = [];
@@ -300,6 +308,7 @@
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_contact_footer.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_project_content.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_program_content.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_mobile_specialist.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_info_section.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_registration_info.default', bootElementorWidget);
 	}

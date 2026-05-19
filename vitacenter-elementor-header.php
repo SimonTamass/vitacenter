@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VitaCenter Elementor Widgets
  * Description: Elementor widgets for the VitaCenter header, navigation, and landing page content.
- * Version: 1.4.6
+ * Version: 1.4.8
  * Author: VitaCenter
  * Text Domain: vitacenter-elementor-header
  * Requires Plugins: elementor
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.6' );
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.8' );
 define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
 define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
@@ -95,6 +95,8 @@ final class VitaCenter_Elementor_Header_Plugin {
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-landing-widget.php';
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-structured-widgets.php';
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-content-widgets.php';
+		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-mobile-specialist-widget.php';
+		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-ciklusoktatas-widget.php';
 
 		$widgets_manager->register( new VitaCenter_Elementor_Header_Widget() );
 		$widgets_manager->register( new VitaCenter_Elementor_Landing_Widget() );
@@ -110,6 +112,8 @@ final class VitaCenter_Elementor_Header_Plugin {
 		$widgets_manager->register( new VitaCenter_Legal_Footer_Widget() );
 		$widgets_manager->register( new VitaCenter_Project_Content_Widget() );
 		$widgets_manager->register( new VitaCenter_Program_Content_Widget() );
+		$widgets_manager->register( new VitaCenter_Mobile_Specialist_Widget() );
+		$widgets_manager->register( new VitaCenter_Ciklusoktatas_Widget() );
 		$widgets_manager->register( new VitaCenter_Info_Section_Widget() );
 		$widgets_manager->register( new VitaCenter_Registration_Info_Widget() );
 	}
