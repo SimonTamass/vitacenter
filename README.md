@@ -24,6 +24,9 @@ WordPress plugin, amely szerkesztheto Elementor widgeteket ad a VitaCenter oldal
    - `VitaCenter Program Content`
    - `VitaCenter Mobil szakorvosi szolgálat`
    - `VitaCenter Ciklusoktatás`
+   - `VitaCenter Egészségfejlesztési Iroda`
+   - `VitaCenter Életmódtanácsadás`
+   - `VitaCenter Iskolaérettség`
    - `VitaCenter Info Section`
    - `VitaCenter Registration Info`
 
@@ -71,6 +74,17 @@ widgeteket helyezd egymas ala.
 - A `VitaCenter Ciklusoktatás` widget header es footer nelkuli belso
   programoldalt ad termekenysegtudatossagi hero szakasszal, programleirassal,
   temalistaval, gyors informacios oldalsavval es kapcsolat blokkal.
+- A `VitaCenter Egészségfejlesztési Iroda` widget header es footer nelkuli
+  belso programoldalt ad prevencios hero szakasszal, programleirassal,
+  szolgaltatasi teruletekkel, gyors informacios oldalsavval es kapcsolat
+  blokkal.
+- A `VitaCenter Életmódtanácsadás` widget header es footer nelkuli belso
+  programoldalt ad eletmodtanacsadas hero szakasszal, tanacsadasi teruletekkel,
+  gyors informacios oldalsavval es kapcsolat blokkal.
+- A `VitaCenter Iskolaérettség` widget header es footer nelkuli belso
+  programoldalt ad ovodas iskolaerettsegi szures hero szakasszal,
+  szuresi tevekenysegekkel, riziko tunet listaval, gyors informacios
+  oldalsavval es kapcsolat blokkal.
 - A `VitaCenter Events` widget a The Events Calendar `tribe_events` bejegyzeseit
   olvassa, a `_EventStartDate` mezovel jovobeli datum szerint rendezve.
 - A nagy egyben widgetek megmaradtak kompatibilitas miatt, de uj oldalt inkabb
