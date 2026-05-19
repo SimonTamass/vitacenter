@@ -58,7 +58,10 @@ widgeteket helyezd egymas ala.
 - Footer: kulon `Legal Footer` widget EU nyilatkozattal, copyright sorral,
   Interreg linkkel es szerkesztheto elerhetosegekkel.
 - Aloldalak: kulon `Project Content`, `Program Content`, `Info Section` es
-  `Registration Info` widgetek a honlap.docx tartalma alapjan.
+  `Registration Info` widgetek a honlap.docx tartalma alapjan. A `Project
+  Content` widget modern belso projektoldal-layoutot ad hero szakasszal,
+  kiemelt szamokkal, attekinto oldalsavval, projektbemutatoval, celokkal,
+  programkartyakkal es strategiai uzenetekkel.
 - A `VitaCenter Events` widget a The Events Calendar `tribe_events` bejegyzeseit
   olvassa, a `_EventStartDate` mezovel jovobeli datum szerint rendezve.
 - A nagy egyben widgetek megmaradtak kompatibilitas miatt, de uj oldalt inkabb

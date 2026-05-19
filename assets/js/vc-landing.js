@@ -16,7 +16,14 @@
 		'.vc-message-grid > div',
 		'.vc-content-panel',
 		'.vc-info-band',
-		'.vc-registration-card'
+		'.vc-registration-card',
+		'.vc-project-page__hero-copy',
+		'.vc-project-page__visual',
+		'.vc-project-page__highlight',
+		'.vc-project-page__overview-card',
+		'.vc-project-page__panel',
+		'.vc-project-page__program-card',
+		'.vc-project-page__strategy'
 	].join(',');
 
 	function initLanding(root) {
