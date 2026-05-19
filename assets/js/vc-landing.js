@@ -20,7 +20,6 @@
 		'.vc-project-page__hero-copy',
 		'.vc-project-page__visual',
 		'.vc-project-page__highlight',
-		'.vc-project-page__overview-card',
 		'.vc-project-page__panel',
 		'.vc-project-page__program-card',
 		'.vc-project-page__strategy'
