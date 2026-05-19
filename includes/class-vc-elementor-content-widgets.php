@@ -136,7 +136,7 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 							<p><?php echo esc_html( $s['intro'] ); ?></p>
 							<div class="vc-project-page__actions">
 								<?php $this->render_project_button( $s['primary_text'], $s['primary_link'], 'vc-project-page__button vc-project-page__button--primary' ); ?>
-								<?php $this->render_project_button( $s['secondary_text'], $s['secondary_link'], 'vc-project-page__button vc-project-page__button--secondary' ); ?>
+								<?php $this->render_project_button( $s['secondary_text'], $s['secondary_link'], 'vc-project-page__button vc-project-page__button--secondary', false ); ?>
 							</div>
 						</div>
 
@@ -305,9 +305,12 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 
 	private function project_paragraph_defaults() {
 		return array(
-			array( 'text' => esc_html__( 'A „Népesedési folyamatok javítása helyi szinten egészségfejlesztési módszerekkel” elnevezésű IPOP ROHU00259-es számú, 2025.05.28. - 2027.11.27. időszakban futó projekt a Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesületének a Hódmezővásárhelyi-Makói Egészségügyi Ellátó Központtal partnerségben az Interreg VI-A Románia-Magyarország Program támogatásával valósul meg.', 'vitacenter-elementor-header' ) ),
-			array( 'text' => esc_html__( 'A kezdeményezés a „4.5 - Az egészségügyi ellátáshoz való egyenlő hozzáférés biztosítása, az egészségügyi rendszerek ellenálló képességének erősítése - beleértve az alapellátást is -, valamint az intézményi ellátásról a családi és közösségi alapú gondozásra való áttérés előmozdítása” egyedi célkitűzés keretén belül jön létre.', 'vitacenter-elementor-header' ) ),
-			array( 'text' => esc_html__( 'A projekt keretén belül kialakított és működés alatt álló Szatmárnémeti Egészségfejlesztési Iroda olyan egészségvédelmi és felvilágosító iroda, melynek küldetése a demográfiai helyzet javítása egészségfejlesztési módszerekkel, esélyegyenlőség biztosításával és a család- és közösségalapú ellátás erősítésével, a prevenció, valamint a megye egészségügyi állapotának javítása.', 'vitacenter-elementor-header' ) ),
+			array( 'text' => esc_html__( 'A „Népesedési folyamatok javítása helyi szinten egészségfejlesztési módszerekkel” elnevezésű IPOP ROHU00259-es számú, 2025.05.28. - 2027.11.27. időszakban futó projekt a Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesületének a Hódmezővásárhelyi-Makói Egészségügyi Ellátó Központtal partnerségben az Interreg VI-A Románia-Magyarország Program támogatásával, a „4.5 - Az egészségügyi ellátáshoz való egyenlő hozzáférés biztosítása, az egészségügyi rendszerek ellenálló képességének erősítése - beleértve az alapellátást is -, valamint az intézményi ellátásról a családi és közösségi alapú gondozásra való áttérés előmozdítása” egyedi célkitűzés keretén belül valósul meg.', 'vitacenter-elementor-header' ) ),
+			array( 'text' => esc_html__( 'A projekt keretén belül kialakított és működés alatt álló Szatmárnémeti Egészségfejlesztési Iroda egy olyan egészségvédelmi és felvilágosító iroda, melynek küldetése a demográfiai helyzet javítása egészségfejlesztési módszerekkel, esélyegyenlőség biztosításával és a család- és közösségalapú ellátás erősítésével, a prevenció, valamint a megye egészségügyi állapotának javítása.', 'vitacenter-elementor-header' ) ),
+			array( 'text' => esc_html__( 'Ennek megfelelően Szatmár megyében legalább 1000 fő részére egy mozgó kardiovaszkuláris és onkológiai - bőr, prosztata, mell, vastagbél - szűrés valósul meg, legalább 10 vidéki háziorvos bevonásával, biztosítva a szükséges szakorvosi vizsgálatok időszakos kihelyezését az érintett rendelőkbe, illetve modern orvosi felszereléseket.', 'vitacenter-elementor-header' ) ),
+			array( 'text' => esc_html__( 'A vezető partner irányításával olyan személyeket szándékoznak kiképezni, akik cikluskövetés-oktatást és meddőségi tanácsadást tudnak majd nyújtani fiatal hölgyeknek. A tanult módszerrel a megye legalább 6 gimnáziumába szeretnének eljutni a projekt időtartama alatt.', 'vitacenter-elementor-header' ) ),
+			array( 'text' => esc_html__( 'Szintén a pályázat segítségével a Boldog Scheffler János Központ „Iskolára készen” kampányával Szatmár megye vidéki településein óvodás gyermekek iskola előtti szenzo-motoros, kognitív és pszichológiai szűrését fogják elvégezni.', 'vitacenter-elementor-header' ) ),
+			array( 'text' => esc_html__( 'A kitűzött cél legalább 30 megyei intézményben, melyben 500-600 nagycsoportos óvodás felmérése zajlik majd a szakemberek által, az óvónők segítségével.', 'vitacenter-elementor-header' ) ),
 		);
 	}
 
@@ -364,7 +367,7 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 		);
 	}
 
-	private function render_project_button( $text, $link, $class ) {
+	private function render_project_button( $text, $link, $class, $show_arrow = true ) {
 		$text = $this->plain_text( $text );
 
 		if ( '' === $text ) {
@@ -373,7 +376,9 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 		?>
 		<a class="<?php echo esc_attr( $class ); ?>" <?php echo $this->url_attributes( $link ); ?>>
 			<span><?php echo esc_html( $text ); ?></span>
-			<?php $this->render_project_icon( 'arrow' ); ?>
+			<?php if ( $show_arrow ) : ?>
+				<?php $this->render_project_icon( 'arrow' ); ?>
+			<?php endif; ?>
 		</a>
 		<?php
 	}
