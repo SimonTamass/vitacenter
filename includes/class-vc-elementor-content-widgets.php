@@ -249,7 +249,7 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 										<?php if ( '' !== $text ) : ?><p><?php echo esc_html( $text ); ?></p><?php endif; ?>
 									<?php endforeach; ?>
 								</div>
-								<?php $this->render_project_button( $s['strategy_button_text'], $s['strategy_button_link'], 'vc-project-page__button vc-project-page__button--light' ); ?>
+								<?php $this->render_project_button( $s['strategy_button_text'], $s['strategy_button_link'], 'vc-project-page__button vc-project-page__button--light', true, esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ) ); ?>
 							</div>
 						</article>
 					</div>
@@ -367,8 +367,12 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 		);
 	}
 
-	private function render_project_button( $text, $link, $class, $show_arrow = true ) {
+	private function render_project_button( $text, $link, $class, $show_arrow = true, $fallback_text = '' ) {
 		$text = $this->plain_text( $text );
+
+		if ( '' === $text ) {
+			$text = $this->plain_text( $fallback_text );
+		}
 
 		if ( '' === $text ) {
 			return;

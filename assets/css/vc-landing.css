@@ -1104,7 +1104,20 @@
 .vc-project-page__button svg {
 	flex: 0 0 auto;
 	font-size: 18px;
+	color: inherit !important;
+	stroke: currentColor !important;
 	transition: transform 200ms ease;
+}
+
+.vc-project-page__button span {
+	display: inline-flex !important;
+	align-items: center !important;
+	color: inherit !important;
+	font-size: inherit !important;
+	font-weight: inherit !important;
+	line-height: inherit !important;
+	opacity: 1 !important;
+	visibility: visible !important;
 }
 
 .vc-project-page__button:hover,
@@ -1146,14 +1159,27 @@
 }
 
 .vc-project-page__button--light {
-	margin-top: 26px;
-	background: #ffffff;
-	color: var(--vc-project-primary-dark);
+	min-width: 252px !important;
+	margin-top: 26px !important;
+	background: #ffffff !important;
+	border-color: #ffffff !important;
+	box-shadow: 0 18px 38px rgba(0, 0, 0, 0.16) !important;
+	color: var(--vc-project-primary-dark) !important;
 }
 
 .vc-project-page__button--light:hover,
 .vc-project-page__button--light:focus-visible {
-	color: var(--vc-project-primary-dark);
+	background: #f4fffd !important;
+	border-color: #f4fffd !important;
+	color: var(--vc-project-primary-dark) !important;
+}
+
+.vc-project-page__strategy .vc-project-page__button--light,
+.vc-project-page__strategy .vc-project-page__button--light span,
+.vc-project-page__strategy .vc-project-page__button--light svg {
+	color: var(--vc-project-primary-dark) !important;
+	opacity: 1 !important;
+	visibility: visible !important;
 }
 
 .vc-project-page__visual {

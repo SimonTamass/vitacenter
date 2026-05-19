@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VitaCenter Elementor Widgets
  * Description: Elementor widgets for the VitaCenter header, navigation, and landing page content.
- * Version: 1.4.5
+ * Version: 1.4.6
  * Author: VitaCenter
  * Text Domain: vitacenter-elementor-header
  * Requires Plugins: elementor
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.5' );
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.6' );
 define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
 define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
