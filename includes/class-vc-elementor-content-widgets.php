@@ -20,7 +20,6 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 		$this->add_control( 'period', array( 'label' => esc_html__( 'Projekt időszak', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( '2025.05.28. - 2027.11.27.', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Népesedési folyamatok javítása helyi szinten egészségfejlesztési módszerekkel', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'intro', array( 'label' => esc_html__( 'Hero szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A projekt célja, hogy Szatmár megye lakosságának egészségi állapotát, prevenciós lehetőségeit és az egészségügyi szolgáltatásokhoz való hozzáférését javítsa.', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'hero_image', array( 'label' => esc_html__( 'Hero kép', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::MEDIA, 'default' => $this->media_default( 'index_hero_vitacenter.jpg' ) ) );
 		$this->add_control( 'primary_text', array( 'label' => esc_html__( 'Első gomb felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Programok megtekintése', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'primary_link', array( 'label' => esc_html__( 'Első gomb link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#programok' ) ) );
 		$this->add_control( 'secondary_text', array( 'label' => esc_html__( 'Második gomb felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Időpontfoglalás', 'vitacenter-elementor-header' ) ) );
@@ -114,8 +113,6 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 	protected function render() {
 		$s = wp_parse_args( $this->get_settings_for_display(), $this->project_defaults() );
 
-		$hero_image     = $this->media_url( $s['hero_image'], 'index_hero_vitacenter.jpg' );
-		$hero_style     = $hero_image ? '--vc-project-hero-image: url("' . esc_url( $hero_image ) . '");' : '';
 		$highlights     = $this->project_items_or_default( $s, 'highlights', $this->project_highlight_defaults() );
 		$overview_items = $this->project_items_or_default( $s, 'overview_items', $this->project_overview_defaults() );
 		$paragraphs     = $this->project_items_or_default( $s, 'paragraphs', $this->project_paragraph_defaults() );
@@ -124,7 +121,7 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 		$messages       = $this->project_items_or_default( $s, 'messages', $this->project_message_defaults() );
 		?>
 		<div class="vc-landing">
-			<section id="projekt" class="vc-project-page"<?php echo $hero_style ? ' style="' . esc_attr( $hero_style ) . '"' : ''; ?>>
+			<section id="projekt" class="vc-project-page">
 				<div class="vc-project-page__hero">
 					<div class="vc-landing__container vc-project-page__hero-grid">
 						<div class="vc-project-page__hero-copy">
@@ -144,7 +141,6 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 						</div>
 
 						<div class="vc-project-page__visual" aria-label="<?php echo esc_attr__( 'Projekt összefoglaló', 'vitacenter-elementor-header' ); ?>">
-							<div class="vc-project-page__visual-media"></div>
 							<div class="vc-project-page__visual-body">
 								<div class="vc-project-page__visual-top">
 									<span class="vc-project-page__visual-icon"><?php $this->render_project_icon( 'map-pin' ); ?></span>
@@ -269,7 +265,6 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 			'period'               => esc_html__( '2025.05.28. - 2027.11.27.', 'vitacenter-elementor-header' ),
 			'title'                => esc_html__( 'Népesedési folyamatok javítása helyi szinten egészségfejlesztési módszerekkel', 'vitacenter-elementor-header' ),
 			'intro'                => esc_html__( 'A projekt célja, hogy Szatmár megye lakosságának egészségi állapotát, prevenciós lehetőségeit és az egészségügyi szolgáltatásokhoz való hozzáférését javítsa.', 'vitacenter-elementor-header' ),
-			'hero_image'           => $this->media_default( 'index_hero_vitacenter.jpg' ),
 			'primary_text'         => esc_html__( 'Programok megtekintése', 'vitacenter-elementor-header' ),
 			'primary_link'         => array( 'url' => '#programok' ),
 			'secondary_text'       => esc_html__( 'Időpontfoglalás', 'vitacenter-elementor-header' ),
@@ -313,9 +308,6 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 			array( 'text' => esc_html__( 'A „Népesedési folyamatok javítása helyi szinten egészségfejlesztési módszerekkel” elnevezésű IPOP ROHU00259-es számú, 2025.05.28. - 2027.11.27. időszakban futó projekt a Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesületének a Hódmezővásárhelyi-Makói Egészségügyi Ellátó Központtal partnerségben az Interreg VI-A Románia-Magyarország Program támogatásával valósul meg.', 'vitacenter-elementor-header' ) ),
 			array( 'text' => esc_html__( 'A kezdeményezés a „4.5 - Az egészségügyi ellátáshoz való egyenlő hozzáférés biztosítása, az egészségügyi rendszerek ellenálló képességének erősítése - beleértve az alapellátást is -, valamint az intézményi ellátásról a családi és közösségi alapú gondozásra való áttérés előmozdítása” egyedi célkitűzés keretén belül jön létre.', 'vitacenter-elementor-header' ) ),
 			array( 'text' => esc_html__( 'A projekt keretén belül kialakított és működés alatt álló Szatmárnémeti Egészségfejlesztési Iroda olyan egészségvédelmi és felvilágosító iroda, melynek küldetése a demográfiai helyzet javítása egészségfejlesztési módszerekkel, esélyegyenlőség biztosításával és a család- és közösségalapú ellátás erősítésével, a prevenció, valamint a megye egészségügyi állapotának javítása.', 'vitacenter-elementor-header' ) ),
-			array( 'text' => esc_html__( 'Szatmár megyében legalább 1000 fő részére mozgó kardiovaszkuláris és onkológiai - bőr-, prosztata-, mell- és vastagbél - szűrés valósul meg, legalább 10 vidéki háziorvos bevonásával. A projekt biztosítja a szükséges szakorvosi vizsgálatok időszakos kihelyezését az érintett rendelőkbe, illetve modern orvosi felszereléseket.', 'vitacenter-elementor-header' ) ),
-			array( 'text' => esc_html__( 'A vezető partner irányításával olyan személyeket szándékoznak kiképezni, akik cikluskövetés-oktatást és meddőségi tanácsadást tudnak majd nyújtani fiatal hölgyeknek. A tanult módszerrel a megye legalább 6 gimnáziumába szeretnének eljutni a projekt időtartama alatt.', 'vitacenter-elementor-header' ) ),
-			array( 'text' => esc_html__( 'A Boldog Scheffler János Központ „Iskolára készen” kampányával Szatmár megye vidéki településein óvodás gyermekek iskola előtti szenzo-motoros, kognitív és pszichológiai szűrését végzik. A kitűzött cél legalább 30 megyei intézmény, amelyben 500-600 nagycsoportos óvodás felmérése zajlik majd szakemberek által, az óvónők segítségével.', 'vitacenter-elementor-header' ) ),
 		);
 	}
 
