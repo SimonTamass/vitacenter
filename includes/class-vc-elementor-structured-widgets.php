@@ -736,18 +736,22 @@ class VitaCenter_Landing_Contact_Widget extends VitaCenter_Structured_Widget_Bas
 
 	protected function register_controls() {
 		$this->start_controls_section( 'contact_section', array( 'label' => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'show_notice', array( 'label' => esc_html__( 'EU nyilatkozat mutatása', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
+		$this->add_control( 'notice_text', array( 'label' => esc_html__( 'Nyilatkozat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Jelen weboldal tartalma nem feltétlenül tükrözi az Európai Unió hivatalos álláspontját.', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '+40 261 713 775' ) );
 		$this->add_control( 'email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'efi@szatmar.ro' ) );
 		$this->add_control( 'address', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Szatmárnémeti, Vasile Lucaciu u. 21.', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'button_text', array( 'label' => esc_html__( 'Gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'button_link', array( 'label' => esc_html__( 'Gomb link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#kapcsolat' ) ) );
-		$this->add_control( 'show_compact_footer', array( 'label' => esc_html__( 'Kis alsó sor mutatása', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => '' ) );
-		$this->add_control( 'copyright', array( 'label' => esc_html__( 'Copyright', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( '© 2025 Egészségfejlesztési Iroda - Szatmár megye', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'project', array( 'label' => esc_html__( 'Projekt sor', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'IPOP ROHU00259 - Interreg VI-A Románia-Magyarország Program', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'button_text', array( 'label' => esc_html__( 'Extra link felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '' ) );
+		$this->add_control( 'button_link', array( 'label' => esc_html__( 'Extra link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#kapcsolat' ) ) );
+		$this->add_control( 'show_compact_footer', array( 'label' => esc_html__( 'Alsó sor mutatása', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
+		$this->add_control( 'copyright', array( 'label' => esc_html__( 'Copyright', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( '© 2025 Egészségfejlesztési Iroda – Szatmár megye', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'project', array( 'label' => esc_html__( 'Projekt sor', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'IPOP ROHU00259 – Interreg VI-A Románia-Magyarország Program', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'website_text', array( 'label' => esc_html__( 'Honlap felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'www.interreg-rohu.eu' ) );
+		$this->add_control( 'website_link', array( 'label' => esc_html__( 'Honlap link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => 'https://interreg-rohu.eu' ) ) );
 		$this->add_control( 'privacy_text', array( 'label' => esc_html__( 'Adatvédelem felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Adatvédelem', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'privacy_link', array( 'label' => esc_html__( 'Adatvédelem link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+		$this->add_control( 'privacy_link', array( 'label' => esc_html__( 'Adatvédelem link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '/adatvedelem' ) ) );
 		$this->add_control( 'imprint_text', array( 'label' => esc_html__( 'Impresszum felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Impresszum', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'imprint_link', array( 'label' => esc_html__( 'Impresszum link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+		$this->add_control( 'imprint_link', array( 'label' => esc_html__( 'Impresszum link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '/impresszum' ) ) );
 		$this->end_controls_section();
 	}
 
@@ -755,62 +759,150 @@ class VitaCenter_Landing_Contact_Widget extends VitaCenter_Structured_Widget_Bas
 		$s = wp_parse_args(
 			$this->get_settings_for_display(),
 			array(
+				'show_notice'  => 'yes',
+				'notice_text'  => esc_html__( 'Jelen weboldal tartalma nem feltétlenül tükrözi az Európai Unió hivatalos álláspontját.', 'vitacenter-elementor-header' ),
 				'phone'        => '+40 261 713 775',
 				'email'        => 'efi@szatmar.ro',
 				'address'      => esc_html__( 'Szatmárnémeti, Vasile Lucaciu u. 21.', 'vitacenter-elementor-header' ),
-				'button_text'  => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ),
+				'button_text'  => '',
 				'button_link'  => array( 'url' => '#kapcsolat' ),
-				'show_compact_footer' => '',
-				'copyright'    => esc_html__( '© 2025 Egészségfejlesztési Iroda - Szatmár megye', 'vitacenter-elementor-header' ),
-				'project'      => esc_html__( 'IPOP ROHU00259 - Interreg VI-A Románia-Magyarország Program', 'vitacenter-elementor-header' ),
+				'show_compact_footer' => 'yes',
+				'copyright'    => esc_html__( '© 2025 Egészségfejlesztési Iroda – Szatmár megye', 'vitacenter-elementor-header' ),
+				'project'      => esc_html__( 'IPOP ROHU00259 – Interreg VI-A Románia-Magyarország Program', 'vitacenter-elementor-header' ),
+				'website_text' => 'www.interreg-rohu.eu',
+				'website_link' => array( 'url' => 'https://interreg-rohu.eu' ),
 				'privacy_text' => esc_html__( 'Adatvédelem', 'vitacenter-elementor-header' ),
-				'privacy_link' => array( 'url' => '#' ),
+				'privacy_link' => array( 'url' => '/adatvedelem' ),
 				'imprint_text' => esc_html__( 'Impresszum', 'vitacenter-elementor-header' ),
-				'imprint_link' => array( 'url' => '#' ),
+				'imprint_link' => array( 'url' => '/impresszum' ),
 			)
 		);
 		?>
 		<div class="vc-landing">
-			<section id="kapcsolat" class="vc-landing__contact-wrap">
-				<div class="vc-landing__container">
-					<div class="vc-landing__contact-bar">
-						<?php $this->render_contact_item( 'phone', esc_html__( 'Telefon', 'vitacenter-elementor-header' ), $s['phone'] ); ?>
-						<?php $this->render_contact_item( 'mail', esc_html__( 'E-mail', 'vitacenter-elementor-header' ), $s['email'] ); ?>
-						<?php $this->render_contact_item( 'pin', esc_html__( 'Cím', 'vitacenter-elementor-header' ), $s['address'] ); ?>
-						<?php $this->render_button( $s['button_text'], $s['button_link'], 'vc-landing__button vc-landing__button--outline' ); ?>
+			<footer id="kapcsolat" class="efi-footer" aria-label="<?php echo esc_attr__( 'Oldal lábléc', 'vitacenter-elementor-header' ); ?>">
+				<?php if ( 'yes' === $this->plain_text( $s['show_notice'] ) && '' !== $this->plain_text( $s['notice_text'] ) ) : ?>
+					<div class="efi-footer__notice">
+						<div class="efi-footer__inner">
+							<p><?php echo esc_html( $this->plain_text( $s['notice_text'] ) ); ?></p>
+						</div>
 					</div>
-					<?php if ( 'yes' === $this->plain_text( $s['show_compact_footer'] ) ) : ?>
-						<footer class="vc-landing__footer">
-							<?php if ( '' !== $this->plain_text( $s['copyright'] ) ) : ?><span><?php echo esc_html( $this->plain_text( $s['copyright'] ) ); ?></span><?php endif; ?>
-							<?php if ( '' !== $this->plain_text( $s['project'] ) ) : ?><span><?php echo esc_html( $this->plain_text( $s['project'] ) ); ?></span><?php endif; ?>
-							<nav>
-								<?php $this->render_text_link( $s['privacy_text'], $s['privacy_link'], 'vc-landing__plain-link' ); ?>
-								<?php $this->render_text_link( $s['imprint_text'], $s['imprint_link'], 'vc-landing__plain-link' ); ?>
-							</nav>
-						</footer>
-					<?php endif; ?>
+				<?php endif; ?>
+
+				<div class="efi-footer__bar">
+					<div class="efi-footer__inner efi-footer__bar-inner">
+						<?php $this->render_efi_footer_bottom( $s ); ?>
+						<div class="efi-footer__contacts" aria-label="<?php echo esc_attr__( 'Kapcsolati információk', 'vitacenter-elementor-header' ); ?>">
+							<?php $this->render_efi_contact_item( 'pin', esc_html__( 'Cím', 'vitacenter-elementor-header' ), $s['address'] ); ?>
+							<?php $this->render_efi_contact_item( 'phone', esc_html__( 'Telefon', 'vitacenter-elementor-header' ), $s['phone'], $this->efi_phone_href( $s['phone'] ) ); ?>
+							<?php $this->render_efi_contact_item( 'mail', esc_html__( 'E-mail', 'vitacenter-elementor-header' ), $s['email'], $this->efi_email_href( $s['email'] ) ); ?>
+						</div>
+					</div>
 				</div>
-			</section>
+			</footer>
 		</div>
 		<?php
 	}
 
-	private function render_contact_item( $type, $label, $value ) {
+	private function render_efi_contact_item( $type, $label, $value, $href = '' ) {
 		$label = $this->plain_text( $label );
 		$value = $this->plain_text( $value );
+		$href  = $this->plain_text( $href );
 
 		if ( '' === $value ) {
 			return;
 		}
 		?>
-		<div class="vc-landing__contact-item vc-landing__contact-item--<?php echo esc_attr( $type ); ?>">
-			<span aria-hidden="true"></span>
-			<div>
-				<strong><?php echo esc_html( $label ); ?></strong>
-				<p><?php echo esc_html( $value ); ?></p>
+		<div class="efi-footer-contact__item efi-footer-contact__item--<?php echo esc_attr( $type ); ?>">
+			<span class="efi-footer-contact__icon" aria-hidden="true"><?php $this->render_efi_footer_icon( $type ); ?></span>
+			<div class="efi-footer-contact__text">
+				<span class="screen-reader-text"><?php echo esc_html( $label ); ?></span>
+				<strong>
+					<?php if ( '' !== $href ) : ?>
+						<a href="<?php echo esc_url( $href ); ?>"><?php echo esc_html( $value ); ?></a>
+					<?php else : ?>
+						<?php echo esc_html( $value ); ?>
+					<?php endif; ?>
+				</strong>
 			</div>
 		</div>
 		<?php
+	}
+
+	private function render_efi_footer_icon( $type ) {
+		if ( 'mail' === $type ) :
+			?>
+			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M4 6.5h16v11H4v-11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+				<path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+			<?php
+			return;
+		endif;
+
+		if ( 'pin' === $type ) :
+			?>
+			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M12 21s7-6.14 7-12a7 7 0 1 0-14 0c0 5.86 7 12 7 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+				<circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.8"/>
+			</svg>
+			<?php
+			return;
+		endif;
+		?>
+		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M6.62 10.79c1.44 2.83 3.76 5.13 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>
+		<?php
+	}
+
+	private function render_efi_footer_bottom( $settings ) {
+		if ( 'yes' !== $this->plain_text( $settings['show_compact_footer'] ) ) {
+			return;
+		}
+
+		$copyright   = $this->plain_text( $settings['copyright'] );
+		$project     = $this->plain_text( $settings['project'] );
+		$website     = $this->plain_text( $settings['website_text'] );
+		$has_website = '' !== $website;
+		?>
+		<div class="efi-footer-bottom">
+			<?php if ( '' !== $copyright || $has_website ) : ?>
+				<p class="efi-footer-bottom__copyright">
+					<?php if ( '' !== $copyright ) : ?><span><?php echo esc_html( $copyright ); ?></span><?php endif; ?>
+					<?php if ( $has_website ) : ?><a <?php echo $this->url_attributes( $settings['website_link'] ); ?>><?php echo esc_html( $website ); ?></a><?php endif; ?>
+				</p>
+			<?php endif; ?>
+			<?php if ( '' !== $project ) : ?><p class="efi-footer-bottom__project"><?php echo esc_html( $project ); ?></p><?php endif; ?>
+			<nav class="efi-footer-bottom__links" aria-label="<?php echo esc_attr__( 'Lábléc linkek', 'vitacenter-elementor-header' ); ?>">
+				<?php $this->render_efi_footer_link( $settings['button_text'], $settings['button_link'] ); ?>
+				<?php $this->render_efi_footer_link( $settings['privacy_text'], $settings['privacy_link'] ); ?>
+				<?php $this->render_efi_footer_link( $settings['imprint_text'], $settings['imprint_link'] ); ?>
+			</nav>
+		</div>
+		<?php
+	}
+
+	private function render_efi_footer_link( $text, $link ) {
+		$text = $this->plain_text( $text );
+
+		if ( '' === $text ) {
+			return;
+		}
+		?>
+		<a <?php echo $this->url_attributes( $link ); ?>><?php echo esc_html( $text ); ?></a>
+		<?php
+	}
+
+	private function efi_phone_href( $phone ) {
+		$normalized = preg_replace( '/[^0-9+]/', '', $this->plain_text( $phone ) );
+
+		return $normalized ? 'tel:' . $normalized : '';
+	}
+
+	private function efi_email_href( $email ) {
+		$email = sanitize_email( $this->plain_text( $email ) );
+
+		return is_email( $email ) ? 'mailto:' . $email : '';
 	}
 }
 
