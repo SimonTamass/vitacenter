@@ -109,6 +109,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 		$widgets_manager->register( new VitaCenter_Landing_Project_Widget() );
 		$widgets_manager->register( new VitaCenter_Landing_Programs_Widget() );
 		$widgets_manager->register( new VitaCenter_Landing_Events_Widget() );
+		$widgets_manager->register( new VitaCenter_Upcoming_Events_Widget() );
 		$widgets_manager->register( new VitaCenter_Landing_Cta_Widget() );
 		$widgets_manager->register( new VitaCenter_Landing_Knowledge_Widget() );
 		$widgets_manager->register( new VitaCenter_Landing_Contact_Widget() );

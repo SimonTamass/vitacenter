@@ -45,6 +45,7 @@ namespace {
 	}
 	function sanitize_email( $email ) { return filter_var( (string) $email, FILTER_SANITIZE_EMAIL ); }
 	function is_email( $email ) { return false !== filter_var( $email, FILTER_VALIDATE_EMAIL ); }
+	function post_type_exists( $post_type ) { return false; }
 	function remove_accents( $text ) {
 		return strtr(
 			(string) $text,
@@ -94,6 +95,7 @@ namespace {
 		)
 	);
 	render_widget( 'VitaCenter_Landing_Contact_Widget', array() );
+	render_widget( 'VitaCenter_Upcoming_Events_Widget', array() );
 
 	echo "ok\n";
 }
