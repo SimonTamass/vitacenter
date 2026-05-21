@@ -251,6 +251,167 @@
 		}
 	}
 
+	var galleryLightbox = null;
+	var galleryLightboxBound = false;
+	var galleryLightboxState = {
+		images: [],
+		index: 0,
+		title: ''
+	};
+
+	function ensureGalleryLightbox() {
+		if (galleryLightbox) {
+			return galleryLightbox;
+		}
+
+		var root = document.createElement('div');
+		root.className = 'efi-gallery-lightbox';
+		root.setAttribute('aria-hidden', 'true');
+		root.setAttribute('role', 'dialog');
+		root.setAttribute('aria-modal', 'true');
+		root.innerHTML = [
+			'<button class="efi-gallery-lightbox__close" type="button" aria-label="Bezárás">&times;</button>',
+			'<button class="efi-gallery-lightbox__nav efi-gallery-lightbox__nav--prev" type="button" aria-label="Előző kép">&#8249;</button>',
+			'<figure class="efi-gallery-lightbox__figure">',
+			'<img class="efi-gallery-lightbox__image" src="" alt="">',
+			'<figcaption class="efi-gallery-lightbox__caption"><strong></strong><span></span></figcaption>',
+			'</figure>',
+			'<button class="efi-gallery-lightbox__nav efi-gallery-lightbox__nav--next" type="button" aria-label="Következő kép">&#8250;</button>'
+		].join('');
+
+		document.body.appendChild(root);
+
+		galleryLightbox = {
+			root: root,
+			image: root.querySelector('.efi-gallery-lightbox__image'),
+			title: root.querySelector('.efi-gallery-lightbox__caption strong'),
+			count: root.querySelector('.efi-gallery-lightbox__caption span'),
+			close: root.querySelector('.efi-gallery-lightbox__close'),
+			prev: root.querySelector('.efi-gallery-lightbox__nav--prev'),
+			next: root.querySelector('.efi-gallery-lightbox__nav--next')
+		};
+
+		galleryLightbox.close.addEventListener('click', closeGalleryLightbox);
+		galleryLightbox.prev.addEventListener('click', function () {
+			moveGalleryLightbox(-1);
+		});
+		galleryLightbox.next.addEventListener('click', function () {
+			moveGalleryLightbox(1);
+		});
+		galleryLightbox.root.addEventListener('click', function (event) {
+			if (event.target === galleryLightbox.root) {
+				closeGalleryLightbox();
+			}
+		});
+
+		return galleryLightbox;
+	}
+
+	function updateGalleryLightbox() {
+		var box = ensureGalleryLightbox();
+		var total = galleryLightboxState.images.length;
+		var current = galleryLightboxState.images[galleryLightboxState.index];
+
+		if (!current) {
+			return;
+		}
+
+		box.image.src = current;
+		box.image.alt = galleryLightboxState.title || '';
+		box.title.textContent = galleryLightboxState.title || '';
+		box.count.textContent = (galleryLightboxState.index + 1) + ' / ' + total;
+		box.prev.disabled = total < 2;
+		box.next.disabled = total < 2;
+		box.root.classList.toggle('is-single', total < 2);
+	}
+
+	function moveGalleryLightbox(step) {
+		var total = galleryLightboxState.images.length;
+
+		if (total < 2) {
+			return;
+		}
+
+		galleryLightboxState.index = (galleryLightboxState.index + step + total) % total;
+		updateGalleryLightbox();
+	}
+
+	function closeGalleryLightbox() {
+		if (!galleryLightbox) {
+			return;
+		}
+
+		galleryLightbox.root.classList.remove('is-open');
+		galleryLightbox.root.setAttribute('aria-hidden', 'true');
+		document.documentElement.classList.remove('efi-gallery-lightbox-open');
+		galleryLightbox.image.removeAttribute('src');
+	}
+
+	function openGalleryLightbox(trigger) {
+		var images = [];
+
+		try {
+			images = JSON.parse(trigger.getAttribute('data-efi-gallery-images') || '[]');
+		} catch (error) {
+			images = [];
+		}
+
+		images = images.filter(function (image) {
+			return typeof image === 'string' && image.length;
+		});
+
+		if (!images.length) {
+			return;
+		}
+
+		galleryLightboxState.images = images;
+		galleryLightboxState.index = 0;
+		galleryLightboxState.title = trigger.getAttribute('data-efi-gallery-title') || trigger.getAttribute('aria-label') || '';
+
+		ensureGalleryLightbox();
+		updateGalleryLightbox();
+		galleryLightbox.root.classList.add('is-open');
+		galleryLightbox.root.setAttribute('aria-hidden', 'false');
+		document.documentElement.classList.add('efi-gallery-lightbox-open');
+		galleryLightbox.close.focus();
+	}
+
+	function bindGalleryLightbox() {
+		if (galleryLightboxBound) {
+			return;
+		}
+
+		galleryLightboxBound = true;
+
+		document.addEventListener('click', function (event) {
+			var target = event.target && event.target.nodeType === 3 ? event.target.parentElement : event.target;
+			var trigger = target && target.closest ? target.closest('[data-efi-gallery-lightbox="true"]') : null;
+
+			if (!trigger) {
+				return;
+			}
+
+			event.preventDefault();
+			event.stopPropagation();
+			event.stopImmediatePropagation();
+			openGalleryLightbox(trigger);
+		}, true);
+
+		document.addEventListener('keydown', function (event) {
+			if (!galleryLightbox || !galleryLightbox.root.classList.contains('is-open')) {
+				return;
+			}
+
+			if (event.key === 'Escape') {
+				closeGalleryLightbox();
+			} else if (event.key === 'ArrowLeft') {
+				moveGalleryLightbox(-1);
+			} else if (event.key === 'ArrowRight') {
+				moveGalleryLightbox(1);
+			}
+		});
+	}
+
 	function initLanding(root) {
 		if (!root) {
 			return;
@@ -297,10 +458,12 @@
 	}
 
 	function boot() {
+		bindGalleryLightbox();
 		document.querySelectorAll('.vc-landing').forEach(initLanding);
 	}
 
 	function bootElementorWidget(scope) {
+		bindGalleryLightbox();
 		var root = scope && scope[0] ? scope[0] : null;
 
 		if (!root) {

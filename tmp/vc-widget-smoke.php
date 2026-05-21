@@ -14,6 +14,7 @@ namespace Elementor {
 		const TEXTAREA = 'textarea';
 		const URL = 'url';
 		const MEDIA = 'media';
+		const GALLERY = 'gallery';
 		const NUMBER = 'number';
 		const COLOR = 'color';
 		const SWITCHER = 'switcher';
@@ -97,6 +98,38 @@ namespace {
 	render_widget( 'VitaCenter_Landing_Contact_Widget', array() );
 	render_widget( 'VitaCenter_Knowledge_Widget', array() );
 	render_widget( 'VitaCenter_Video_Gallery_Widget', array() );
+	render_widget(
+		'VitaCenter_Video_Gallery_Widget',
+		array(
+			'featured_items' => array(
+				array(
+					'title'      => 'Teszt galéria',
+					'media_type' => 'Fotók',
+					'media_kind' => 'gallery',
+					'gallery'    => array(
+						array( 'url' => 'https://example.test/one.jpg' ),
+						array( 'url' => 'https://example.test/two.jpg' ),
+					),
+					'link'       => array( 'url' => '#' ),
+					'variant'    => 'photo',
+					'large'      => 'yes',
+				),
+			),
+			'gallery_items'  => array(
+				array(
+					'badge'      => 'Fotóalbum',
+					'title'      => 'Teszt album',
+					'media_kind' => 'gallery',
+					'gallery'    => array(
+						array( 'url' => 'https://example.test/three.jpg' ),
+						array( 'url' => 'https://example.test/four.jpg' ),
+					),
+					'link'       => array( 'url' => '#' ),
+					'variant'    => 'one',
+				),
+			),
+		)
+	);
 	render_widget( 'VitaCenter_Partners_Widget', array() );
 	render_widget( 'VitaCenter_Contact_Widget', array() );
 	render_widget( 'VitaCenter_Upcoming_Events_Widget', array() );
