@@ -607,6 +607,12 @@
 	font-family: inherit;
 }
 
+.efi-events-section > .vc-landing__container {
+	width: min(100%, 1400px);
+	padding-right: clamp(18px, 2.85vw, 40px);
+	padding-left: clamp(18px, 2.85vw, 40px);
+}
+
 .efi-events-grid {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
