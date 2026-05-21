@@ -607,6 +607,8 @@
 	font-family: inherit;
 }
 
+.vc-landing__events > .vc-landing__container,
+.vc-landing__cta-wrap > .vc-landing__container,
 .efi-events-section > .vc-landing__container {
 	width: min(100%, 1400px);
 	padding-right: clamp(18px, 2.85vw, 40px);
