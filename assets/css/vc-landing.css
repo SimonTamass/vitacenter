@@ -610,9 +610,12 @@
 .vc-landing__events > .vc-landing__container,
 .vc-landing__cta-wrap > .vc-landing__container,
 .efi-events-section > .vc-landing__container {
-	width: min(100%, 1400px);
-	padding-right: clamp(18px, 2.85vw, 40px);
-	padding-left: clamp(18px, 2.85vw, 40px);
+	width: auto;
+	max-width: none;
+	margin-right: calc(50% - min(50vw, 700px));
+	margin-left: calc(50% - min(50vw, 700px));
+	padding-right: clamp(18px, calc((100vw - 1320px) / 2), 40px);
+	padding-left: clamp(18px, calc((100vw - 1320px) / 2), 40px);
 }
 
 .efi-events-grid {
