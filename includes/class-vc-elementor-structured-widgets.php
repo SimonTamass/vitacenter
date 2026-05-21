@@ -1601,7 +1601,13 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 	private function render_knowledge_book_icon() {
 		?>
 		<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
-			<circle cx="48" cy="48" r="45" fill="#ffffff" opacity="0.18"/>
+			<defs>
+				<linearGradient id="efiKnowledgeGradient" x1="14" y1="12" x2="84" y2="86" gradientUnits="userSpaceOnUse">
+					<stop offset="0%" stop-color="#4FC3EA"/>
+					<stop offset="100%" stop-color="#1266B3"/>
+				</linearGradient>
+			</defs>
+			<circle cx="48" cy="48" r="45" fill="url(#efiKnowledgeGradient)"/>
 			<path d="M28 28h28c6.6 0 12 5.4 12 12v29H38c-5.5 0-10-4.5-10-10V28Z" fill="#ffffff" opacity="0.95"/>
 			<path d="M28 28v31c0 5.5 4.5 10 10 10h30" fill="none" stroke="#2BBFD0" stroke-width="4" stroke-linecap="round"/>
 			<path d="M40 41h17M40 50h20M40 59h13" stroke="#2BBFD0" stroke-width="4" stroke-linecap="round"/>
@@ -2021,7 +2027,13 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 	private function render_gallery_play_icon() {
 		?>
 		<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
-			<circle cx="48" cy="48" r="45" fill="#ffffff" opacity="0.18"/>
+			<defs>
+				<linearGradient id="efiGalleryGradient" x1="14" y1="12" x2="84" y2="86" gradientUnits="userSpaceOnUse">
+					<stop offset="0%" stop-color="#4FC3EA"/>
+					<stop offset="100%" stop-color="#1266B3"/>
+				</linearGradient>
+			</defs>
+			<circle cx="48" cy="48" r="45" fill="url(#efiGalleryGradient)"/>
 			<path d="M39 31.5 67 48 39 64.5v-33Z" fill="#ffffff"/>
 		</svg>
 		<?php
@@ -2422,7 +2434,13 @@ class VitaCenter_Contact_Widget extends VitaCenter_Structured_Widget_Base {
 	private function render_contact_pulse_icon() {
 		?>
 		<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
-			<circle cx="48" cy="48" r="45" fill="#ffffff" opacity="0.18"/>
+			<defs>
+				<linearGradient id="efiContactIconGradient" x1="14" y1="12" x2="84" y2="86" gradientUnits="userSpaceOnUse">
+					<stop offset="0%" stop-color="#4FC3EA"/>
+					<stop offset="100%" stop-color="#1266B3"/>
+				</linearGradient>
+			</defs>
+			<circle cx="48" cy="48" r="45" fill="url(#efiContactIconGradient)"/>
 			<path d="M31 50h10l5-13 8 25 5-12h8" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
 			<path d="M35 34c3.5-5 11-5 13 1 2-6 9.5-6 13-1 5.5 8.5-5 19-13 25-8-6-18.5-16.5-13-25Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round" opacity="0.92"/>
 		</svg>
