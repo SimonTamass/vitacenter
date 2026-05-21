@@ -1957,6 +1957,7 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 
 	private function normalize_gallery_featured_items( $items ) {
 		$featured = array();
+		$index    = 0;
 
 		foreach ( $this->repeater_items( $items ) as $item ) {
 			$title = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
@@ -1978,7 +1979,10 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 				'variant'    => isset( $item['variant'] ) ? $this->gallery_variant( $item['variant'], array( 'photo', 'screening', 'video' ), 'photo' ) : 'photo',
 				'large'      => isset( $item['large'] ) && 'yes' === $this->plain_text( $item['large'] ),
 				'show_play'  => isset( $item['show_play'] ) && 'yes' === $this->plain_text( $item['show_play'] ),
+				'lightbox_group' => 'featured-' . $index,
 			);
+
+			$index++;
 		}
 
 		return $featured;
@@ -1986,6 +1990,7 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 
 	private function normalize_gallery_items( $items ) {
 		$gallery = array();
+		$index   = 0;
 
 		foreach ( $this->repeater_items( $items ) as $item ) {
 			$title = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
@@ -2005,7 +2010,10 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 				'link'       => isset( $item['link'] ) ? $item['link'] : array( 'url' => '#' ),
 				'variant'    => isset( $item['variant'] ) ? $this->gallery_variant( $item['variant'], array( 'one', 'two', 'three', 'four', 'five', 'six' ), 'one' ) : 'one',
 				'show_play'  => isset( $item['show_play'] ) && 'yes' === $this->plain_text( $item['show_play'] ),
+				'lightbox_group' => 'grid-' . $index,
 			);
+
+			$index++;
 		}
 
 		return $gallery;
@@ -2047,6 +2055,7 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 					<?php if ( '' !== $item['text'] ) : ?><p><?php echo esc_html( $item['text'] ); ?></p><?php endif; ?>
 				</div>
 			</a>
+			<?php $this->render_gallery_lightbox_links( $item ); ?>
 		</article>
 		<?php
 	}
@@ -2061,6 +2070,7 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 					<?php if ( '' !== $item['text'] ) : ?><p><?php echo esc_html( $item['text'] ); ?></p><?php endif; ?>
 				</div>
 			</a>
+			<?php $this->render_gallery_lightbox_links( $item ); ?>
 		</article>
 		<?php
 	}
@@ -2117,9 +2127,29 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 	}
 
 	private function gallery_card_link_attributes( $item ) {
+		if ( isset( $item['media_kind'], $item['image_url'] ) && 'image' === $item['media_kind'] && '' !== $item['image_url'] ) {
+			$images = array( $item['image_url'] );
+			$json   = function_exists( 'wp_json_encode' ) ? wp_json_encode( $images ) : json_encode( $images );
+			$group  = $this->gallery_lightbox_group( $item );
+
+			return implode(
+				' ',
+				array(
+					'href="' . esc_url( $item['image_url'] ) . '"',
+					'data-efi-gallery-lightbox="true"',
+					'data-efi-gallery-images="' . esc_attr( $json ) . '"',
+					'data-efi-gallery-title="' . esc_attr( $item['title'] ) . '"',
+					'data-elementor-open-lightbox="yes"',
+					'data-elementor-lightbox-slideshow="' . esc_attr( $group ) . '"',
+					'data-elementor-lightbox-title="' . esc_attr( $item['title'] ) . '"',
+				)
+			);
+		}
+
 		if ( isset( $item['media_kind'], $item['gallery_urls'] ) && 'gallery' === $item['media_kind'] && ! empty( $item['gallery_urls'] ) && is_array( $item['gallery_urls'] ) ) {
 			$images = array_values( $item['gallery_urls'] );
 			$json   = function_exists( 'wp_json_encode' ) ? wp_json_encode( $images ) : json_encode( $images );
+			$group  = $this->gallery_lightbox_group( $item );
 
 			return implode(
 				' ',
@@ -2128,12 +2158,42 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 					'data-efi-gallery-lightbox="true"',
 					'data-efi-gallery-images="' . esc_attr( $json ) . '"',
 					'data-efi-gallery-title="' . esc_attr( $item['title'] ) . '"',
-					'data-elementor-open-lightbox="no"',
+					'data-elementor-open-lightbox="yes"',
+					'data-elementor-lightbox-slideshow="' . esc_attr( $group ) . '"',
+					'data-elementor-lightbox-title="' . esc_attr( $item['title'] ) . '"',
 				)
 			);
 		}
 
 		return $this->url_attributes( $item['link'] );
+	}
+
+	private function render_gallery_lightbox_links( $item ) {
+		if ( ! isset( $item['media_kind'], $item['gallery_urls'] ) || 'gallery' !== $item['media_kind'] || empty( $item['gallery_urls'] ) || ! is_array( $item['gallery_urls'] ) ) {
+			return;
+		}
+
+		$images = array_values( $item['gallery_urls'] );
+
+		if ( count( $images ) < 2 ) {
+			return;
+		}
+
+		$group = $this->gallery_lightbox_group( $item );
+
+		foreach ( array_slice( $images, 1 ) as $url ) :
+			?>
+			<a
+				class="efi-gallery-lightbox-link"
+				href="<?php echo esc_url( $url ); ?>"
+				data-elementor-open-lightbox="yes"
+				data-elementor-lightbox-slideshow="<?php echo esc_attr( $group ); ?>"
+				data-elementor-lightbox-title="<?php echo esc_attr( $item['title'] ); ?>"
+				aria-hidden="true"
+				tabindex="-1"
+			></a>
+			<?php
+		endforeach;
 	}
 
 	private function render_gallery_link_button( $text, $link ) {
@@ -2169,6 +2229,12 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 		}
 
 		return array_values( array_unique( $urls ) );
+	}
+
+	private function gallery_lightbox_group( $item ) {
+		$group = isset( $item['lightbox_group'] ) ? $this->plain_text( $item['lightbox_group'] ) : 'gallery';
+
+		return 'efi-gallery-' . preg_replace( '/[^a-z0-9_-]+/i', '-', $group );
 	}
 
 	private function render_gallery_play_icon() {

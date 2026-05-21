@@ -117,6 +117,14 @@ namespace {
 			),
 			'gallery_items'  => array(
 				array(
+					'badge'      => 'FotÃ³',
+					'title'      => 'Teszt kÃ©p',
+					'media_kind' => 'image',
+					'image'      => array( 'url' => 'https://example.test/single.jpg' ),
+					'link'       => array( 'url' => '#' ),
+					'variant'    => 'one',
+				),
+				array(
 					'badge'      => 'Fotóalbum',
 					'title'      => 'Teszt album',
 					'media_kind' => 'gallery',

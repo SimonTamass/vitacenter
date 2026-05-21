@@ -376,6 +376,14 @@
 		galleryLightbox.close.focus();
 	}
 
+	function hasElementorLightbox() {
+		return !!(
+			window.elementorFrontend &&
+			window.elementorFrontend.utils &&
+			window.elementorFrontend.utils.lightbox
+		);
+	}
+
 	function bindGalleryLightbox() {
 		if (galleryLightboxBound) {
 			return;
@@ -388,6 +396,10 @@
 			var trigger = target && target.closest ? target.closest('[data-efi-gallery-lightbox="true"]') : null;
 
 			if (!trigger) {
+				return;
+			}
+
+			if (hasElementorLightbox()) {
 				return;
 			}
 
