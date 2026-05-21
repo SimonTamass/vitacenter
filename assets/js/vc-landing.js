@@ -31,7 +31,25 @@
 		'.vc-mobile-specialist__message',
 		'.vc-mobile-specialist__side-card',
 		'.vc-mobile-specialist__useful',
-		'.vc-mobile-specialist__cta'
+		'.vc-mobile-specialist__cta',
+		'.efi-knowledge-hero',
+		'.efi-featured-article',
+		'.efi-featured-mini-card',
+		'.efi-knowledge-section',
+		'.efi-sidebar-card',
+		'.efi-gallery-hero',
+		'.efi-gallery-filter',
+		'.efi-gallery-featured-card',
+		'.efi-gallery-item',
+		'.efi-gallery-sidebar-card',
+		'.efi-partners-hero',
+		'.efi-partner-card',
+		'.efi-partners-note',
+		'.efi-contact-hero',
+		'.efi-contact-info-card',
+		'.efi-contact-form-card',
+		'.efi-contact-side-card',
+		'.efi-contact-map'
 	].join(',');
 
 	var projectStickyPages = [];
@@ -308,6 +326,10 @@
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_all_events.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_cta.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_knowledge.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_knowledge.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_video_gallery.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_partners.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_contact.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_contact_footer.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_project_content.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_program_content.default', bootElementorWidget);

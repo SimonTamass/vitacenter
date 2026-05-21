@@ -1132,6 +1132,1343 @@ class VitaCenter_Landing_Knowledge_Widget extends VitaCenter_Landing_Programs_Wi
 	}
 }
 
+class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
+	public function get_name() { return 'vitacenter_knowledge'; }
+	public function get_title() { return esc_html__( 'VitaCenter Knowledge', 'vitacenter-elementor-header' ); }
+	public function get_icon() { return 'eicon-library-open'; }
+	public function get_style_depends() { return array( 'vc-landing' ); }
+	public function get_script_depends() { return array( 'vc-landing' ); }
+
+	protected function register_controls() {
+		$this->start_controls_section( 'hero_section', array( 'label' => esc_html__( 'Hero', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'eyebrow', array( 'label' => esc_html__( 'Kis címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Tudástár', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Hasznos információk az egészségesebb mindennapokért', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Cikkek, letölthető anyagok és gyakori kérdések a prevenció, az egészséges életmód és a közösségi egészségfejlesztés témáiban.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'visual_title', array( 'label' => esc_html__( 'Vizuális kártya cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Prevenció', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'visual_text', array( 'label' => esc_html__( 'Vizuális kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'útmutatók és anyagok', 'vitacenter-elementor-header' ) ) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'featured_section', array( 'label' => esc_html__( 'Kiemelt tartalom', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'featured_label', array( 'label' => esc_html__( 'Címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kiemelt téma', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'featured_title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Prevenció fontossága', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$this->add_control( 'featured_text', array( 'label' => esc_html__( 'Szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A megelőzés segít időben felismerni a kockázatokat, támogatja az egészségtudatos döntéseket és hozzájárulhat a hosszabb, aktívabb élethez.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'featured_button_text', array( 'label' => esc_html__( 'Gomb felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Elolvasom', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'featured_link', array( 'label' => esc_html__( 'Gomb link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+
+		$r = new Repeater();
+		$r->add_control( 'number', array( 'label' => esc_html__( 'Sorszám', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '01' ) );
+		$r->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Mini téma', 'vitacenter-elementor-header' ) ) );
+		$r->add_control( 'text', array( 'label' => esc_html__( 'Szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Rövid leírás.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'mini_cards', array(
+			'label' => esc_html__( 'Mini kártyák', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $r->get_controls(),
+			'title_field' => '{{{ title }}}',
+			'default' => $this->default_knowledge_mini_cards(),
+		) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'articles_section', array( 'label' => esc_html__( 'Cikkek', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'articles_label', array( 'label' => esc_html__( 'Szekció címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Cikkek', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'articles_title', array( 'label' => esc_html__( 'Szekció cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Friss tudnivalók', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'articles_intro', array( 'label' => esc_html__( 'Szekció szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Ide érkeznek majd a szakmai és ismeretterjesztő tartalmak.', 'vitacenter-elementor-header' ) ) );
+
+		$articles = new Repeater();
+		$articles->add_control( 'icon', array( 'label' => esc_html__( 'Ikon betű', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'P' ) );
+		$articles->add_control( 'category', array( 'label' => esc_html__( 'Kategória', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Prevenció', 'vitacenter-elementor-header' ) ) );
+		$articles->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Cikk címe', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$articles->add_control( 'text', array( 'label' => esc_html__( 'Leírás', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Rövid cikkleírás.', 'vitacenter-elementor-header' ) ) );
+		$articles->add_control( 'link_text', array( 'label' => esc_html__( 'Link felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Tovább olvasom', 'vitacenter-elementor-header' ) ) );
+		$articles->add_control( 'link', array( 'label' => esc_html__( 'Link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+		$this->add_control( 'articles', array(
+			'label' => esc_html__( 'Cikk kártyák', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $articles->get_controls(),
+			'title_field' => '{{{ title }}}',
+			'default' => $this->default_knowledge_articles(),
+		) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'downloads_section', array( 'label' => esc_html__( 'Letöltések', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'downloads_label', array( 'label' => esc_html__( 'Szekció címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Letöltések', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'downloads_title', array( 'label' => esc_html__( 'Szekció cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Letölthető anyagok', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'downloads_intro', array( 'label' => esc_html__( 'Szekció szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Tájékoztatók, útmutatók és programismertetők egy helyen.', 'vitacenter-elementor-header' ) ) );
+
+		$downloads = new Repeater();
+		$downloads->add_control( 'label', array( 'label' => esc_html__( 'Típus', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'PDF' ) );
+		$downloads->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Letölthető dokumentum', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$downloads->add_control( 'text', array( 'label' => esc_html__( 'Alszöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Letölthető dokumentum', 'vitacenter-elementor-header' ) ) );
+		$downloads->add_control( 'link', array( 'label' => esc_html__( 'Link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+		$this->add_control( 'downloads', array(
+			'label' => esc_html__( 'Letölthető anyagok', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $downloads->get_controls(),
+			'title_field' => '{{{ title }}}',
+			'default' => $this->default_knowledge_downloads(),
+		) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'faq_section', array( 'label' => esc_html__( 'GYIK', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'faq_label', array( 'label' => esc_html__( 'Szekció címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'GYIK', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'faq_title', array( 'label' => esc_html__( 'Szekció cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Gyakori kérdések', 'vitacenter-elementor-header' ) ) );
+
+		$faqs = new Repeater();
+		$faqs->add_control( 'question', array( 'label' => esc_html__( 'Kérdés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kérdés', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$faqs->add_control( 'answer', array( 'label' => esc_html__( 'Válasz', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Válasz szövege.', 'vitacenter-elementor-header' ) ) );
+		$faqs->add_control( 'open', array( 'label' => esc_html__( 'Alapból nyitva', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => '' ) );
+		$this->add_control( 'faqs', array(
+			'label' => esc_html__( 'Kérdések', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $faqs->get_controls(),
+			'title_field' => '{{{ question }}}',
+			'default' => $this->default_knowledge_faqs(),
+		) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'sidebar_section', array( 'label' => esc_html__( 'Oldalsáv', 'vitacenter-elementor-header' ) ) );
+		$categories = new Repeater();
+		$categories->add_control( 'title', array( 'label' => esc_html__( 'Kategória', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kategória', 'vitacenter-elementor-header' ) ) );
+		$categories->add_control( 'link', array( 'label' => esc_html__( 'Link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+		$this->add_control( 'categories', array(
+			'label' => esc_html__( 'Kategóriák', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $categories->get_controls(),
+			'title_field' => '{{{ title }}}',
+			'default' => $this->default_knowledge_categories(),
+		) );
+		$this->add_control( 'categories_label', array( 'label' => esc_html__( 'Kategória címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kategóriák', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'cta_title', array( 'label' => esc_html__( 'CTA cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Hasznos anyagot keres?', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'cta_text', array( 'label' => esc_html__( 'CTA szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Keressen minket, segítünk megtalálni a megfelelő tájékoztatót vagy programot.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'cta_button_text', array( 'label' => esc_html__( 'CTA gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'cta_link', array( 'label' => esc_html__( 'CTA link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '/kapcsolat' ) ) );
+		$this->end_controls_section();
+	}
+
+	protected function render() {
+		$s = wp_parse_args( $this->get_settings_for_display(), $this->default_knowledge_settings() );
+
+		$mini_cards = $this->normalize_knowledge_mini_cards( isset( $s['mini_cards'] ) ? $s['mini_cards'] : array() );
+		$articles   = $this->normalize_knowledge_articles( isset( $s['articles'] ) ? $s['articles'] : array() );
+		$downloads  = $this->normalize_knowledge_downloads( isset( $s['downloads'] ) ? $s['downloads'] : array() );
+		$faqs       = $this->normalize_knowledge_faqs( isset( $s['faqs'] ) ? $s['faqs'] : array() );
+		$categories = $this->normalize_knowledge_categories( isset( $s['categories'] ) ? $s['categories'] : array() );
+
+		if ( empty( $mini_cards ) ) {
+			$mini_cards = $this->normalize_knowledge_mini_cards( $this->default_knowledge_mini_cards() );
+		}
+
+		if ( empty( $articles ) ) {
+			$articles = $this->normalize_knowledge_articles( $this->default_knowledge_articles() );
+		}
+
+		if ( empty( $downloads ) ) {
+			$downloads = $this->normalize_knowledge_downloads( $this->default_knowledge_downloads() );
+		}
+
+		if ( empty( $faqs ) ) {
+			$faqs = $this->normalize_knowledge_faqs( $this->default_knowledge_faqs() );
+		}
+
+		if ( empty( $categories ) ) {
+			$categories = $this->normalize_knowledge_categories( $this->default_knowledge_categories() );
+		}
+		?>
+		<div class="vc-landing">
+			<section class="efi-knowledge-page" aria-label="<?php echo esc_attr__( 'Tudástár oldal', 'vitacenter-elementor-header' ); ?>">
+				<div class="efi-knowledge-hero">
+					<div class="efi-knowledge-hero__content">
+						<?php if ( '' !== $this->plain_text( $s['eyebrow'] ) ) : ?><span class="efi-knowledge-eyebrow"><?php echo esc_html( $this->plain_text( $s['eyebrow'] ) ); ?></span><?php endif; ?>
+						<h1><?php echo esc_html( $this->plain_text( $s['title'] ) ); ?></h1>
+						<?php if ( '' !== $this->plain_text( $s['intro'] ) ) : ?><p><?php echo esc_html( $this->plain_text( $s['intro'] ) ); ?></p><?php endif; ?>
+					</div>
+
+					<div class="efi-knowledge-hero__visual" aria-hidden="true">
+						<div class="efi-knowledge-book-card">
+							<span class="efi-knowledge-book-icon"><?php $this->render_knowledge_book_icon(); ?></span>
+							<strong><?php echo esc_html( $this->plain_text( $s['visual_title'] ) ); ?></strong>
+							<span><?php echo esc_html( $this->plain_text( $s['visual_text'] ) ); ?></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="efi-knowledge-featured">
+					<article class="efi-featured-article">
+						<?php if ( '' !== $this->plain_text( $s['featured_label'] ) ) : ?><span class="efi-card-label"><?php echo esc_html( $this->plain_text( $s['featured_label'] ) ); ?></span><?php endif; ?>
+						<h2><?php echo esc_html( $this->plain_text( $s['featured_title'] ) ); ?></h2>
+						<?php if ( '' !== $this->plain_text( $s['featured_text'] ) ) : ?><p><?php echo esc_html( $this->plain_text( $s['featured_text'] ) ); ?></p><?php endif; ?>
+						<?php $this->render_knowledge_link_button( $s['featured_button_text'], $s['featured_link'], 'efi-link-button' ); ?>
+					</article>
+
+					<?php foreach ( $mini_cards as $card ) : ?>
+						<article class="efi-featured-mini-card">
+							<span><?php echo esc_html( $card['number'] ); ?></span>
+							<h3><?php echo esc_html( $card['title'] ); ?></h3>
+							<?php if ( '' !== $card['text'] ) : ?><p><?php echo esc_html( $card['text'] ); ?></p><?php endif; ?>
+						</article>
+					<?php endforeach; ?>
+				</div>
+
+				<div class="efi-knowledge-main-grid">
+					<main class="efi-knowledge-content">
+						<section class="efi-knowledge-section" aria-label="<?php echo esc_attr__( 'Cikkek', 'vitacenter-elementor-header' ); ?>">
+							<?php $this->render_knowledge_section_heading( $s['articles_label'], $s['articles_title'], $s['articles_intro'] ); ?>
+							<div class="efi-article-grid">
+								<?php foreach ( $articles as $article ) : ?>
+									<article class="efi-article-card">
+										<div class="efi-article-icon"><?php echo esc_html( $article['icon'] ); ?></div>
+										<?php if ( '' !== $article['category'] ) : ?><span><?php echo esc_html( $article['category'] ); ?></span><?php endif; ?>
+										<h3><?php echo esc_html( $article['title'] ); ?></h3>
+										<?php if ( '' !== $article['text'] ) : ?><p><?php echo esc_html( $article['text'] ); ?></p><?php endif; ?>
+										<?php $this->render_knowledge_text_link( $article['link_text'], $article['link'] ); ?>
+									</article>
+								<?php endforeach; ?>
+							</div>
+						</section>
+
+						<section class="efi-knowledge-section" aria-label="<?php echo esc_attr__( 'Letölthető anyagok', 'vitacenter-elementor-header' ); ?>">
+							<?php $this->render_knowledge_section_heading( $s['downloads_label'], $s['downloads_title'], $s['downloads_intro'] ); ?>
+							<div class="efi-download-list">
+								<?php foreach ( $downloads as $download ) : ?>
+									<a class="efi-download-item" <?php echo $this->url_attributes( $download['link'] ); ?>>
+										<span class="efi-download-icon"><?php echo esc_html( $download['label'] ); ?></span>
+										<div>
+											<strong><?php echo esc_html( $download['title'] ); ?></strong>
+											<?php if ( '' !== $download['text'] ) : ?><small><?php echo esc_html( $download['text'] ); ?></small><?php endif; ?>
+										</div>
+										<span class="efi-download-arrow" aria-hidden="true">&#8595;</span>
+									</a>
+								<?php endforeach; ?>
+							</div>
+						</section>
+
+						<section class="efi-knowledge-section" aria-label="<?php echo esc_attr__( 'Gyakori kérdések', 'vitacenter-elementor-header' ); ?>">
+							<?php $this->render_knowledge_section_heading( $s['faq_label'], $s['faq_title'], '' ); ?>
+							<div class="efi-faq-list">
+								<?php foreach ( $faqs as $faq ) : ?>
+									<details <?php echo $faq['open'] ? 'open' : ''; ?>>
+										<summary><?php echo esc_html( $faq['question'] ); ?></summary>
+										<?php if ( '' !== $faq['answer'] ) : ?><p><?php echo esc_html( $faq['answer'] ); ?></p><?php endif; ?>
+									</details>
+								<?php endforeach; ?>
+							</div>
+						</section>
+					</main>
+
+					<aside class="efi-knowledge-sidebar" aria-label="<?php echo esc_attr__( 'Tudástár oldalsáv', 'vitacenter-elementor-header' ); ?>">
+						<div class="efi-sidebar-card">
+							<?php if ( '' !== $this->plain_text( $s['categories_label'] ) ) : ?><span class="efi-card-label"><?php echo esc_html( $this->plain_text( $s['categories_label'] ) ); ?></span><?php endif; ?>
+							<nav class="efi-category-list">
+								<?php foreach ( $categories as $category ) : ?>
+									<a <?php echo $this->url_attributes( $category['link'] ); ?>><?php echo esc_html( $category['title'] ); ?></a>
+								<?php endforeach; ?>
+							</nav>
+						</div>
+
+						<div class="efi-sidebar-card efi-sidebar-card--cta">
+							<h3><?php echo esc_html( $this->plain_text( $s['cta_title'] ) ); ?></h3>
+							<?php if ( '' !== $this->plain_text( $s['cta_text'] ) ) : ?><p><?php echo esc_html( $this->plain_text( $s['cta_text'] ) ); ?></p><?php endif; ?>
+							<?php $this->render_knowledge_link_button( $s['cta_button_text'], $s['cta_link'], '' ); ?>
+						</div>
+					</aside>
+				</div>
+			</section>
+		</div>
+		<?php
+	}
+
+	private function default_knowledge_settings() {
+		return array(
+			'eyebrow'              => esc_html__( 'Tudástár', 'vitacenter-elementor-header' ),
+			'title'                => esc_html__( 'Hasznos információk az egészségesebb mindennapokért', 'vitacenter-elementor-header' ),
+			'intro'                => esc_html__( 'Cikkek, letölthető anyagok és gyakori kérdések a prevenció, az egészséges életmód és a közösségi egészségfejlesztés témáiban.', 'vitacenter-elementor-header' ),
+			'visual_title'         => esc_html__( 'Prevenció', 'vitacenter-elementor-header' ),
+			'visual_text'          => esc_html__( 'útmutatók és anyagok', 'vitacenter-elementor-header' ),
+			'featured_label'       => esc_html__( 'Kiemelt téma', 'vitacenter-elementor-header' ),
+			'featured_title'       => esc_html__( 'Prevenció fontossága', 'vitacenter-elementor-header' ),
+			'featured_text'        => esc_html__( 'A megelőzés segít időben felismerni a kockázatokat, támogatja az egészségtudatos döntéseket és hozzájárulhat a hosszabb, aktívabb élethez.', 'vitacenter-elementor-header' ),
+			'featured_button_text' => esc_html__( 'Elolvasom', 'vitacenter-elementor-header' ),
+			'featured_link'        => array( 'url' => '#' ),
+			'mini_cards'           => $this->default_knowledge_mini_cards(),
+			'articles_label'       => esc_html__( 'Cikkek', 'vitacenter-elementor-header' ),
+			'articles_title'       => esc_html__( 'Friss tudnivalók', 'vitacenter-elementor-header' ),
+			'articles_intro'       => esc_html__( 'Ide érkeznek majd a szakmai és ismeretterjesztő tartalmak.', 'vitacenter-elementor-header' ),
+			'articles'             => $this->default_knowledge_articles(),
+			'downloads_label'      => esc_html__( 'Letöltések', 'vitacenter-elementor-header' ),
+			'downloads_title'      => esc_html__( 'Letölthető anyagok', 'vitacenter-elementor-header' ),
+			'downloads_intro'      => esc_html__( 'Tájékoztatók, útmutatók és programismertetők egy helyen.', 'vitacenter-elementor-header' ),
+			'downloads'            => $this->default_knowledge_downloads(),
+			'faq_label'            => esc_html__( 'GYIK', 'vitacenter-elementor-header' ),
+			'faq_title'            => esc_html__( 'Gyakori kérdések', 'vitacenter-elementor-header' ),
+			'faqs'                 => $this->default_knowledge_faqs(),
+			'categories_label'     => esc_html__( 'Kategóriák', 'vitacenter-elementor-header' ),
+			'categories'           => $this->default_knowledge_categories(),
+			'cta_title'            => esc_html__( 'Hasznos anyagot keres?', 'vitacenter-elementor-header' ),
+			'cta_text'             => esc_html__( 'Keressen minket, segítünk megtalálni a megfelelő tájékoztatót vagy programot.', 'vitacenter-elementor-header' ),
+			'cta_button_text'      => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ),
+			'cta_link'             => array( 'url' => '/kapcsolat' ),
+		);
+	}
+
+	private function default_knowledge_mini_cards() {
+		return array(
+			array( 'number' => '01', 'title' => esc_html__( 'Demográfiai kihívások', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Rövid áttekintés közösségi szinten.', 'vitacenter-elementor-header' ) ),
+			array( 'number' => '02', 'title' => esc_html__( 'Egészséges életmód útmutató', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Gyakorlati tanácsok a mindennapokra.', 'vitacenter-elementor-header' ) ),
+		);
+	}
+
+	private function default_knowledge_articles() {
+		return array(
+			array( 'icon' => 'P', 'category' => esc_html__( 'Prevenció', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Prevenció fontossága', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'A korai felismerés és a rendszeres szűrés szerepe az egészségmegőrzésben.', 'vitacenter-elementor-header' ), 'link_text' => esc_html__( 'Tovább olvasom', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+			array( 'icon' => 'D', 'category' => esc_html__( 'Közösség', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Demográfiai kihívások', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Miért fontos a családok, fiatalok és közösségek egészségének támogatása?', 'vitacenter-elementor-header' ), 'link_text' => esc_html__( 'Tovább olvasom', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+			array( 'icon' => 'É', 'category' => esc_html__( 'Életmód', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Egészséges életmód útmutató', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Egyszerű, követhető szokások a mindennapi egészség támogatásához.', 'vitacenter-elementor-header' ), 'link_text' => esc_html__( 'Tovább olvasom', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+		);
+	}
+
+	private function default_knowledge_downloads() {
+		return array(
+			array( 'label' => 'PDF', 'title' => esc_html__( 'Prevenciós tájékoztató', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Letölthető dokumentum', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+			array( 'label' => 'PDF', 'title' => esc_html__( 'Egészséges életmód útmutató', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Letölthető dokumentum', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+			array( 'label' => 'PDF', 'title' => esc_html__( 'Szűrővizsgálati kisokos', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Letölthető dokumentum', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+		);
+	}
+
+	private function default_knowledge_faqs() {
+		return array(
+			array( 'question' => esc_html__( 'Kik vehetnek részt a programokon?', 'vitacenter-elementor-header' ), 'answer' => esc_html__( 'A programok célcsoportja témánként eltérő, de több szolgáltatás fiataloknak, felnőtteknek és családoknak is szól.', 'vitacenter-elementor-header' ), 'open' => 'yes' ),
+			array( 'question' => esc_html__( 'Ingyenesek a szűrések és tanácsadások?', 'vitacenter-elementor-header' ), 'answer' => esc_html__( 'A projekt keretében megvalósuló szolgáltatások részvételi feltételeiről az adott program oldalán található információ.', 'vitacenter-elementor-header' ), 'open' => '' ),
+			array( 'question' => esc_html__( 'Hogyan lehet jelentkezni?', 'vitacenter-elementor-header' ), 'answer' => esc_html__( 'Jelentkezéshez vagy további információért a kapcsolati oldalon megadott elérhetőségeken lehet érdeklődni.', 'vitacenter-elementor-header' ), 'open' => '' ),
+		);
+	}
+
+	private function default_knowledge_categories() {
+		return array(
+			array( 'title' => esc_html__( 'Prevenció', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+			array( 'title' => esc_html__( 'Demográfia', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+			array( 'title' => esc_html__( 'Egészséges életmód', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+			array( 'title' => esc_html__( 'Szűrővizsgálatok', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+			array( 'title' => esc_html__( 'Család és közösség', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+		);
+	}
+
+	private function normalize_knowledge_mini_cards( $items ) {
+		$cards = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			$title = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
+
+			if ( '' === $title ) {
+				continue;
+			}
+
+			$cards[] = array(
+				'number' => isset( $item['number'] ) && '' !== $this->plain_text( $item['number'] ) ? $this->plain_text( $item['number'] ) : sprintf( '%02d', count( $cards ) + 1 ),
+				'title'  => $title,
+				'text'   => isset( $item['text'] ) ? $this->plain_text( $item['text'] ) : '',
+			);
+		}
+
+		return $cards;
+	}
+
+	private function normalize_knowledge_articles( $items ) {
+		$articles = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			$title = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
+
+			if ( '' === $title ) {
+				continue;
+			}
+
+			$articles[] = array(
+				'icon'      => isset( $item['icon'] ) && '' !== $this->plain_text( $item['icon'] ) ? $this->knowledge_icon_text( $this->plain_text( $item['icon'] ), 2 ) : $this->knowledge_icon_text( $title, 1 ),
+				'category'  => isset( $item['category'] ) ? $this->plain_text( $item['category'] ) : '',
+				'title'     => $title,
+				'text'      => isset( $item['text'] ) ? $this->plain_text( $item['text'] ) : '',
+				'link_text' => isset( $item['link_text'] ) && '' !== $this->plain_text( $item['link_text'] ) ? $this->plain_text( $item['link_text'] ) : esc_html__( 'Tovább olvasom', 'vitacenter-elementor-header' ),
+				'link'      => isset( $item['link'] ) ? $item['link'] : array( 'url' => '#' ),
+			);
+		}
+
+		return $articles;
+	}
+
+	private function normalize_knowledge_downloads( $items ) {
+		$downloads = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			$title = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
+
+			if ( '' === $title ) {
+				continue;
+			}
+
+			$downloads[] = array(
+				'label' => isset( $item['label'] ) && '' !== $this->plain_text( $item['label'] ) ? $this->plain_text( $item['label'] ) : 'PDF',
+				'title' => $title,
+				'text'  => isset( $item['text'] ) ? $this->plain_text( $item['text'] ) : '',
+				'link'  => isset( $item['link'] ) ? $item['link'] : array( 'url' => '#' ),
+			);
+		}
+
+		return $downloads;
+	}
+
+	private function normalize_knowledge_faqs( $items ) {
+		$faqs = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			$question = isset( $item['question'] ) ? $this->plain_text( $item['question'] ) : '';
+
+			if ( '' === $question ) {
+				continue;
+			}
+
+			$faqs[] = array(
+				'question' => $question,
+				'answer'   => isset( $item['answer'] ) ? $this->plain_text( $item['answer'] ) : '',
+				'open'     => isset( $item['open'] ) && 'yes' === $this->plain_text( $item['open'] ),
+			);
+		}
+
+		return $faqs;
+	}
+
+	private function normalize_knowledge_categories( $items ) {
+		$categories = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			$title = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
+
+			if ( '' === $title ) {
+				continue;
+			}
+
+			$categories[] = array(
+				'title' => $title,
+				'link'  => isset( $item['link'] ) ? $item['link'] : array( 'url' => '#' ),
+			);
+		}
+
+		return $categories;
+	}
+
+	private function knowledge_icon_text( $text, $length = 1 ) {
+		$text = $this->plain_text( $text );
+
+		if ( function_exists( 'mb_substr' ) ) {
+			return mb_substr( $text, 0, $length, 'UTF-8' );
+		}
+
+		return substr( $text, 0, $length );
+	}
+
+	private function render_knowledge_section_heading( $label, $title, $intro = '' ) {
+		?>
+		<div class="efi-section-heading">
+			<?php if ( '' !== $this->plain_text( $label ) ) : ?><span><?php echo esc_html( $this->plain_text( $label ) ); ?></span><?php endif; ?>
+			<h2><?php echo esc_html( $this->plain_text( $title ) ); ?></h2>
+			<?php if ( '' !== $this->plain_text( $intro ) ) : ?><p><?php echo esc_html( $this->plain_text( $intro ) ); ?></p><?php endif; ?>
+		</div>
+		<?php
+	}
+
+	private function render_knowledge_text_link( $text, $link ) {
+		$text = $this->plain_text( $text );
+
+		if ( '' === $text ) {
+			return;
+		}
+		?>
+		<a <?php echo $this->url_attributes( $link ); ?>><?php echo esc_html( $text ); ?></a>
+		<?php
+	}
+
+	private function render_knowledge_link_button( $text, $link, $class = 'efi-link-button' ) {
+		$text = $this->plain_text( $text );
+
+		if ( '' === $text ) {
+			return;
+		}
+		?>
+		<a <?php if ( '' !== $class ) : ?>class="<?php echo esc_attr( $class ); ?>"<?php endif; ?> <?php echo $this->url_attributes( $link ); ?>>
+			<span><?php echo esc_html( $text ); ?></span>
+			<span aria-hidden="true">&#8594;</span>
+		</a>
+		<?php
+	}
+
+	private function render_knowledge_book_icon() {
+		?>
+		<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+			<circle cx="48" cy="48" r="45" fill="#ffffff" opacity="0.18"/>
+			<path d="M28 28h28c6.6 0 12 5.4 12 12v29H38c-5.5 0-10-4.5-10-10V28Z" fill="#ffffff" opacity="0.95"/>
+			<path d="M28 28v31c0 5.5 4.5 10 10 10h30" fill="none" stroke="#2BBFD0" stroke-width="4" stroke-linecap="round"/>
+			<path d="M40 41h17M40 50h20M40 59h13" stroke="#2BBFD0" stroke-width="4" stroke-linecap="round"/>
+		</svg>
+		<?php
+	}
+}
+
+class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base {
+	public function get_name() { return 'vitacenter_video_gallery'; }
+	public function get_title() { return esc_html__( 'VitaCenter Video Gallery', 'vitacenter-elementor-header' ); }
+	public function get_icon() { return 'eicon-gallery-grid'; }
+	public function get_style_depends() { return array( 'vc-landing' ); }
+	public function get_script_depends() { return array( 'vc-landing' ); }
+
+	protected function register_controls() {
+		$this->start_controls_section( 'hero_section', array( 'label' => esc_html__( 'Hero', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'eyebrow', array( 'label' => esc_html__( 'Kis címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Galéria', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Fotó- és videógaléria', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Fotók és videók egészségügyi eseményeinkről, szűréseinkről és közösségi aktivitásainkról.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'visual_title', array( 'label' => esc_html__( 'Vizuális kártya cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Események képekben', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'visual_text', array( 'label' => esc_html__( 'Vizuális kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'fotók · videók · beszámolók', 'vitacenter-elementor-header' ) ) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'filters_section', array( 'label' => esc_html__( 'Szűrők', 'vitacenter-elementor-header' ) ) );
+		$filters = new Repeater();
+		$filters->add_control( 'title', array( 'label' => esc_html__( 'Felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Összes', 'vitacenter-elementor-header' ) ) );
+		$filters->add_control( 'link', array( 'label' => esc_html__( 'Link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+		$filters->add_control( 'active', array( 'label' => esc_html__( 'Aktív', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => '' ) );
+		$this->add_control( 'filters', array(
+			'label' => esc_html__( 'Kategória szűrők', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $filters->get_controls(),
+			'title_field' => '{{{ title }}}',
+			'default' => $this->default_gallery_filters(),
+		) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'featured_section', array( 'label' => esc_html__( 'Kiemelt galéria', 'vitacenter-elementor-header' ) ) );
+		$featured = new Repeater();
+		$featured->add_control( 'label', array( 'label' => esc_html__( 'Címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kiemelt album', 'vitacenter-elementor-header' ) ) );
+		$featured->add_control( 'media_type', array( 'label' => esc_html__( 'Média típus', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Fotók', 'vitacenter-elementor-header' ) ) );
+		$featured->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Album címe', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$featured->add_control( 'text', array( 'label' => esc_html__( 'Leírás', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Rövid leírás.', 'vitacenter-elementor-header' ) ) );
+		$featured->add_control( 'link', array( 'label' => esc_html__( 'Link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+		$featured->add_control( 'variant', array(
+			'label' => esc_html__( 'Vizuális stílus', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::SELECT,
+			'default' => 'photo',
+			'options' => array(
+				'photo'     => esc_html__( 'Fotó', 'vitacenter-elementor-header' ),
+				'screening' => esc_html__( 'Szűrés', 'vitacenter-elementor-header' ),
+				'video'     => esc_html__( 'Videó', 'vitacenter-elementor-header' ),
+			),
+		) );
+		$featured->add_control( 'large', array( 'label' => esc_html__( 'Nagy kártya', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => '' ) );
+		$featured->add_control( 'show_play', array( 'label' => esc_html__( 'Lejátszás ikon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => '' ) );
+		$this->add_control( 'featured_items', array(
+			'label' => esc_html__( 'Kiemelt elemek', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $featured->get_controls(),
+			'title_field' => '{{{ title }}}',
+			'default' => $this->default_gallery_featured_items(),
+		) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'gallery_section', array( 'label' => esc_html__( 'Galéria elemek', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'gallery_label', array( 'label' => esc_html__( 'Szekció címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Legutóbbi feltöltések', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'gallery_title', array( 'label' => esc_html__( 'Szekció cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Képek és videók', 'vitacenter-elementor-header' ) ) );
+
+		$items = new Repeater();
+		$items->add_control( 'badge', array( 'label' => esc_html__( 'Címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Fotóalbum', 'vitacenter-elementor-header' ) ) );
+		$items->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Galéria elem', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$items->add_control( 'text', array( 'label' => esc_html__( 'Leírás', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Rövid leírás.', 'vitacenter-elementor-header' ) ) );
+		$items->add_control( 'link', array( 'label' => esc_html__( 'Link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+		$items->add_control( 'variant', array(
+			'label' => esc_html__( 'Vizuális stílus', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::SELECT,
+			'default' => 'one',
+			'options' => array(
+				'one'   => '1',
+				'two'   => '2',
+				'three' => '3',
+				'four'  => '4',
+				'five'  => '5',
+				'six'   => '6',
+			),
+		) );
+		$items->add_control( 'show_play', array( 'label' => esc_html__( 'Lejátszás ikon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => '' ) );
+		$this->add_control( 'gallery_items', array(
+			'label' => esc_html__( 'Galéria elemek', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $items->get_controls(),
+			'title_field' => '{{{ title }}}',
+			'default' => $this->default_gallery_items(),
+		) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'sidebar_section', array( 'label' => esc_html__( 'Oldalsáv', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'categories_label', array( 'label' => esc_html__( 'Kategória címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kategóriák', 'vitacenter-elementor-header' ) ) );
+		$categories = new Repeater();
+		$categories->add_control( 'title', array( 'label' => esc_html__( 'Kategória', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Fotók', 'vitacenter-elementor-header' ) ) );
+		$categories->add_control( 'count', array( 'label' => esc_html__( 'Darab', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '24' ) );
+		$categories->add_control( 'link', array( 'label' => esc_html__( 'Link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+		$this->add_control( 'categories', array(
+			'label' => esc_html__( 'Kategóriák', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $categories->get_controls(),
+			'title_field' => '{{{ title }}}',
+			'default' => $this->default_gallery_categories(),
+		) );
+		$this->add_control( 'cta_title', array( 'label' => esc_html__( 'CTA cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Van megosztható fotója?', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'cta_text', array( 'label' => esc_html__( 'CTA szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Programjainkhoz kapcsolódó képeket vagy videókat a kapcsolat oldalon keresztül is elküldhet.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'cta_button_text', array( 'label' => esc_html__( 'CTA gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'cta_link', array( 'label' => esc_html__( 'CTA link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '/kapcsolat' ) ) );
+		$this->end_controls_section();
+	}
+
+	protected function render() {
+		$s = wp_parse_args( $this->get_settings_for_display(), $this->default_gallery_settings() );
+
+		$filters  = $this->normalize_gallery_filters( isset( $s['filters'] ) ? $s['filters'] : array() );
+		$featured = $this->normalize_gallery_featured_items( isset( $s['featured_items'] ) ? $s['featured_items'] : array() );
+		$items    = $this->normalize_gallery_items( isset( $s['gallery_items'] ) ? $s['gallery_items'] : array() );
+		$cats     = $this->normalize_gallery_categories( isset( $s['categories'] ) ? $s['categories'] : array() );
+
+		if ( empty( $filters ) ) {
+			$filters = $this->normalize_gallery_filters( $this->default_gallery_filters() );
+		}
+
+		if ( empty( $featured ) ) {
+			$featured = $this->normalize_gallery_featured_items( $this->default_gallery_featured_items() );
+		}
+
+		if ( empty( $items ) ) {
+			$items = $this->normalize_gallery_items( $this->default_gallery_items() );
+		}
+
+		if ( empty( $cats ) ) {
+			$cats = $this->normalize_gallery_categories( $this->default_gallery_categories() );
+		}
+		?>
+		<div class="vc-landing">
+			<section class="efi-gallery-page" aria-label="<?php echo esc_attr__( 'Fotó- és videógaléria oldal', 'vitacenter-elementor-header' ); ?>">
+				<div class="efi-gallery-hero">
+					<div class="efi-gallery-hero__content">
+						<?php if ( '' !== $this->plain_text( $s['eyebrow'] ) ) : ?><span class="efi-gallery-eyebrow"><?php echo esc_html( $this->plain_text( $s['eyebrow'] ) ); ?></span><?php endif; ?>
+						<h1><?php echo esc_html( $this->plain_text( $s['title'] ) ); ?></h1>
+						<?php if ( '' !== $this->plain_text( $s['intro'] ) ) : ?><p><?php echo esc_html( $this->plain_text( $s['intro'] ) ); ?></p><?php endif; ?>
+					</div>
+
+					<div class="efi-gallery-hero__visual" aria-hidden="true">
+						<div class="efi-gallery-stack efi-gallery-stack--one"></div>
+						<div class="efi-gallery-stack efi-gallery-stack--two"></div>
+						<div class="efi-gallery-play-card">
+							<span class="efi-gallery-play-icon"><?php $this->render_gallery_play_icon(); ?></span>
+							<strong><?php echo esc_html( $this->plain_text( $s['visual_title'] ) ); ?></strong>
+							<small><?php echo esc_html( $this->plain_text( $s['visual_text'] ) ); ?></small>
+						</div>
+					</div>
+				</div>
+
+				<?php if ( ! empty( $filters ) ) : ?>
+					<nav class="efi-gallery-filter" aria-label="<?php echo esc_attr__( 'Galéria kategóriák', 'vitacenter-elementor-header' ); ?>">
+						<?php foreach ( $filters as $filter ) : ?>
+							<a class="<?php echo $filter['active'] ? 'is-active' : ''; ?>" <?php echo $this->url_attributes( $filter['link'] ); ?>><?php echo esc_html( $filter['title'] ); ?></a>
+						<?php endforeach; ?>
+					</nav>
+				<?php endif; ?>
+
+				<div class="efi-gallery-featured">
+					<?php foreach ( $featured as $item ) : ?>
+						<?php $this->render_gallery_featured_card( $item ); ?>
+					<?php endforeach; ?>
+				</div>
+
+				<div class="efi-gallery-main-grid">
+					<main class="efi-gallery-content" aria-label="<?php echo esc_attr__( 'Galéria elemek', 'vitacenter-elementor-header' ); ?>">
+						<div class="efi-gallery-section-heading">
+							<?php if ( '' !== $this->plain_text( $s['gallery_label'] ) ) : ?><span><?php echo esc_html( $this->plain_text( $s['gallery_label'] ) ); ?></span><?php endif; ?>
+							<h2><?php echo esc_html( $this->plain_text( $s['gallery_title'] ) ); ?></h2>
+						</div>
+
+						<div class="efi-gallery-grid">
+							<?php foreach ( $items as $item ) : ?>
+								<?php $this->render_gallery_item( $item ); ?>
+							<?php endforeach; ?>
+						</div>
+					</main>
+
+					<aside class="efi-gallery-sidebar" aria-label="<?php echo esc_attr__( 'Galéria oldalsáv', 'vitacenter-elementor-header' ); ?>">
+						<div class="efi-gallery-sidebar-card">
+							<?php if ( '' !== $this->plain_text( $s['categories_label'] ) ) : ?><span class="efi-gallery-card-label"><?php echo esc_html( $this->plain_text( $s['categories_label'] ) ); ?></span><?php endif; ?>
+							<nav class="efi-gallery-category-list">
+								<?php foreach ( $cats as $cat ) : ?>
+									<a <?php echo $this->url_attributes( $cat['link'] ); ?>><span><?php echo esc_html( $cat['title'] ); ?></span><strong><?php echo esc_html( $cat['count'] ); ?></strong></a>
+								<?php endforeach; ?>
+							</nav>
+						</div>
+
+						<div class="efi-gallery-sidebar-card efi-gallery-sidebar-card--cta">
+							<h3><?php echo esc_html( $this->plain_text( $s['cta_title'] ) ); ?></h3>
+							<?php if ( '' !== $this->plain_text( $s['cta_text'] ) ) : ?><p><?php echo esc_html( $this->plain_text( $s['cta_text'] ) ); ?></p><?php endif; ?>
+							<?php $this->render_gallery_link_button( $s['cta_button_text'], $s['cta_link'] ); ?>
+						</div>
+					</aside>
+				</div>
+			</section>
+		</div>
+		<?php
+	}
+
+	private function default_gallery_settings() {
+		return array(
+			'eyebrow'          => esc_html__( 'Galéria', 'vitacenter-elementor-header' ),
+			'title'            => esc_html__( 'Fotó- és videógaléria', 'vitacenter-elementor-header' ),
+			'intro'            => esc_html__( 'Fotók és videók egészségügyi eseményeinkről, szűréseinkről és közösségi aktivitásainkról.', 'vitacenter-elementor-header' ),
+			'visual_title'     => esc_html__( 'Események képekben', 'vitacenter-elementor-header' ),
+			'visual_text'      => esc_html__( 'fotók · videók · beszámolók', 'vitacenter-elementor-header' ),
+			'filters'          => $this->default_gallery_filters(),
+			'featured_items'   => $this->default_gallery_featured_items(),
+			'gallery_label'    => esc_html__( 'Legutóbbi feltöltések', 'vitacenter-elementor-header' ),
+			'gallery_title'    => esc_html__( 'Képek és videók', 'vitacenter-elementor-header' ),
+			'gallery_items'    => $this->default_gallery_items(),
+			'categories_label' => esc_html__( 'Kategóriák', 'vitacenter-elementor-header' ),
+			'categories'       => $this->default_gallery_categories(),
+			'cta_title'        => esc_html__( 'Van megosztható fotója?', 'vitacenter-elementor-header' ),
+			'cta_text'         => esc_html__( 'Programjainkhoz kapcsolódó képeket vagy videókat a kapcsolat oldalon keresztül is elküldhet.', 'vitacenter-elementor-header' ),
+			'cta_button_text'  => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ),
+			'cta_link'         => array( 'url' => '/kapcsolat' ),
+		);
+	}
+
+	private function default_gallery_filters() {
+		return array(
+			array( 'title' => esc_html__( 'Összes', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'active' => 'yes' ),
+			array( 'title' => esc_html__( 'Események', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'active' => '' ),
+			array( 'title' => esc_html__( 'Szűrések', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'active' => '' ),
+			array( 'title' => esc_html__( 'Közösségi programok', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'active' => '' ),
+			array( 'title' => esc_html__( 'Videók', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'active' => '' ),
+		);
+	}
+
+	private function default_gallery_featured_items() {
+		return array(
+			array( 'label' => esc_html__( 'Kiemelt album', 'vitacenter-elementor-header' ), 'media_type' => esc_html__( 'Fotók', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Egészségügyi események', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Válogatás legfontosabb programjaink pillanataiból.', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'variant' => 'photo', 'large' => 'yes', 'show_play' => '' ),
+			array( 'label' => '', 'media_type' => esc_html__( 'Album', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Szűrések', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Helyszíni programok és szakmai aktivitások.', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'variant' => 'screening', 'large' => '', 'show_play' => '' ),
+			array( 'label' => '', 'media_type' => esc_html__( 'Videó', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Videós beszámolók', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Rövid összefoglalók eseményeinkről.', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'variant' => 'video', 'large' => '', 'show_play' => 'yes' ),
+		);
+	}
+
+	private function default_gallery_items() {
+		return array(
+			array( 'badge' => esc_html__( 'Fotóalbum', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Közösségi egészségnap', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Egészségfejlesztési programok és lakossági aktivitások.', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'variant' => 'one', 'show_play' => '' ),
+			array( 'badge' => esc_html__( 'Fotóalbum', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Mobil szűrés', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Pillanatképek helyszíni szűrőprogramjainkról.', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'variant' => 'two', 'show_play' => '' ),
+			array( 'badge' => esc_html__( 'Videó', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Tanácsadási programok', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Rövid videós betekintés a szakmai munkába.', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'variant' => 'three', 'show_play' => 'yes' ),
+			array( 'badge' => esc_html__( 'Fotóalbum', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Óvodai programok', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Korai fejlesztést támogató közösségi alkalmak.', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'variant' => 'four', 'show_play' => '' ),
+			array( 'badge' => esc_html__( 'Videó', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Workshopok', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Szakmai találkozók és tájékoztató alkalmak.', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'variant' => 'five', 'show_play' => 'yes' ),
+			array( 'badge' => esc_html__( 'Fotóalbum', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Közösségi aktivitások', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Programok, találkozók és helyi kezdeményezések.', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ), 'variant' => 'six', 'show_play' => '' ),
+		);
+	}
+
+	private function default_gallery_categories() {
+		return array(
+			array( 'title' => esc_html__( 'Fotók', 'vitacenter-elementor-header' ), 'count' => '24', 'link' => array( 'url' => '#' ) ),
+			array( 'title' => esc_html__( 'Videók', 'vitacenter-elementor-header' ), 'count' => '8', 'link' => array( 'url' => '#' ) ),
+			array( 'title' => esc_html__( 'Események', 'vitacenter-elementor-header' ), 'count' => '12', 'link' => array( 'url' => '#' ) ),
+			array( 'title' => esc_html__( 'Szűrések', 'vitacenter-elementor-header' ), 'count' => '7', 'link' => array( 'url' => '#' ) ),
+		);
+	}
+
+	private function normalize_gallery_filters( $items ) {
+		$filters = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			$title = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
+
+			if ( '' === $title ) {
+				continue;
+			}
+
+			$filters[] = array(
+				'title'  => $title,
+				'link'   => isset( $item['link'] ) ? $item['link'] : array( 'url' => '#' ),
+				'active' => isset( $item['active'] ) && 'yes' === $this->plain_text( $item['active'] ),
+			);
+		}
+
+		return $filters;
+	}
+
+	private function normalize_gallery_featured_items( $items ) {
+		$featured = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			$title = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
+
+			if ( '' === $title ) {
+				continue;
+			}
+
+			$featured[] = array(
+				'label'      => isset( $item['label'] ) ? $this->plain_text( $item['label'] ) : '',
+				'media_type' => isset( $item['media_type'] ) ? $this->plain_text( $item['media_type'] ) : '',
+				'title'      => $title,
+				'text'       => isset( $item['text'] ) ? $this->plain_text( $item['text'] ) : '',
+				'link'       => isset( $item['link'] ) ? $item['link'] : array( 'url' => '#' ),
+				'variant'    => isset( $item['variant'] ) ? $this->gallery_variant( $item['variant'], array( 'photo', 'screening', 'video' ), 'photo' ) : 'photo',
+				'large'      => isset( $item['large'] ) && 'yes' === $this->plain_text( $item['large'] ),
+				'show_play'  => isset( $item['show_play'] ) && 'yes' === $this->plain_text( $item['show_play'] ),
+			);
+		}
+
+		return $featured;
+	}
+
+	private function normalize_gallery_items( $items ) {
+		$gallery = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			$title = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
+
+			if ( '' === $title ) {
+				continue;
+			}
+
+			$gallery[] = array(
+				'badge'     => isset( $item['badge'] ) ? $this->plain_text( $item['badge'] ) : '',
+				'title'     => $title,
+				'text'      => isset( $item['text'] ) ? $this->plain_text( $item['text'] ) : '',
+				'link'      => isset( $item['link'] ) ? $item['link'] : array( 'url' => '#' ),
+				'variant'   => isset( $item['variant'] ) ? $this->gallery_variant( $item['variant'], array( 'one', 'two', 'three', 'four', 'five', 'six' ), 'one' ) : 'one',
+				'show_play' => isset( $item['show_play'] ) && 'yes' === $this->plain_text( $item['show_play'] ),
+			);
+		}
+
+		return $gallery;
+	}
+
+	private function normalize_gallery_categories( $items ) {
+		$categories = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			$title = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
+
+			if ( '' === $title ) {
+				continue;
+			}
+
+			$categories[] = array(
+				'title' => $title,
+				'count' => isset( $item['count'] ) ? $this->plain_text( $item['count'] ) : '',
+				'link'  => isset( $item['link'] ) ? $item['link'] : array( 'url' => '#' ),
+			);
+		}
+
+		return $categories;
+	}
+
+	private function render_gallery_featured_card( $item ) {
+		$classes = 'efi-gallery-featured-card';
+
+		if ( $item['large'] ) {
+			$classes .= ' efi-gallery-featured-card--large';
+		}
+		?>
+		<article class="<?php echo esc_attr( $classes ); ?>">
+			<a class="efi-gallery-media-link" aria-label="<?php echo esc_attr( $item['title'] ); ?>" <?php echo $this->url_attributes( $item['link'] ); ?>>
+				<div class="efi-gallery-placeholder efi-gallery-placeholder--<?php echo esc_attr( $item['variant'] ); ?>">
+					<?php if ( '' !== $item['media_type'] ) : ?><span class="efi-gallery-type"><?php echo esc_html( $item['media_type'] ); ?></span><?php endif; ?>
+					<?php if ( $item['show_play'] ) : ?><span class="efi-video-play" aria-hidden="true">&#9654;</span><?php else : ?><span class="efi-gallery-placeholder-icon" aria-hidden="true"><?php $this->render_gallery_camera_icon(); ?></span><?php endif; ?>
+				</div>
+				<div class="efi-gallery-card-content">
+					<?php if ( '' !== $item['label'] ) : ?><span class="efi-gallery-card-label"><?php echo esc_html( $item['label'] ); ?></span><?php endif; ?>
+					<?php if ( $item['large'] ) : ?><h2><?php echo esc_html( $item['title'] ); ?></h2><?php else : ?><h3><?php echo esc_html( $item['title'] ); ?></h3><?php endif; ?>
+					<?php if ( '' !== $item['text'] ) : ?><p><?php echo esc_html( $item['text'] ); ?></p><?php endif; ?>
+				</div>
+			</a>
+		</article>
+		<?php
+	}
+
+	private function render_gallery_item( $item ) {
+		?>
+		<article class="efi-gallery-item">
+			<a aria-label="<?php echo esc_attr( $item['title'] ); ?>" <?php echo $this->url_attributes( $item['link'] ); ?>>
+				<div class="efi-gallery-thumb efi-gallery-thumb--<?php echo esc_attr( $item['variant'] ); ?>">
+					<?php if ( '' !== $item['badge'] ) : ?><span><?php echo esc_html( $item['badge'] ); ?></span><?php endif; ?>
+					<?php if ( $item['show_play'] ) : ?><i aria-hidden="true">&#9654;</i><?php endif; ?>
+				</div>
+				<div class="efi-gallery-item-body">
+					<h3><?php echo esc_html( $item['title'] ); ?></h3>
+					<?php if ( '' !== $item['text'] ) : ?><p><?php echo esc_html( $item['text'] ); ?></p><?php endif; ?>
+				</div>
+			</a>
+		</article>
+		<?php
+	}
+
+	private function render_gallery_link_button( $text, $link ) {
+		$text = $this->plain_text( $text );
+
+		if ( '' === $text ) {
+			return;
+		}
+		?>
+		<a <?php echo $this->url_attributes( $link ); ?>><?php echo esc_html( $text ); ?></a>
+		<?php
+	}
+
+	private function gallery_variant( $value, $allowed, $fallback ) {
+		$value = $this->plain_text( $value );
+
+		return in_array( $value, $allowed, true ) ? $value : $fallback;
+	}
+
+	private function render_gallery_play_icon() {
+		?>
+		<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+			<circle cx="48" cy="48" r="45" fill="#ffffff" opacity="0.18"/>
+			<path d="M39 31.5 67 48 39 64.5v-33Z" fill="#ffffff"/>
+		</svg>
+		<?php
+	}
+
+	private function render_gallery_camera_icon() {
+		?>
+		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M4 7.5h3l1.6-2h6.8l1.6 2h3v11H4v-11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+			<circle cx="12" cy="13" r="3.4" stroke="currentColor" stroke-width="1.8"/>
+		</svg>
+		<?php
+	}
+}
+
+class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
+	public function get_name() { return 'vitacenter_partners'; }
+	public function get_title() { return esc_html__( 'VitaCenter Partners', 'vitacenter-elementor-header' ); }
+	public function get_icon() { return 'eicon-users'; }
+	public function get_style_depends() { return array( 'vc-landing' ); }
+	public function get_script_depends() { return array( 'vc-landing' ); }
+
+	protected function register_controls() {
+		$this->start_controls_section( 'hero_section', array( 'label' => esc_html__( 'Hero', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'eyebrow', array( 'label' => esc_html__( 'Kis címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Partnerek', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Együtt az egészségesebb közösségekért', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Projektünk szakmai és intézményi partnereink együttműködésével valósul meg.', 'vitacenter-elementor-header' ) ) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'partners_section', array( 'label' => esc_html__( 'Partner intézmények', 'vitacenter-elementor-header' ) ) );
+		$r = new Repeater();
+		$r->add_control( 'logo_text', array( 'label' => esc_html__( 'Logó rövidítés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'EFI' ) );
+		$r->add_control( 'type', array( 'label' => esc_html__( 'Típus', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ) ) );
+		$r->add_control( 'name', array( 'label' => esc_html__( 'Név', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Partner neve', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$r->add_control( 'description', array( 'label' => esc_html__( 'Leírás', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => '' ) );
+		$r->add_control( 'featured', array( 'label' => esc_html__( 'Kiemelt partner', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => '' ) );
+		$this->add_control( 'partners', array(
+			'label' => esc_html__( 'Partnerek', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $r->get_controls(),
+			'title_field' => '{{{ name }}}',
+			'default' => $this->default_partners(),
+		) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'note_section', array( 'label' => esc_html__( 'Alsó megjegyzés', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'note_text', array( 'label' => esc_html__( 'Megjegyzés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A közös munka célja, hogy a szűrések, tanácsadások és egészségfejlesztési programok minél több emberhez eljussanak.', 'vitacenter-elementor-header' ) ) );
+		$this->end_controls_section();
+	}
+
+	protected function render() {
+		$s = wp_parse_args(
+			$this->get_settings_for_display(),
+			array(
+				'eyebrow'   => esc_html__( 'Partnerek', 'vitacenter-elementor-header' ),
+				'title'     => esc_html__( 'Együtt az egészségesebb közösségekért', 'vitacenter-elementor-header' ),
+				'intro'     => esc_html__( 'Projektünk szakmai és intézményi partnereink együttműködésével valósul meg.', 'vitacenter-elementor-header' ),
+				'partners'  => $this->default_partners(),
+				'note_text' => esc_html__( 'A közös munka célja, hogy a szűrések, tanácsadások és egészségfejlesztési programok minél több emberhez eljussanak.', 'vitacenter-elementor-header' ),
+			)
+		);
+
+		$partners = $this->normalize_partners( isset( $s['partners'] ) ? $s['partners'] : array() );
+
+		if ( empty( $partners ) ) {
+			$partners = $this->normalize_partners( $this->default_partners() );
+		}
+		?>
+		<div class="vc-landing">
+			<section class="efi-partners-page" aria-label="<?php echo esc_attr__( 'Partnerek oldal', 'vitacenter-elementor-header' ); ?>">
+				<div class="efi-partners-hero">
+					<?php if ( '' !== $this->plain_text( $s['eyebrow'] ) ) : ?><span class="efi-partners-eyebrow"><?php echo esc_html( $this->plain_text( $s['eyebrow'] ) ); ?></span><?php endif; ?>
+					<h1><?php echo esc_html( $this->plain_text( $s['title'] ) ); ?></h1>
+					<?php if ( '' !== $this->plain_text( $s['intro'] ) ) : ?><p><?php echo esc_html( $this->plain_text( $s['intro'] ) ); ?></p><?php endif; ?>
+				</div>
+
+				<div class="efi-partners-grid" aria-label="<?php echo esc_attr__( 'Partner intézmények', 'vitacenter-elementor-header' ); ?>">
+					<?php foreach ( $partners as $partner ) : ?>
+						<?php $this->render_partner_card( $partner ); ?>
+					<?php endforeach; ?>
+				</div>
+
+				<?php if ( '' !== $this->plain_text( $s['note_text'] ) ) : ?>
+					<div class="efi-partners-note">
+						<div class="efi-partners-note__icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M7.5 12.5 10.5 15.5 16.8 8.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+							</svg>
+						</div>
+						<p><?php echo esc_html( $this->plain_text( $s['note_text'] ) ); ?></p>
+					</div>
+				<?php endif; ?>
+			</section>
+		</div>
+		<?php
+	}
+
+	private function default_partners() {
+		return array(
+			array(
+				'logo_text'   => 'EFI',
+				'type'        => esc_html__( 'Vezető partner', 'vitacenter-elementor-header' ),
+				'name'        => esc_html__( 'Szatmárnémeti Egészségfejlesztési Iroda', 'vitacenter-elementor-header' ),
+				'description' => esc_html__( 'Egészségfejlesztés, prevenció és közösségi programok koordinációja.', 'vitacenter-elementor-header' ),
+				'featured'    => 'yes',
+			),
+			array(
+				'logo_text'   => 'PSV',
+				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
+				'name'        => esc_html__( 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesülete', 'vitacenter-elementor-header' ),
+				'description' => '',
+				'featured'    => '',
+			),
+			array(
+				'logo_text'   => 'HM',
+				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
+				'name'        => esc_html__( 'Hódmezővásárhelyi-Makói Egészségügyi Ellátó Központ', 'vitacenter-elementor-header' ),
+				'description' => '',
+				'featured'    => '',
+			),
+			array(
+				'logo_text'   => 'EU',
+				'type'        => esc_html__( 'Támogató program', 'vitacenter-elementor-header' ),
+				'name'        => esc_html__( 'Interreg VI-A Románia-Magyarország Program', 'vitacenter-elementor-header' ),
+				'description' => '',
+				'featured'    => '',
+			),
+		);
+	}
+
+	private function normalize_partners( $items ) {
+		$partners = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			$name = isset( $item['name'] ) ? $this->plain_text( $item['name'] ) : '';
+
+			if ( '' === $name ) {
+				continue;
+			}
+
+			$partners[] = array(
+				'logo_text'   => isset( $item['logo_text'] ) && '' !== $this->plain_text( $item['logo_text'] ) ? $this->plain_text( $item['logo_text'] ) : $this->partner_initials( $name ),
+				'type'        => isset( $item['type'] ) ? $this->plain_text( $item['type'] ) : '',
+				'name'        => $name,
+				'description' => isset( $item['description'] ) ? $this->plain_text( $item['description'] ) : '',
+				'featured'    => isset( $item['featured'] ) && 'yes' === $this->plain_text( $item['featured'] ),
+			);
+		}
+
+		return $partners;
+	}
+
+	private function render_partner_card( $partner ) {
+		$classes = 'efi-partner-card';
+
+		if ( ! empty( $partner['featured'] ) ) {
+			$classes .= ' efi-partner-card--featured';
+		}
+		?>
+		<article class="<?php echo esc_attr( $classes ); ?>">
+			<div class="efi-partner-logo">
+				<span><?php echo esc_html( $partner['logo_text'] ); ?></span>
+			</div>
+			<div class="efi-partner-card__body">
+				<?php if ( '' !== $partner['type'] ) : ?><span class="efi-partner-type"><?php echo esc_html( $partner['type'] ); ?></span><?php endif; ?>
+				<h2><?php echo esc_html( $partner['name'] ); ?></h2>
+				<?php if ( '' !== $partner['description'] ) : ?><p><?php echo esc_html( $partner['description'] ); ?></p><?php endif; ?>
+			</div>
+		</article>
+		<?php
+	}
+
+	private function partner_initials( $name ) {
+		$words = preg_split( '/\s+/', remove_accents( $name ) );
+		$letters = '';
+
+		foreach ( $words as $word ) {
+			if ( '' === $word ) {
+				continue;
+			}
+
+			$letters .= strtoupper( substr( $word, 0, 1 ) );
+
+			if ( 3 <= strlen( $letters ) ) {
+				break;
+			}
+		}
+
+		return $letters ? $letters : 'P';
+	}
+}
+
+class VitaCenter_Contact_Widget extends VitaCenter_Structured_Widget_Base {
+	public function get_name() { return 'vitacenter_contact'; }
+	public function get_title() { return esc_html__( 'VitaCenter Contact', 'vitacenter-elementor-header' ); }
+	public function get_icon() { return 'eicon-mail'; }
+	public function get_style_depends() { return array( 'vc-landing' ); }
+	public function get_script_depends() { return array( 'vc-landing' ); }
+
+	protected function register_controls() {
+		$this->start_controls_section( 'hero_section', array( 'label' => esc_html__( 'Hero', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'eyebrow', array( 'label' => esc_html__( 'Kis címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Lépjen kapcsolatba velünk', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Kérdése van programjainkkal, szűréseinkkel vagy tanácsadási lehetőségeinkkel kapcsolatban? Keressen minket bizalommal, munkatársaink készséggel állnak rendelkezésére.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'hero_card_title', array( 'label' => esc_html__( 'Kiemelt kártya cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Egészsége nem várhat.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'hero_card_text', array( 'label' => esc_html__( 'Kiemelt kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Foglaljon időpontot, érdeklődjön programjainkról, vagy kérjen további tájékoztatást.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'call_button_text', array( 'label' => esc_html__( 'Telefon gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Telefonhívás indítása', 'vitacenter-elementor-header' ) ) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'contact_section', array( 'label' => esc_html__( 'Elérhetőségek', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '+40 261 713 775' ) );
+		$this->add_control( 'email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'efi@szatmar.ro' ) );
+		$this->add_control( 'address', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Szatmárnémeti, Vasile Lucaciu u. 21.', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$this->add_control( 'map_link', array( 'label' => esc_html__( 'Térkép link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => 'https://www.google.com/maps/search/?api=1&query=Szatm%C3%A1rn%C3%A9meti%2C%20Vasile%20Lucaciu%20u.%2021', 'is_external' => true ) ) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'form_section', array( 'label' => esc_html__( 'Űrlap', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'form_eyebrow', array( 'label' => esc_html__( 'Űrlap címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Írjon nekünk', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'form_title', array( 'label' => esc_html__( 'Űrlap cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolatfelvételi űrlap', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'form_intro', array( 'label' => esc_html__( 'Űrlap szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Töltse ki az alábbi mezőket, és hamarosan felvesszük Önnel a kapcsolatot.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'form_shortcode', array( 'label' => esc_html__( 'Űrlap shortcode', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => '', 'description' => esc_html__( 'Ha kitöltöd, a beépített statikus űrlap helyett ez jelenik meg.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'form_action', array( 'label' => esc_html__( 'Statikus űrlap action', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '#' ) );
+		$this->add_control( 'submit_text', array( 'label' => esc_html__( 'Küldés gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Üzenet küldése', 'vitacenter-elementor-header' ) ) );
+		$this->end_controls_section();
+
+		$this->start_controls_section( 'side_section', array( 'label' => esc_html__( 'Oldalsáv', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'hours_label', array( 'label' => esc_html__( 'Nyitvatartás címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Ügyfélfogadás', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'hours_title', array( 'label' => esc_html__( 'Nyitvatartás cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Nyitvatartás', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'weekday_hours', array( 'label' => esc_html__( 'Hétfő - Péntek', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '8:00 - 16:00' ) );
+		$this->add_control( 'saturday_hours', array( 'label' => esc_html__( 'Szombat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Zárva', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'sunday_hours', array( 'label' => esc_html__( 'Vasárnap', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Zárva', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'map_label', array( 'label' => esc_html__( 'Megközelítés címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Megközelítés', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'map_title', array( 'label' => esc_html__( 'Megközelítés cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Hol talál minket?', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'map_text', array( 'label' => esc_html__( 'Megközelítés szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Szatmárnémeti központi részén, a Vasile Lucaciu utcában várjuk az érdeklődőket.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'map_button_text', array( 'label' => esc_html__( 'Térkép gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Megnyitás térképen', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'directions_text', array( 'label' => esc_html__( 'Útvonal gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Útvonaltervezés', 'vitacenter-elementor-header' ) ) );
+		$this->end_controls_section();
+	}
+
+	protected function render() {
+		$s = wp_parse_args(
+			$this->get_settings_for_display(),
+			$this->default_contact_settings()
+		);
+
+		$phone_href = $this->contact_phone_href( $s['phone'] );
+		$email_href = $this->contact_email_href( $s['email'] );
+		?>
+		<div class="vc-landing">
+			<section class="efi-contact-page" aria-label="<?php echo esc_attr__( 'Kapcsolat oldal', 'vitacenter-elementor-header' ); ?>">
+				<div class="efi-contact-hero">
+					<div class="efi-contact-hero__content">
+						<?php if ( '' !== $this->plain_text( $s['eyebrow'] ) ) : ?><span class="efi-contact-eyebrow"><?php echo esc_html( $this->plain_text( $s['eyebrow'] ) ); ?></span><?php endif; ?>
+						<h1><?php echo esc_html( $this->plain_text( $s['title'] ) ); ?></h1>
+						<?php if ( '' !== $this->plain_text( $s['intro'] ) ) : ?><p><?php echo esc_html( $this->plain_text( $s['intro'] ) ); ?></p><?php endif; ?>
+					</div>
+
+					<div class="efi-contact-hero__card" aria-label="<?php echo esc_attr__( 'Gyors elérhetőség', 'vitacenter-elementor-header' ); ?>">
+						<div class="efi-contact-pulse" aria-hidden="true"><?php $this->render_contact_pulse_icon(); ?></div>
+						<h2><?php echo esc_html( $this->plain_text( $s['hero_card_title'] ) ); ?></h2>
+						<?php if ( '' !== $this->plain_text( $s['hero_card_text'] ) ) : ?><p><?php echo esc_html( $this->plain_text( $s['hero_card_text'] ) ); ?></p><?php endif; ?>
+						<?php if ( '' !== $phone_href && '' !== $this->plain_text( $s['call_button_text'] ) ) : ?><a href="<?php echo esc_url( $phone_href ); ?>" class="efi-contact-hero__button"><?php echo esc_html( $this->plain_text( $s['call_button_text'] ) ); ?></a><?php endif; ?>
+					</div>
+				</div>
+
+				<div class="efi-contact-info-grid">
+					<?php $this->render_contact_info_card( 'phone', esc_html__( 'Telefon', 'vitacenter-elementor-header' ), $s['phone'], $phone_href ); ?>
+					<?php $this->render_contact_info_card( 'mail', esc_html__( 'E-mail', 'vitacenter-elementor-header' ), $s['email'], $email_href ); ?>
+					<?php $this->render_contact_info_card( 'pin', esc_html__( 'Cím', 'vitacenter-elementor-header' ), $s['address'] ); ?>
+				</div>
+
+				<div class="efi-contact-main-grid">
+					<div class="efi-contact-form-card">
+						<div class="efi-contact-section-heading">
+							<?php if ( '' !== $this->plain_text( $s['form_eyebrow'] ) ) : ?><span><?php echo esc_html( $this->plain_text( $s['form_eyebrow'] ) ); ?></span><?php endif; ?>
+							<h2><?php echo esc_html( $this->plain_text( $s['form_title'] ) ); ?></h2>
+							<?php if ( '' !== $this->plain_text( $s['form_intro'] ) ) : ?><p><?php echo esc_html( $this->plain_text( $s['form_intro'] ) ); ?></p><?php endif; ?>
+						</div>
+						<?php $this->render_contact_form( $s ); ?>
+					</div>
+
+					<aside class="efi-contact-side">
+						<div class="efi-contact-side-card efi-contact-side-card--hours">
+							<?php if ( '' !== $this->plain_text( $s['hours_label'] ) ) : ?><span class="efi-contact-side-card__label"><?php echo esc_html( $this->plain_text( $s['hours_label'] ) ); ?></span><?php endif; ?>
+							<h3><?php echo esc_html( $this->plain_text( $s['hours_title'] ) ); ?></h3>
+							<div class="efi-hours-list">
+								<div><span><?php echo esc_html__( 'Hétfő - Péntek', 'vitacenter-elementor-header' ); ?></span><strong><?php echo esc_html( $this->plain_text( $s['weekday_hours'] ) ); ?></strong></div>
+								<div><span><?php echo esc_html__( 'Szombat', 'vitacenter-elementor-header' ); ?></span><strong><?php echo esc_html( $this->plain_text( $s['saturday_hours'] ) ); ?></strong></div>
+								<div><span><?php echo esc_html__( 'Vasárnap', 'vitacenter-elementor-header' ); ?></span><strong><?php echo esc_html( $this->plain_text( $s['sunday_hours'] ) ); ?></strong></div>
+							</div>
+						</div>
+
+						<div class="efi-contact-side-card">
+							<?php if ( '' !== $this->plain_text( $s['map_label'] ) ) : ?><span class="efi-contact-side-card__label"><?php echo esc_html( $this->plain_text( $s['map_label'] ) ); ?></span><?php endif; ?>
+							<h3><?php echo esc_html( $this->plain_text( $s['map_title'] ) ); ?></h3>
+							<?php if ( '' !== $this->plain_text( $s['map_text'] ) ) : ?><p><?php echo esc_html( $this->plain_text( $s['map_text'] ) ); ?></p><?php endif; ?>
+							<?php $this->render_contact_link( $s['map_button_text'], $s['map_link'], 'efi-map-link' ); ?>
+						</div>
+					</aside>
+				</div>
+
+				<div class="efi-contact-map" aria-label="<?php echo esc_attr__( 'Térkép helye', 'vitacenter-elementor-header' ); ?>">
+					<div class="efi-contact-map__overlay">
+						<span><?php echo esc_html__( 'Cím', 'vitacenter-elementor-header' ); ?></span>
+						<strong><?php echo esc_html( $this->plain_text( $s['address'] ) ); ?></strong>
+						<?php $this->render_contact_link( $s['directions_text'], $s['map_link'], '' ); ?>
+					</div>
+				</div>
+			</section>
+		</div>
+		<?php
+	}
+
+	private function default_contact_settings() {
+		return array(
+			'eyebrow'          => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ),
+			'title'            => esc_html__( 'Lépjen kapcsolatba velünk', 'vitacenter-elementor-header' ),
+			'intro'            => esc_html__( 'Kérdése van programjainkkal, szűréseinkkel vagy tanácsadási lehetőségeinkkel kapcsolatban? Keressen minket bizalommal, munkatársaink készséggel állnak rendelkezésére.', 'vitacenter-elementor-header' ),
+			'hero_card_title'  => esc_html__( 'Egészsége nem várhat.', 'vitacenter-elementor-header' ),
+			'hero_card_text'   => esc_html__( 'Foglaljon időpontot, érdeklődjön programjainkról, vagy kérjen további tájékoztatást.', 'vitacenter-elementor-header' ),
+			'call_button_text' => esc_html__( 'Telefonhívás indítása', 'vitacenter-elementor-header' ),
+			'phone'            => '+40 261 713 775',
+			'email'            => 'efi@szatmar.ro',
+			'address'          => esc_html__( 'Szatmárnémeti, Vasile Lucaciu u. 21.', 'vitacenter-elementor-header' ),
+			'map_link'         => array( 'url' => 'https://www.google.com/maps/search/?api=1&query=Szatm%C3%A1rn%C3%A9meti%2C%20Vasile%20Lucaciu%20u.%2021', 'is_external' => true ),
+			'form_eyebrow'     => esc_html__( 'Írjon nekünk', 'vitacenter-elementor-header' ),
+			'form_title'       => esc_html__( 'Kapcsolatfelvételi űrlap', 'vitacenter-elementor-header' ),
+			'form_intro'       => esc_html__( 'Töltse ki az alábbi mezőket, és hamarosan felvesszük Önnel a kapcsolatot.', 'vitacenter-elementor-header' ),
+			'form_shortcode'   => '',
+			'form_action'      => '#',
+			'submit_text'      => esc_html__( 'Üzenet küldése', 'vitacenter-elementor-header' ),
+			'hours_label'      => esc_html__( 'Ügyfélfogadás', 'vitacenter-elementor-header' ),
+			'hours_title'      => esc_html__( 'Nyitvatartás', 'vitacenter-elementor-header' ),
+			'weekday_hours'    => '8:00 - 16:00',
+			'saturday_hours'   => esc_html__( 'Zárva', 'vitacenter-elementor-header' ),
+			'sunday_hours'     => esc_html__( 'Zárva', 'vitacenter-elementor-header' ),
+			'map_label'        => esc_html__( 'Megközelítés', 'vitacenter-elementor-header' ),
+			'map_title'        => esc_html__( 'Hol talál minket?', 'vitacenter-elementor-header' ),
+			'map_text'         => esc_html__( 'Szatmárnémeti központi részén, a Vasile Lucaciu utcában várjuk az érdeklődőket.', 'vitacenter-elementor-header' ),
+			'map_button_text'  => esc_html__( 'Megnyitás térképen', 'vitacenter-elementor-header' ),
+			'directions_text'  => esc_html__( 'Útvonaltervezés', 'vitacenter-elementor-header' ),
+		);
+	}
+
+	private function render_contact_info_card( $type, $label, $value, $href = '' ) {
+		$value = $this->plain_text( $value );
+		$href  = $this->plain_text( $href );
+
+		if ( '' === $value ) {
+			return;
+		}
+		?>
+		<article class="efi-contact-info-card">
+			<span class="efi-contact-info-card__icon" aria-hidden="true"><?php $this->render_contact_icon( $type ); ?></span>
+			<div>
+				<h3><?php echo esc_html( $label ); ?></h3>
+				<p><?php if ( '' !== $href ) : ?><a href="<?php echo esc_url( $href ); ?>"><?php echo esc_html( $value ); ?></a><?php else : ?><?php echo esc_html( $value ); ?><?php endif; ?></p>
+			</div>
+		</article>
+		<?php
+	}
+
+	private function render_contact_form( $settings ) {
+		$shortcode = $this->plain_text( $settings['form_shortcode'] );
+
+		if ( '' !== $shortcode && function_exists( 'do_shortcode' ) ) {
+			echo '<div class="efi-contact-form-shortcode">' . do_shortcode( $shortcode ) . '</div>';
+			return;
+		}
+		?>
+		<form class="efi-contact-form" action="<?php echo esc_url( $this->plain_text( $settings['form_action'] ) ); ?>" method="post">
+			<div class="efi-form-row">
+				<label><span><?php echo esc_html__( 'Név', 'vitacenter-elementor-header' ); ?></span><input type="text" name="name" placeholder="<?php echo esc_attr__( 'Teljes név', 'vitacenter-elementor-header' ); ?>" required></label>
+				<label><span><?php echo esc_html__( 'E-mail', 'vitacenter-elementor-header' ); ?></span><input type="email" name="email" placeholder="email@pelda.ro" required></label>
+			</div>
+			<div class="efi-form-row">
+				<label><span><?php echo esc_html__( 'Telefon', 'vitacenter-elementor-header' ); ?></span><input type="tel" name="phone" placeholder="+40 ..."></label>
+				<label><span><?php echo esc_html__( 'Téma', 'vitacenter-elementor-header' ); ?></span><select name="topic"><option value=""><?php echo esc_html__( 'Válasszon témát', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Programok', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Időpontfoglalás', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Szűrővizsgálatok', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Tanácsadás', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Egyéb kérdés', 'vitacenter-elementor-header' ); ?></option></select></label>
+			</div>
+			<label><span><?php echo esc_html__( 'Üzenet', 'vitacenter-elementor-header' ); ?></span><textarea name="message" rows="6" placeholder="<?php echo esc_attr__( 'Írja meg kérdését vagy üzenetét...', 'vitacenter-elementor-header' ); ?>" required></textarea></label>
+			<button type="submit" class="efi-contact-submit"><span><?php echo esc_html( $this->plain_text( $settings['submit_text'] ) ); ?></span><span aria-hidden="true">&#8594;</span></button>
+		</form>
+		<?php
+	}
+
+	private function render_contact_link( $text, $link, $class = '' ) {
+		$text = $this->plain_text( $text );
+
+		if ( '' === $text ) {
+			return;
+		}
+		?>
+		<a <?php if ( '' !== $class ) : ?>class="<?php echo esc_attr( $class ); ?>"<?php endif; ?> <?php echo $this->url_attributes( $link ); ?>><?php echo esc_html( $text ); ?></a>
+		<?php
+	}
+
+	private function render_contact_pulse_icon() {
+		?>
+		<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+			<circle cx="48" cy="48" r="45" fill="#ffffff" opacity="0.18"/>
+			<path d="M31 50h10l5-13 8 25 5-12h8" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M35 34c3.5-5 11-5 13 1 2-6 9.5-6 13-1 5.5 8.5-5 19-13 25-8-6-18.5-16.5-13-25Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round" opacity="0.92"/>
+		</svg>
+		<?php
+	}
+
+	private function render_contact_icon( $type ) {
+		if ( 'mail' === $type ) :
+			?>
+			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M4 6.5h16v11H4v-11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+				<path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+			<?php
+			return;
+		endif;
+
+		if ( 'pin' === $type ) :
+			?>
+			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M12 21s7-6.14 7-12a7 7 0 1 0-14 0c0 5.86 7 12 7 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+				<circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.8"/>
+			</svg>
+			<?php
+			return;
+		endif;
+		?>
+		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M6.62 10.79c1.44 2.83 3.76 5.13 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>
+		<?php
+	}
+
+	private function contact_phone_href( $phone ) {
+		$normalized = preg_replace( '/[^0-9+]/', '', $this->plain_text( $phone ) );
+
+		return $normalized ? 'tel:' . $normalized : '';
+	}
+
+	private function contact_email_href( $email ) {
+		$email = sanitize_email( $this->plain_text( $email ) );
+
+		return is_email( $email ) ? 'mailto:' . $email : '';
+	}
+}
+
 class VitaCenter_Landing_Contact_Widget extends VitaCenter_Structured_Widget_Base {
 	public function get_name() { return 'vitacenter_landing_contact_footer'; }
 	public function get_title() { return esc_html__( 'VitaCenter Contact/Footer', 'vitacenter-elementor-header' ); }

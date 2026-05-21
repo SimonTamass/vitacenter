@@ -20,6 +20,10 @@ WordPress plugin, amely szerkesztheto Elementor widgeteket ad a VitaCenter oldal
    - `All Events`
    - `VitaCenter CTA`
    - `VitaCenter Knowledge Cards`
+   - `VitaCenter Knowledge`
+   - `VitaCenter Video Gallery`
+   - `VitaCenter Partners`
+   - `VitaCenter Contact`
    - `VitaCenter Contact/Footer`
    - `VitaCenter Legal Footer`
    - `VitaCenter Project Content`
@@ -93,6 +97,15 @@ widgeteket helyezd egymas ala.
   shortcode-szeru, kepes, datum-badges esemenykartyakat ad.
 - Az `All Events` widget minden `tribe_events` esemenyt megjelenit: elol a
   kovetkezoket novekvo idorendben, utana kulon, jelolve az elmultakat.
+- A `VitaCenter Contact` widget teljes kapcsolat oldalt ad hero szakasszal,
+  elerhetosegi kartyakkal, urlap/shortcode hellyel, nyitvatartassal es
+  terkepblokkal.
+- A `VitaCenter Knowledge` widget teljes tudastar oldalt ad hero szakasszal,
+  kiemelt temaval, cikkkartyakkal, letoltesekkel, GYIK blokkal es oldalsavval.
+- A `VitaCenter Video Gallery` widget foto- es videogaleria oldalt ad hero
+  szakasszal, szurokkel, kiemelt albumokkal, galeria raccsal es oldalsavval.
+- A `VitaCenter Partners` widget partneroldalt ad szerkesztheto hero
+  szakasszal, kiemelt partnerrel, partnerkartyakkal es also megjegyzessel.
 - A nagy egyben widgetek megmaradtak kompatibilitas miatt, de uj oldalt inkabb
   a kisebb widgetekbol epits.
 

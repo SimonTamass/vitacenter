@@ -95,6 +95,10 @@ namespace {
 		)
 	);
 	render_widget( 'VitaCenter_Landing_Contact_Widget', array() );
+	render_widget( 'VitaCenter_Knowledge_Widget', array() );
+	render_widget( 'VitaCenter_Video_Gallery_Widget', array() );
+	render_widget( 'VitaCenter_Partners_Widget', array() );
+	render_widget( 'VitaCenter_Contact_Widget', array() );
 	render_widget( 'VitaCenter_Upcoming_Events_Widget', array() );
 	render_widget( 'VitaCenter_All_Events_Widget', array() );
 
