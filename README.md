@@ -17,6 +17,7 @@ WordPress plugin, amely szerkesztheto Elementor widgeteket ad a VitaCenter oldal
    - `VitaCenter Programs`
    - `VitaCenter Events`
    - `VitaCenter Upcoming Events`
+   - `All Events`
    - `VitaCenter CTA`
    - `VitaCenter Knowledge Cards`
    - `VitaCenter Contact/Footer`
@@ -90,6 +91,8 @@ widgeteket helyezd egymas ala.
   olvassa, a `_EventStartDate` mezovel jovobeli datum szerint rendezve.
 - A `VitaCenter Upcoming Events` widget ugyanezt a forrast hasznalja, de
   shortcode-szeru, kepes, datum-badges esemenykartyakat ad.
+- Az `All Events` widget minden `tribe_events` esemenyt megjelenit: elol a
+  kovetkezoket novekvo idorendben, utana kulon, jelolve az elmultakat.
 - A nagy egyben widgetek megmaradtak kompatibilitas miatt, de uj oldalt inkabb
   a kisebb widgetekbol epits.
 

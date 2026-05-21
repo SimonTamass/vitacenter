@@ -726,7 +726,7 @@ class VitaCenter_Upcoming_Events_Widget extends VitaCenter_Structured_Widget_Bas
 		<?php
 	}
 
-	private function get_upcoming_events( $limit ) {
+	protected function get_upcoming_events( $limit ) {
 		if ( ! post_type_exists( 'tribe_events' ) ) {
 			return false;
 		}
@@ -763,7 +763,7 @@ class VitaCenter_Upcoming_Events_Widget extends VitaCenter_Structured_Widget_Bas
 		return $events;
 	}
 
-	private function format_upcoming_event( $event_id ) {
+	protected function format_upcoming_event( $event_id ) {
 		$start_date_raw = get_post_meta( $event_id, '_EventStartDate', true );
 		$end_date_raw   = get_post_meta( $event_id, '_EventEndDate', true );
 		$start_ts       = ! empty( $start_date_raw ) && strtotime( $start_date_raw ) ? strtotime( $start_date_raw ) : 0;
@@ -816,15 +816,25 @@ class VitaCenter_Upcoming_Events_Widget extends VitaCenter_Structured_Widget_Bas
 			'date'    => $date_display,
 			'venue'   => $venue,
 			'excerpt' => $excerpt,
+			'start_ts' => $start_ts,
 		);
 	}
 
-	private function render_upcoming_event_card( $event, $settings ) {
+	protected function render_upcoming_event_card( $event, $settings ) {
 		$has_image      = ! empty( $event['image'] );
 		$has_date_badge = ! empty( $event['month'] ) || ! empty( $event['day'] );
 		$has_meta       = ! empty( $event['date'] ) || ! empty( $event['venue'] );
+		$card_classes   = array( 'efi-event-card' );
+
+		if ( ! $has_image ) {
+			$card_classes[] = 'efi-event-card--no-image';
+		}
+
+		if ( ! empty( $event['is_past'] ) ) {
+			$card_classes[] = 'efi-event-card--past';
+		}
 		?>
-		<article class="efi-event-card <?php echo ! $has_image ? 'efi-event-card--no-image' : ''; ?>">
+		<article class="<?php echo esc_attr( implode( ' ', $card_classes ) ); ?>">
 			<div class="efi-event-media">
 				<?php if ( ! empty( $event['url'] ) ) : ?>
 					<a class="efi-event-image-link" href="<?php echo esc_url( $event['url'] ); ?>" aria-label="<?php echo esc_attr( $event['title'] ); ?>">
@@ -851,6 +861,10 @@ class VitaCenter_Upcoming_Events_Widget extends VitaCenter_Structured_Widget_Bas
 						<?php if ( ! empty( $event['month'] ) ) : ?><span class="efi-event-month"><?php echo esc_html( $event['month'] ); ?></span><?php endif; ?>
 						<?php if ( ! empty( $event['day'] ) ) : ?><span class="efi-event-day"><?php echo esc_html( $event['day'] ); ?></span><?php endif; ?>
 					</div>
+				<?php endif; ?>
+
+				<?php if ( ! empty( $event['status_label'] ) ) : ?>
+					<div class="efi-event-status"><?php echo esc_html( $event['status_label'] ); ?></div>
 				<?php endif; ?>
 			</div>
 
@@ -889,7 +903,7 @@ class VitaCenter_Upcoming_Events_Widget extends VitaCenter_Structured_Widget_Bas
 		<?php
 	}
 
-	private function render_upcoming_event_meta_icon( $type ) {
+	protected function render_upcoming_event_meta_icon( $type ) {
 		if ( 'pin' === $type ) :
 			?>
 			<svg viewBox="0 0 24 24">
@@ -904,6 +918,152 @@ class VitaCenter_Upcoming_Events_Widget extends VitaCenter_Structured_Widget_Bas
 			<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
 			<path d="M12 7v5l3.5 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 		</svg>
+		<?php
+	}
+}
+
+class VitaCenter_All_Events_Widget extends VitaCenter_Upcoming_Events_Widget {
+	public function get_name() { return 'vitacenter_all_events'; }
+	public function get_title() { return esc_html__( 'All Events', 'vitacenter-elementor-header' ); }
+	public function get_icon() { return 'eicon-calendar'; }
+	public function get_style_depends() { return array( 'vc-landing' ); }
+	public function get_script_depends() { return array( 'vc-landing' ); }
+
+	protected function register_controls() {
+		$this->start_controls_section( 'events_section', array( 'label' => esc_html__( 'Összes esemény', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'upcoming_title', array( 'label' => esc_html__( 'Jövőbeli blokk címe', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Közelgő események', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'past_title', array( 'label' => esc_html__( 'Elmúlt blokk címe', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Elmúlt események', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'upcoming_category_text', array( 'label' => esc_html__( 'Jövőbeli kártya címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Közelgő esemény', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'past_category_text', array( 'label' => esc_html__( 'Elmúlt kártya címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Elmúlt esemény', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'past_status_text', array( 'label' => esc_html__( 'Elmúlt jelölő felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Elmúlt', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'button_text', array( 'label' => esc_html__( 'Gomb felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Részletek', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'show_empty', array( 'label' => esc_html__( 'Üres állapot mutatása', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
+		$this->add_control( 'empty_text', array( 'label' => esc_html__( 'Üres állapot szövege', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Jelenleg nincs megjeleníthető esemény.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'unavailable_text', array( 'label' => esc_html__( 'Eseménykezelő hiányzik szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Az eseménykezelő jelenleg nem érhető el.', 'vitacenter-elementor-header' ) ) );
+		$this->end_controls_section();
+	}
+
+	protected function render() {
+		$s = wp_parse_args(
+			$this->get_settings_for_display(),
+			array(
+				'upcoming_title'         => esc_html__( 'Közelgő események', 'vitacenter-elementor-header' ),
+				'past_title'             => esc_html__( 'Elmúlt események', 'vitacenter-elementor-header' ),
+				'upcoming_category_text' => esc_html__( 'Közelgő esemény', 'vitacenter-elementor-header' ),
+				'past_category_text'     => esc_html__( 'Elmúlt esemény', 'vitacenter-elementor-header' ),
+				'past_status_text'       => esc_html__( 'Elmúlt', 'vitacenter-elementor-header' ),
+				'button_text'            => esc_html__( 'Részletek', 'vitacenter-elementor-header' ),
+				'show_empty'             => 'yes',
+				'empty_text'             => esc_html__( 'Jelenleg nincs megjeleníthető esemény.', 'vitacenter-elementor-header' ),
+				'unavailable_text'       => esc_html__( 'Az eseménykezelő jelenleg nem érhető el.', 'vitacenter-elementor-header' ),
+			)
+		);
+
+		$show_empty = 'yes' === $this->plain_text( $s['show_empty'] );
+		$groups     = $this->get_all_events_groups( $s );
+
+		if ( false === $groups && ! $show_empty ) {
+			return;
+		}
+
+		if ( is_array( $groups ) && empty( $groups['upcoming'] ) && empty( $groups['past'] ) && ! $show_empty ) {
+			return;
+		}
+		?>
+		<div class="vc-landing">
+			<section class="efi-events-section efi-events-section--all" aria-label="<?php echo esc_attr__( 'Összes esemény', 'vitacenter-elementor-header' ); ?>">
+				<div class="vc-landing__container">
+					<?php if ( false === $groups ) : ?>
+						<div class="efi-events-empty"><?php echo esc_html( $this->plain_text( $s['unavailable_text'] ) ); ?></div>
+					<?php elseif ( empty( $groups['upcoming'] ) && empty( $groups['past'] ) ) : ?>
+						<div class="efi-events-empty"><?php echo esc_html( $this->plain_text( $s['empty_text'] ) ); ?></div>
+					<?php else : ?>
+						<div class="efi-events-groups">
+							<?php $this->render_all_events_group( 'upcoming', $s['upcoming_title'], $groups['upcoming'], $s['upcoming_category_text'], $s ); ?>
+							<?php $this->render_all_events_group( 'past', $s['past_title'], $groups['past'], $s['past_category_text'], $s ); ?>
+						</div>
+					<?php endif; ?>
+				</div>
+			</section>
+		</div>
+		<?php
+	}
+
+	private function get_all_events_groups( $settings ) {
+		if ( ! post_type_exists( 'tribe_events' ) ) {
+			return false;
+		}
+
+		$today = current_time( 'Y-m-d H:i:s' );
+
+		return array(
+			'upcoming' => $this->query_all_events_group( $today, '>=', 'ASC', false, '' ),
+			'past'     => $this->query_all_events_group( $today, '<', 'DESC', true, $settings['past_status_text'] ),
+		);
+	}
+
+	private function query_all_events_group( $today, $compare, $order, $is_past, $status_label ) {
+		$query = new WP_Query(
+			array(
+				'post_type'      => 'tribe_events',
+				'posts_per_page' => -1,
+				'post_status'    => 'publish',
+				'meta_key'       => '_EventStartDate',
+				'orderby'        => 'meta_value',
+				'order'          => $order,
+				'meta_query'     => array(
+					array(
+						'key'     => '_EventStartDate',
+						'value'   => $today,
+						'compare' => $compare,
+						'type'    => 'DATETIME',
+					),
+				),
+				'no_found_rows'  => true,
+			)
+		);
+
+		$events = array();
+
+		while ( $query->have_posts() ) {
+			$query->the_post();
+
+			$event = $this->format_upcoming_event( get_the_ID() );
+
+			if ( $is_past ) {
+				$event['is_past']      = true;
+				$event['status_label'] = $this->plain_text( $status_label );
+			}
+
+			$events[] = $event;
+		}
+
+		wp_reset_postdata();
+
+		return $events;
+	}
+
+	private function render_all_events_group( $type, $title, $events, $category_text, $settings ) {
+		if ( empty( $events ) ) {
+			return;
+		}
+
+		$card_settings                  = $settings;
+		$card_settings['category_text'] = $category_text;
+		?>
+		<section class="efi-events-group efi-events-group--<?php echo esc_attr( $type ); ?>" aria-label="<?php echo esc_attr( $this->plain_text( $title ) ); ?>">
+			<?php if ( '' !== $this->plain_text( $title ) ) : ?>
+				<div class="efi-events-group__head">
+					<span><?php echo 'past' === $type ? esc_html__( 'Archívum', 'vitacenter-elementor-header' ) : esc_html__( 'Soron következő', 'vitacenter-elementor-header' ); ?></span>
+					<h2><?php echo esc_html( $this->plain_text( $title ) ); ?></h2>
+				</div>
+			<?php endif; ?>
+			<div class="efi-events-grid">
+				<?php foreach ( $events as $event ) : ?>
+					<?php $this->render_upcoming_event_card( $event, $card_settings ); ?>
+				<?php endforeach; ?>
+			</div>
+		</section>
 		<?php
 	}
 }

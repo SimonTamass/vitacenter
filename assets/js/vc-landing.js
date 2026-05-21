@@ -305,6 +305,7 @@
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_programs.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_events.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_upcoming_events.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_all_events.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_cta.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_knowledge.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_landing_contact_footer.default', bootElementorWidget);

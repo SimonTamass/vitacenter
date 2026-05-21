@@ -713,6 +713,23 @@
 	line-height: 0.95;
 }
 
+.efi-event-status {
+	position: absolute;
+	z-index: 2;
+	top: 18px;
+	right: 18px;
+	padding: 8px 12px;
+	background: rgba(38, 56, 62, 0.82);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	border-radius: 999px;
+	color: #ffffff;
+	font-size: 11px;
+	font-weight: 900;
+	letter-spacing: 0.1em;
+	line-height: 1;
+	text-transform: uppercase;
+}
+
 .efi-event-content {
 	display: flex;
 	flex: 1;
@@ -863,6 +880,76 @@
 	font-size: 16px;
 	font-weight: 700;
 	line-height: 1.45;
+}
+
+.efi-events-groups {
+	display: grid;
+	gap: clamp(44px, 5vw, 72px);
+}
+
+.efi-events-group {
+	min-width: 0;
+}
+
+.efi-events-group__head {
+	display: grid;
+	gap: 8px;
+	margin-bottom: 24px;
+}
+
+.efi-events-group__head span {
+	color: var(--efi-events-teal);
+	font-size: 12px;
+	font-weight: 900;
+	letter-spacing: 0.12em;
+	line-height: 1;
+	text-transform: uppercase;
+}
+
+.efi-events-group__head h2 {
+	margin: 0;
+	color: var(--vc-landing-primary-dark, #075c57);
+	font-size: clamp(28px, 3vw, 42px);
+	font-weight: 850;
+	letter-spacing: 0;
+	line-height: 1.08;
+}
+
+.efi-events-group--past {
+	padding-top: clamp(28px, 4vw, 46px);
+	border-top: 1px solid rgba(12, 143, 132, 0.14);
+}
+
+.efi-events-group--past .efi-events-group__head span {
+	color: #7d8b90;
+}
+
+.efi-event-card--past {
+	background: #fbfcfc;
+	border-color: rgba(84, 105, 112, 0.18);
+}
+
+.efi-event-card--past .efi-event-image {
+	filter: saturate(0.78);
+}
+
+.efi-event-card--past .efi-event-date-badge {
+	color: #4f6268;
+}
+
+.efi-event-card--past .efi-event-month,
+.efi-event-card--past .efi-event-meta-icon,
+.efi-event-card--past .efi-event-category {
+	color: #708086;
+}
+
+.efi-event-card--past .efi-event-category {
+	background: #eef2f3;
+}
+
+.efi-event-card--past .efi-event-button {
+	background: #4f6268;
+	box-shadow: 0 14px 28px rgba(79, 98, 104, 0.2);
 }
 
 @media (max-width: 1180px) {

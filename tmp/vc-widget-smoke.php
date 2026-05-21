@@ -96,6 +96,7 @@ namespace {
 	);
 	render_widget( 'VitaCenter_Landing_Contact_Widget', array() );
 	render_widget( 'VitaCenter_Upcoming_Events_Widget', array() );
+	render_widget( 'VitaCenter_All_Events_Widget', array() );
 
 	echo "ok\n";
 }
