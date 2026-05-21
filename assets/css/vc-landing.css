@@ -794,7 +794,7 @@
 .efi-event-meta {
 	display: grid;
 	gap: 10px;
-	margin-top: 22px;
+	margin-top: auto;
 	padding-top: 18px;
 	border-top: 1px solid rgba(12, 143, 132, 0.12);
 	color: #5e7076;
@@ -850,10 +850,13 @@
 	transition: box-shadow 220ms ease, filter 220ms ease, transform 220ms ease;
 }
 
-.efi-event-meta + .efi-event-button,
+.efi-event-meta + .efi-event-button {
+	margin-top: 22px;
+}
+
 .efi-event-excerpt + .efi-event-button,
 .efi-event-title + .efi-event-button {
-	margin-top: 22px;
+	margin-top: auto;
 }
 
 .efi-event-button:hover,
@@ -1057,6 +1060,28 @@
 	color: rgba(255, 255, 255, 0.92);
 	font-size: 16px;
 	line-height: 1.5;
+}
+
+.vc-landing__cta .vc-landing__button--light {
+	min-width: 190px;
+	background: #ffffff !important;
+	color: var(--vc-landing-primary-dark) !important;
+	box-shadow: 0 12px 26px rgba(0, 77, 84, 0.18);
+	opacity: 1;
+}
+
+.vc-landing__cta .vc-landing__button--light span,
+.vc-landing__cta .vc-landing__button--light i {
+	display: inline-flex;
+	color: var(--vc-landing-primary-dark) !important;
+	opacity: 1;
+	visibility: visible;
+}
+
+.vc-landing__cta .vc-landing__button--light:hover,
+.vc-landing__cta .vc-landing__button--light:focus-visible {
+	background: #ffffff !important;
+	color: var(--vc-landing-primary) !important;
 }
 
 .vc-landing__article-grid {
