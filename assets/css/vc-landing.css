@@ -6212,3 +6212,358 @@ html.efi-gallery-lightbox-open body {
 		font-size: 13px;
 	}
 }
+
+/* EFI widgets: responsive typography and positioning polish. */
+.efi-contact-page,
+.efi-partners-page,
+.efi-knowledge-page,
+.efi-gallery-page,
+.efi-events-section,
+.efi-footer {
+	overflow-wrap: anywhere;
+}
+
+.efi-contact-hero__button,
+.efi-contact-submit,
+.efi-link-button,
+.efi-sidebar-card--cta a,
+.efi-gallery-sidebar-card--cta a,
+.efi-event-button,
+.vc-landing__cta .vc-landing__button {
+	text-align: center;
+	white-space: normal;
+}
+
+.efi-partner-card h2,
+.efi-contact-info-card p,
+.efi-contact-side-card h3,
+.efi-featured-mini-card h3,
+.efi-article-card h3,
+.efi-gallery-card-content h2,
+.efi-gallery-card-content h3,
+.efi-gallery-item-body h3,
+.efi-footer-contact__text strong,
+.efi-footer-bottom__copyright {
+	overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+	.efi-contact-hero h1,
+	.efi-partners-hero h1,
+	.efi-knowledge-hero h1,
+	.efi-gallery-hero h1 {
+		font-size: clamp(36px, 7vw, 52px);
+		line-height: 1.04;
+	}
+
+	.efi-contact-section-heading h2,
+	.efi-featured-article h2,
+	.efi-section-heading h2,
+	.efi-gallery-section-heading h2,
+	.efi-events-group__head h2 {
+		font-size: clamp(28px, 5vw, 38px);
+		line-height: 1.1;
+	}
+
+	.efi-partner-card h2,
+	.efi-gallery-card-content h3,
+	.efi-gallery-item-body h3,
+	.efi-sidebar-card h3,
+	.efi-gallery-sidebar-card h3 {
+		font-size: clamp(21px, 3.4vw, 26px);
+		line-height: 1.18;
+	}
+
+	.vc-landing__cta {
+		grid-template-columns: 72px minmax(0, 1fr);
+	}
+
+	.vc-landing__cta .vc-landing__button {
+		grid-column: 1 / -1;
+		width: 100%;
+	}
+}
+
+@media (max-width: 680px) {
+	.efi-contact-page,
+	.efi-partners-page,
+	.efi-knowledge-page,
+	.efi-gallery-page {
+		padding-top: 24px;
+		padding-bottom: 42px;
+	}
+
+	.efi-contact-hero,
+	.efi-partners-hero,
+	.efi-knowledge-hero,
+	.efi-gallery-hero {
+		gap: 20px;
+		padding: 22px;
+	}
+
+	.efi-contact-hero h1,
+	.efi-partners-hero h1,
+	.efi-knowledge-hero h1,
+	.efi-gallery-hero h1 {
+		margin-top: 14px;
+		margin-bottom: 12px;
+		font-size: clamp(30px, 9vw, 38px);
+		line-height: 1.08;
+	}
+
+	.efi-contact-hero p,
+	.efi-partners-hero p,
+	.efi-knowledge-hero p,
+	.efi-gallery-hero p,
+	.efi-contact-section-heading p,
+	.efi-featured-article p,
+	.efi-section-heading p,
+	.efi-gallery-card-content p,
+	.efi-gallery-item-body p,
+	.efi-sidebar-card p,
+	.efi-gallery-sidebar-card p {
+		font-size: 15px;
+		line-height: 1.58;
+	}
+
+	.efi-contact-eyebrow,
+	.efi-partners-eyebrow,
+	.efi-knowledge-eyebrow,
+	.efi-gallery-eyebrow,
+	.efi-contact-section-heading span,
+	.efi-contact-side-card__label,
+	.efi-partner-type,
+	.efi-knowledge-page .efi-section-heading span,
+	.efi-knowledge-page .efi-card-label,
+	.efi-gallery-section-heading span,
+	.efi-gallery-card-label,
+	.efi-event-category,
+	.efi-gallery-type,
+	.efi-gallery-thumb span {
+		max-width: 100%;
+		font-size: 10px;
+		line-height: 1.2;
+		letter-spacing: 0.08em;
+	}
+
+	.efi-contact-hero__card {
+		min-height: auto;
+		padding: 22px;
+	}
+
+	.efi-contact-pulse {
+		width: 66px;
+		height: 66px;
+		margin-bottom: 16px;
+		border-radius: 20px;
+	}
+
+	.efi-contact-pulse svg {
+		width: 56px;
+		height: 56px;
+	}
+
+	.efi-contact-hero__card h2,
+	.efi-contact-side-card h3,
+	.efi-sidebar-card--cta h3,
+	.efi-gallery-sidebar-card--cta h3 {
+		font-size: 24px;
+		line-height: 1.12;
+	}
+
+	.efi-contact-info-card {
+		align-items: flex-start;
+	}
+
+	.efi-contact-info-card p,
+	.efi-contact-form input,
+	.efi-contact-form select,
+	.efi-contact-form textarea,
+	.efi-contact-form-shortcode input,
+	.efi-contact-form-shortcode select,
+	.efi-contact-form-shortcode textarea {
+		font-size: 15px;
+	}
+
+	.efi-contact-section-heading h2,
+	.efi-featured-article h2,
+	.efi-section-heading h2,
+	.efi-gallery-section-heading h2,
+	.efi-events-group__head h2 {
+		font-size: 28px;
+		line-height: 1.12;
+	}
+
+	.efi-contact-hero__button,
+	.efi-contact-submit,
+	.efi-link-button,
+	.efi-sidebar-card--cta a,
+	.efi-gallery-sidebar-card--cta a,
+	.efi-contact-map__overlay a {
+		width: 100%;
+		min-height: 50px;
+		padding-right: 16px;
+		padding-left: 16px;
+	}
+
+	.efi-partner-card {
+		gap: 16px;
+		padding: 20px;
+		min-height: auto;
+	}
+
+	.efi-partner-card--featured {
+		align-items: start;
+	}
+
+	.efi-partner-logo {
+		width: 82px;
+		height: 82px;
+		border-radius: 22px;
+	}
+
+	.efi-partner-logo span {
+		font-size: 23px;
+	}
+
+	.efi-partner-card h2,
+	.efi-gallery-card-content h3,
+	.efi-gallery-item-body h3,
+	.efi-article-card h3,
+	.efi-featured-mini-card h3 {
+		font-size: 21px;
+		line-height: 1.18;
+	}
+
+	.efi-featured-article,
+	.efi-featured-mini-card,
+	.efi-knowledge-section,
+	.efi-sidebar-card,
+	.efi-gallery-card-content,
+	.efi-gallery-item-body,
+	.efi-gallery-sidebar-card {
+		padding: 20px;
+	}
+
+	.efi-gallery-card-content h2 {
+		font-size: 28px;
+		line-height: 1.08;
+	}
+
+	.efi-gallery-placeholder,
+	.efi-gallery-thumb,
+	.efi-gallery-featured-card--large .efi-gallery-placeholder {
+		min-height: 220px;
+	}
+
+	.efi-event-media,
+	.efi-event-image,
+	.efi-event-placeholder,
+	.efi-event-image-link {
+		min-height: 210px;
+	}
+
+	.efi-event-title {
+		font-size: 21px;
+		line-height: 1.18;
+	}
+
+	.efi-event-excerpt,
+	.efi-event-meta {
+		font-size: 14px;
+	}
+
+	.efi-event-date-badge {
+		min-width: 64px;
+		min-height: 64px;
+		padding: 8px 10px;
+	}
+
+	.efi-event-day {
+		font-size: 28px;
+	}
+
+	.efi-event-status {
+		top: 16px;
+		right: 16px;
+		max-width: calc(100% - 104px);
+		white-space: normal;
+		line-height: 1.2;
+	}
+
+	.vc-landing__cta {
+		grid-template-columns: 58px minmax(0, 1fr);
+		gap: 16px;
+		padding: 20px;
+	}
+
+	.vc-landing__cta img {
+		width: 58px;
+		height: 58px;
+	}
+
+	.vc-landing__cta h2 {
+		font-size: 24px;
+		line-height: 1.12;
+	}
+
+	.vc-landing__cta p {
+		font-size: 14px;
+	}
+
+	.efi-footer__notice p {
+		font-size: 18px;
+		line-height: 1.42;
+	}
+
+	.efi-footer-bottom__copyright {
+		font-size: 15px;
+		line-height: 1.35;
+	}
+
+	.efi-footer-bottom__project,
+	.efi-footer-bottom__links a {
+		font-size: 12px;
+	}
+}
+
+@media (max-width: 420px) {
+	.efi-contact-page,
+	.efi-partners-page,
+	.efi-knowledge-page,
+	.efi-gallery-page {
+		padding-right: 12px;
+		padding-left: 12px;
+	}
+
+	.efi-contact-hero,
+	.efi-partners-hero,
+	.efi-knowledge-hero,
+	.efi-gallery-hero {
+		padding: 20px;
+	}
+
+	.efi-contact-hero h1,
+	.efi-partners-hero h1,
+	.efi-knowledge-hero h1,
+	.efi-gallery-hero h1 {
+		font-size: 30px;
+	}
+
+	.efi-contact-section-heading h2,
+	.efi-featured-article h2,
+	.efi-section-heading h2,
+	.efi-gallery-section-heading h2 {
+		font-size: 26px;
+	}
+
+	.efi-gallery-placeholder,
+	.efi-gallery-thumb,
+	.efi-gallery-featured-card--large .efi-gallery-placeholder,
+	.efi-event-media,
+	.efi-event-image,
+	.efi-event-placeholder,
+	.efi-event-image-link {
+		min-height: 190px;
+	}
+}
