@@ -6214,40 +6214,40 @@ html.efi-gallery-lightbox-open body {
 }
 
 /* EFI widgets: responsive typography and positioning polish. */
-.efi-contact-page,
-.efi-partners-page,
-.efi-knowledge-page,
-.efi-gallery-page,
-.efi-events-section,
-.efi-footer {
-	overflow-wrap: anywhere;
-}
-
-.efi-contact-hero__button,
-.efi-contact-submit,
-.efi-link-button,
-.efi-sidebar-card--cta a,
-.efi-gallery-sidebar-card--cta a,
-.efi-event-button,
-.vc-landing__cta .vc-landing__button {
-	text-align: center;
-	white-space: normal;
-}
-
-.efi-partner-card h2,
-.efi-contact-info-card p,
-.efi-contact-side-card h3,
-.efi-featured-mini-card h3,
-.efi-article-card h3,
-.efi-gallery-card-content h2,
-.efi-gallery-card-content h3,
-.efi-gallery-item-body h3,
-.efi-footer-contact__text strong,
-.efi-footer-bottom__copyright {
-	overflow-wrap: anywhere;
-}
-
 @media (max-width: 900px) {
+	.efi-contact-page,
+	.efi-partners-page,
+	.efi-knowledge-page,
+	.efi-gallery-page,
+	.efi-events-section,
+	.efi-footer {
+		overflow-wrap: anywhere;
+	}
+
+	.efi-contact-hero__button,
+	.efi-contact-submit,
+	.efi-link-button,
+	.efi-sidebar-card--cta a,
+	.efi-gallery-sidebar-card--cta a,
+	.efi-event-button,
+	.vc-landing__cta .vc-landing__button {
+		text-align: center;
+		white-space: normal;
+	}
+
+	.efi-partner-card h2,
+	.efi-contact-info-card p,
+	.efi-contact-side-card h3,
+	.efi-featured-mini-card h3,
+	.efi-article-card h3,
+	.efi-gallery-card-content h2,
+	.efi-gallery-card-content h3,
+	.efi-gallery-item-body h3,
+	.efi-footer-contact__text strong,
+	.efi-footer-bottom__copyright {
+		overflow-wrap: anywhere;
+	}
+
 	.efi-contact-hero h1,
 	.efi-partners-hero h1,
 	.efi-knowledge-hero h1,
@@ -6289,8 +6289,25 @@ html.efi-gallery-lightbox-open body {
 	.efi-partners-page,
 	.efi-knowledge-page,
 	.efi-gallery-page {
+		max-width: 100%;
+		overflow-x: hidden;
+		overflow-x: clip;
 		padding-top: 24px;
 		padding-bottom: 42px;
+	}
+
+	.efi-contact-hero > *,
+	.efi-contact-info-card > *,
+	.efi-contact-main-grid > *,
+	.efi-contact-side > *,
+	.efi-partner-card > *,
+	.efi-knowledge-main-grid > *,
+	.efi-knowledge-sidebar > *,
+	.efi-gallery-main-grid > *,
+	.efi-gallery-sidebar > *,
+	.efi-event-card > *,
+	.vc-landing__cta > * {
+		min-width: 0;
 	}
 
 	.efi-contact-hero,
@@ -6375,6 +6392,26 @@ html.efi-gallery-lightbox-open body {
 		align-items: flex-start;
 	}
 
+	.efi-hours-list div {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.efi-contact-map__overlay {
+		right: 16px;
+		bottom: 16px;
+		left: 16px;
+		width: auto;
+		max-width: none;
+		padding: 20px;
+	}
+
+	.efi-contact-map__overlay strong {
+		font-size: 19px;
+		line-height: 1.25;
+	}
+
 	.efi-contact-info-card p,
 	.efi-contact-form input,
 	.efi-contact-form select,
@@ -6450,6 +6487,17 @@ html.efi-gallery-lightbox-open body {
 		line-height: 1.08;
 	}
 
+	.efi-gallery-filter {
+		width: 100%;
+		max-width: 100%;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.efi-gallery-filter a {
+		flex: 0 0 auto;
+	}
+
 	.efi-gallery-placeholder,
 	.efi-gallery-thumb,
 	.efi-gallery-featured-card--large .efi-gallery-placeholder {
@@ -6489,6 +6537,10 @@ html.efi-gallery-lightbox-open body {
 		max-width: calc(100% - 104px);
 		white-space: normal;
 		line-height: 1.2;
+	}
+
+	.efi-events-group__head {
+		margin-bottom: 18px;
 	}
 
 	.vc-landing__cta {
