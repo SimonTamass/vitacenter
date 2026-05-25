@@ -5220,8 +5220,12 @@
 		padding-left: 18px;
 	}
 
+	.vc-mobile-specialist__hero-grid {
+		gap: 0;
+	}
+
 	.vc-mobile-specialist__hero-copy {
-		padding-top: 46px;
+		padding: 46px 0 24px;
 	}
 
 	.vc-mobile-specialist__breadcrumb {
@@ -5235,6 +5239,7 @@
 
 	.vc-mobile-specialist__hero-copy p {
 		font-size: 17px;
+		line-height: 1.55;
 	}
 
 	.vc-mobile-specialist__actions,
@@ -5249,18 +5254,27 @@
 	}
 
 	.vc-mobile-specialist__visual {
-		min-height: 330px;
+		min-height: 0;
+		padding-bottom: 32px;
+		background: transparent;
 	}
 
 	.vc-mobile-specialist__visual-card {
-		right: 18px;
-		bottom: 24px;
-		left: 18px;
+		position: relative;
+		right: auto;
+		bottom: auto;
+		left: auto;
 		padding: 22px;
 	}
 
 	.vc-mobile-specialist__visual-card h2 {
 		font-size: 23px;
+		line-height: 1.18;
+	}
+
+	.vc-mobile-specialist__visual-card p {
+		font-size: 15px;
+		line-height: 1.55;
 	}
 
 	.vc-mobile-specialist__visual-stats {
