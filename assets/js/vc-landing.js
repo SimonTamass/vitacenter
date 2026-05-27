@@ -32,6 +32,16 @@
 		'.vc-mobile-specialist__side-card',
 		'.vc-mobile-specialist__useful',
 		'.vc-mobile-specialist__cta',
+		'.vc-mobile-specialist-v2__hero-copy',
+		'.vc-mobile-specialist-v2__visual',
+		'.vc-mobile-specialist-v2__highlight-card',
+		'.vc-mobile-specialist-v2__card',
+		'.vc-mobile-specialist-v2__sidebar-card',
+		'.vc-mobile-screening__hero-copy',
+		'.vc-mobile-screening__visual',
+		'.vc-mobile-screening__highlight-card',
+		'.vc-mobile-screening__card',
+		'.vc-mobile-screening__sidebar-card',
 		'.efi-knowledge-hero',
 		'.efi-featured-article',
 		'.efi-featured-mini-card',
@@ -509,6 +519,8 @@
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_project_content.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_program_content.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_mobile_specialist.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_mobile_specialist_v2.default', bootElementorWidget);
+		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_mobile_screening.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_info_section.default', bootElementorWidget);
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/vitacenter_registration_info.default', bootElementorWidget);
 	}

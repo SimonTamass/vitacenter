@@ -29,6 +29,8 @@ WordPress plugin, amely szerkesztheto Elementor widgeteket ad a VitaCenter oldal
    - `VitaCenter Project Content`
    - `VitaCenter Program Content`
    - `VitaCenter Mobil szakorvosi szolgálat`
+   - `VitaCenter Mobil szakorvosi szolgálat 2.0`
+   - `VitaCenter Mobil szűrés`
    - `VitaCenter Ciklusoktatás`
    - `VitaCenter Egészségfejlesztési Iroda`
    - `VitaCenter Életmódtanácsadás`
@@ -77,6 +79,14 @@ widgeteket helyezd egymas ala.
   belso programoldalt ad hero szakasszal, reszletes cikk tartalommal, gyors
   informacios oldalsavval, kapcsolodo mobil szures blokkal es kiemelt
   uzenettel.
+- A `VitaCenter Mobil szakorvosi szolgálat 2.0` widget a mobil szakorvosi
+  oldal uj, kompaktabb vizualis valtozata hero szakasszal, kiemelt
+  kartyakkal, reszletes programleirassal, statisztika kartyakkal es gyors
+  informacios oldalsavval. A regi mobil szakorvosi widget tovabbra is
+  elerheto marad.
+- A `VitaCenter Mobil szűrés` widget kulon mobil szures programoldalt ad
+  onkologiai szuresi tartalommal, 1000 fos tervezett eleressel, szuresi
+  teruletek kartyaval, gyors informacios oldalsavval es kiemelt uzenettel.
 - A `VitaCenter Ciklusoktatás` widget header es footer nelkuli belso
   programoldalt ad termekenysegtudatossagi hero szakasszal, programleirassal,
   temalistaval, gyors informacios oldalsavval es kapcsolat blokkal.

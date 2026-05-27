@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VitaCenter Elementor Widgets
  * Description: Elementor widgets for the VitaCenter header, navigation, and landing page content.
- * Version: 1.4.12
+ * Version: 1.4.14
  * Author: VitaCenter
  * Text Domain: vitacenter-elementor-header
  * Requires Plugins: elementor
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.12' );
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.14' );
 define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
 define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
@@ -96,6 +96,8 @@ final class VitaCenter_Elementor_Header_Plugin {
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-structured-widgets.php';
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-content-widgets.php';
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-mobile-specialist-widget.php';
+		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-mobile-specialist-v2-widget.php';
+		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-mobile-screening-widget.php';
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-ciklusoktatas-widget.php';
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-egeszsegfejlesztesi-iroda-widget.php';
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-eletmodtanacsadas-widget.php';
@@ -122,6 +124,8 @@ final class VitaCenter_Elementor_Header_Plugin {
 		$widgets_manager->register( new VitaCenter_Project_Content_Widget() );
 		$widgets_manager->register( new VitaCenter_Program_Content_Widget() );
 		$widgets_manager->register( new VitaCenter_Mobile_Specialist_Widget() );
+		$widgets_manager->register( new VitaCenter_Mobile_Specialist_V2_Widget() );
+		$widgets_manager->register( new VitaCenter_Mobile_Screening_Widget() );
 		$widgets_manager->register( new VitaCenter_Ciklusoktatas_Widget() );
 		$widgets_manager->register( new VitaCenter_Egeszsegfejlesztesi_Iroda_Widget() );
 		$widgets_manager->register( new VitaCenter_Eletmodtanacsadas_Widget() );
