@@ -2272,8 +2272,8 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 	protected function register_controls() {
 		$this->start_controls_section( 'hero_section', array( 'label' => esc_html__( 'Hero', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'eyebrow', array( 'label' => esc_html__( 'Kis címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Partnerek', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Projektpartnereink', 'vitacenter-elementor-header' ), 'label_block' => true ) );
-		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A projekt a vezető partner és a szakmai projektpartnerek együttműködésével valósul meg.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Partnerek', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A projekt a vezető partner és a projektpartnerek együttműködésével valósul meg.', 'vitacenter-elementor-header' ) ) );
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'partners_section', array( 'label' => esc_html__( 'Partner intézmények', 'vitacenter-elementor-header' ) ) );
@@ -2303,14 +2303,28 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 			$this->get_settings_for_display(),
 			array(
 				'eyebrow'   => esc_html__( 'Partnerek', 'vitacenter-elementor-header' ),
-				'title'     => esc_html__( 'Projektpartnereink', 'vitacenter-elementor-header' ),
-				'intro'     => esc_html__( 'A projekt a vezető partner és a szakmai projektpartnerek együttműködésével valósul meg.', 'vitacenter-elementor-header' ),
+				'title'     => esc_html__( 'Partnerek', 'vitacenter-elementor-header' ),
+				'intro'     => esc_html__( 'A projekt a vezető partner és a projektpartnerek együttműködésével valósul meg.', 'vitacenter-elementor-header' ),
 				'partners'  => $this->default_partners(),
 				'note_text' => esc_html__( 'A partnerség célja, hogy a projekt egészségfejlesztési, szűrési és szakmai tevékenységei szervezett együttműködésben valósuljanak meg.', 'vitacenter-elementor-header' ),
 			)
 		);
 
-		$partners = $this->normalize_partners( isset( $s['partners'] ) ? $s['partners'] : array() );
+		$partner_items = isset( $s['partners'] ) ? $s['partners'] : array();
+
+		if ( $this->is_legacy_partner_list( $partner_items ) ) {
+			$partner_items = $this->default_partners();
+		}
+
+		if ( 'Együtt az egészségesebb közösségekért' === $this->plain_text( $s['title'] ) ) {
+			$s['title'] = esc_html__( 'Partnerek', 'vitacenter-elementor-header' );
+		}
+
+		if ( 'Projektünk szakmai és intézményi partnereink együttműködésével valósul meg.' === $this->plain_text( $s['intro'] ) ) {
+			$s['intro'] = esc_html__( 'A projekt a vezető partner és a projektpartnerek együttműködésével valósul meg.', 'vitacenter-elementor-header' );
+		}
+
+		$partners = $this->normalize_partners( $partner_items );
 
 		if ( empty( $partners ) ) {
 			$partners = $this->normalize_partners( $this->default_partners() );
@@ -2355,7 +2369,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'logo_text'   => 'PSV',
 				'type'        => esc_html__( 'Vezető partner', 'vitacenter-elementor-header' ),
 				'name'        => esc_html__( 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesülete', 'vitacenter-elementor-header' ),
-				'description' => esc_html__( 'A projekt vezető partnere és koordináló intézménye.', 'vitacenter-elementor-header' ),
+				'description' => '',
 				'featured'    => 'yes',
 			),
 			array(
@@ -2375,6 +2389,26 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'featured'    => '',
 			),
 		);
+	}
+
+	private function is_legacy_partner_list( $items ) {
+		$names = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			if ( isset( $item['name'] ) ) {
+				$names[] = $this->plain_text( $item['name'] );
+			}
+		}
+
+		if ( empty( $names ) ) {
+			return false;
+		}
+
+		$joined = implode( ' | ', $names );
+
+		return false !== strpos( $joined, 'Szatmárnémeti Egészségfejlesztési Iroda' )
+			|| false !== strpos( $joined, 'Interreg VI-A' )
+			|| false !== strpos( $joined, 'Egészségügyi Ellátó Központ' );
 	}
 
 	private function normalize_partners( $items ) {
