@@ -2394,18 +2394,24 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 	}
 
 	private function partner_items_for_render( $saved_items ) {
-		$defaults = array(
-			'leader'            => $this->default_partners()[0],
-			'scheffler'         => $this->default_partners()[1],
-			'hodmezovasarhely'  => $this->default_partners()[2],
+		$default_partners = $this->default_partners();
+		$defaults         = array(
+			'leader'           => $default_partners[0],
+			'scheffler'        => $default_partners[1],
+			'hodmezovasarhely' => $default_partners[2],
 		);
-		$items    = array();
+		$items            = array();
+		$extra_items      = array();
 
 		foreach ( $this->repeater_items( $saved_items ) as $item ) {
 			$name = isset( $item['name'] ) ? $this->plain_text( $item['name'] ) : '';
 			$key  = $this->partner_key( $name );
 
 			if ( '' === $key || ! isset( $defaults[ $key ] ) ) {
+				if ( '' !== $name ) {
+					$extra_items[] = $item;
+				}
+
 				continue;
 			}
 
@@ -2433,11 +2439,11 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 			}
 		}
 
-		return array(
+		return array_merge( array(
 			$items['leader'],
 			$items['scheffler'],
 			$items['hodmezovasarhely'],
-		);
+		), $extra_items );
 	}
 
 	private function normalize_partners( $items ) {
