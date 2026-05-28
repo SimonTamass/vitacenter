@@ -2290,6 +2290,13 @@
 	letter-spacing: 0;
 }
 
+.efi-partner-logo img {
+	display: block;
+	max-width: 82%;
+	max-height: 82%;
+	object-fit: contain;
+}
+
 .efi-partner-card h2 {
 	margin: 14px 0 0;
 	color: var(--efi-partners-text);

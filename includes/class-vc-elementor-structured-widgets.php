@@ -2272,12 +2272,13 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 	protected function register_controls() {
 		$this->start_controls_section( 'hero_section', array( 'label' => esc_html__( 'Hero', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'eyebrow', array( 'label' => esc_html__( 'Kis címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Partnerek', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Együtt az egészségesebb közösségekért', 'vitacenter-elementor-header' ), 'label_block' => true ) );
-		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Projektünk szakmai és intézményi partnereink együttműködésével valósul meg.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Projektpartnereink', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A projekt a vezető partner és a szakmai projektpartnerek együttműködésével valósul meg.', 'vitacenter-elementor-header' ) ) );
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'partners_section', array( 'label' => esc_html__( 'Partner intézmények', 'vitacenter-elementor-header' ) ) );
 		$r = new Repeater();
+		$r->add_control( 'logo', array( 'label' => esc_html__( 'Logó', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::MEDIA, 'default' => $this->media_default( 'birodepromovare (1).png' ) ) );
 		$r->add_control( 'logo_text', array( 'label' => esc_html__( 'Logó rövidítés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'EFI' ) );
 		$r->add_control( 'type', array( 'label' => esc_html__( 'Típus', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ) ) );
 		$r->add_control( 'name', array( 'label' => esc_html__( 'Név', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Partner neve', 'vitacenter-elementor-header' ), 'label_block' => true ) );
@@ -2293,7 +2294,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'note_section', array( 'label' => esc_html__( 'Alsó megjegyzés', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'note_text', array( 'label' => esc_html__( 'Megjegyzés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A közös munka célja, hogy a szűrések, tanácsadások és egészségfejlesztési programok minél több emberhez eljussanak.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'note_text', array( 'label' => esc_html__( 'Megjegyzés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A partnerség célja, hogy a projekt egészségfejlesztési, szűrési és szakmai tevékenységei szervezett együttműködésben valósuljanak meg.', 'vitacenter-elementor-header' ) ) );
 		$this->end_controls_section();
 	}
 
@@ -2302,10 +2303,10 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 			$this->get_settings_for_display(),
 			array(
 				'eyebrow'   => esc_html__( 'Partnerek', 'vitacenter-elementor-header' ),
-				'title'     => esc_html__( 'Együtt az egészségesebb közösségekért', 'vitacenter-elementor-header' ),
-				'intro'     => esc_html__( 'Projektünk szakmai és intézményi partnereink együttműködésével valósul meg.', 'vitacenter-elementor-header' ),
+				'title'     => esc_html__( 'Projektpartnereink', 'vitacenter-elementor-header' ),
+				'intro'     => esc_html__( 'A projekt a vezető partner és a szakmai projektpartnerek együttműködésével valósul meg.', 'vitacenter-elementor-header' ),
 				'partners'  => $this->default_partners(),
-				'note_text' => esc_html__( 'A közös munka célja, hogy a szűrések, tanácsadások és egészségfejlesztési programok minél több emberhez eljussanak.', 'vitacenter-elementor-header' ),
+				'note_text' => esc_html__( 'A partnerség célja, hogy a projekt egészségfejlesztési, szűrési és szakmai tevékenységei szervezett együttműködésben valósuljanak meg.', 'vitacenter-elementor-header' ),
 			)
 		);
 
@@ -2346,32 +2347,30 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 	}
 
 	private function default_partners() {
+		$placeholder_logo = $this->media_default( 'birodepromovare (1).png' );
+
 		return array(
 			array(
-				'logo_text'   => 'EFI',
+				'logo'        => $placeholder_logo,
+				'logo_text'   => 'PSV',
 				'type'        => esc_html__( 'Vezető partner', 'vitacenter-elementor-header' ),
-				'name'        => esc_html__( 'Szatmárnémeti Egészségfejlesztési Iroda', 'vitacenter-elementor-header' ),
-				'description' => esc_html__( 'Egészségfejlesztés, prevenció és közösségi programok koordinációja.', 'vitacenter-elementor-header' ),
+				'name'        => esc_html__( 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesülete', 'vitacenter-elementor-header' ),
+				'description' => esc_html__( 'A projekt vezető partnere és koordináló intézménye.', 'vitacenter-elementor-header' ),
 				'featured'    => 'yes',
 			),
 			array(
-				'logo_text'   => 'PSV',
+				'logo'        => $placeholder_logo,
+				'logo_text'   => 'BSJ',
 				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
-				'name'        => esc_html__( 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesülete', 'vitacenter-elementor-header' ),
+				'name'        => esc_html__( 'Boldog Scheffler János Központ', 'vitacenter-elementor-header' ),
 				'description' => '',
 				'featured'    => '',
 			),
 			array(
+				'logo'        => $placeholder_logo,
 				'logo_text'   => 'HM',
 				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
-				'name'        => esc_html__( 'Hódmezővásárhelyi-Makói Egészségügyi Ellátó Központ', 'vitacenter-elementor-header' ),
-				'description' => '',
-				'featured'    => '',
-			),
-			array(
-				'logo_text'   => 'EU',
-				'type'        => esc_html__( 'Támogató program', 'vitacenter-elementor-header' ),
-				'name'        => esc_html__( 'Interreg VI-A Románia-Magyarország Program', 'vitacenter-elementor-header' ),
+				'name'        => esc_html__( 'Hódmezővásárhelyi-Makói Egészségellátó Központ', 'vitacenter-elementor-header' ),
 				'description' => '',
 				'featured'    => '',
 			),
@@ -2389,6 +2388,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 			}
 
 			$partners[] = array(
+				'logo_url'    => $this->media_url( isset( $item['logo'] ) ? $item['logo'] : array() ),
 				'logo_text'   => isset( $item['logo_text'] ) && '' !== $this->plain_text( $item['logo_text'] ) ? $this->plain_text( $item['logo_text'] ) : $this->partner_initials( $name ),
 				'type'        => isset( $item['type'] ) ? $this->plain_text( $item['type'] ) : '',
 				'name'        => $name,
@@ -2409,7 +2409,11 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 		?>
 		<article class="<?php echo esc_attr( $classes ); ?>">
 			<div class="efi-partner-logo">
-				<span><?php echo esc_html( $partner['logo_text'] ); ?></span>
+				<?php if ( ! empty( $partner['logo_url'] ) ) : ?>
+					<img src="<?php echo esc_url( $partner['logo_url'] ); ?>" alt="<?php echo esc_attr( $partner['name'] ); ?>">
+				<?php else : ?>
+					<span><?php echo esc_html( $partner['logo_text'] ); ?></span>
+				<?php endif; ?>
 			</div>
 			<div class="efi-partner-card__body">
 				<?php if ( '' !== $partner['type'] ) : ?><span class="efi-partner-type"><?php echo esc_html( $partner['type'] ); ?></span><?php endif; ?>
