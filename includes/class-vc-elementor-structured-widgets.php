@@ -2310,11 +2310,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 			)
 		);
 
-		$partner_items = isset( $s['partners'] ) ? $s['partners'] : array();
-
-		if ( $this->is_legacy_partner_list( $partner_items ) ) {
-			$partner_items = $this->default_partners();
-		}
+		$partner_items = $this->partner_items_with_saved_logos( isset( $s['partners'] ) ? $s['partners'] : array() );
 
 		if ( 'Együtt az egészségesebb közösségekért' === $this->plain_text( $s['title'] ) ) {
 			$s['title'] = esc_html__( 'Partnerek', 'vitacenter-elementor-header' );
@@ -2361,11 +2357,13 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 	}
 
 	private function default_partners() {
-		$placeholder_logo = $this->media_default( 'birodepromovare (1).png' );
+		$leader_logo      = $this->leader_partner_logo();
+		$scheffler_logo   = $this->media_default( 'Scheffler_logo-200x120.png' );
+		$healthcare_logo  = $this->media_default( 'fekvo_logo.png' );
 
 		return array(
 			array(
-				'logo'        => $placeholder_logo,
+				'logo'        => $leader_logo,
 				'logo_text'   => 'PSV',
 				'type'        => esc_html__( 'Vezető partner', 'vitacenter-elementor-header' ),
 				'name'        => esc_html__( 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesülete', 'vitacenter-elementor-header' ),
@@ -2373,7 +2371,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'featured'    => 'yes',
 			),
 			array(
-				'logo'        => $placeholder_logo,
+				'logo'        => $scheffler_logo,
 				'logo_text'   => 'BSJ',
 				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
 				'name'        => esc_html__( 'Boldog Scheffler János Központ', 'vitacenter-elementor-header' ),
@@ -2381,7 +2379,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'featured'    => '',
 			),
 			array(
-				'logo'        => $placeholder_logo,
+				'logo'        => $healthcare_logo,
 				'logo_text'   => 'HM',
 				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
 				'name'        => esc_html__( 'Hódmezővásárhelyi-Makói Egészségellátó Központ', 'vitacenter-elementor-header' ),
@@ -2391,24 +2389,43 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 		);
 	}
 
-	private function is_legacy_partner_list( $items ) {
-		$names = array();
+	private function leader_partner_logo() {
+		return $this->media_default( 'Logo-Szatmari-Szent-Vincarol-nevezett-1030x159.png' );
+	}
 
-		foreach ( $this->repeater_items( $items ) as $item ) {
-			if ( isset( $item['name'] ) ) {
-				$names[] = $this->plain_text( $item['name'] );
+	private function partner_items_with_saved_logos( $saved_items ) {
+		$items       = $this->default_partners();
+		$saved_logos = array();
+
+		foreach ( $this->repeater_items( $saved_items ) as $item ) {
+			$name = isset( $item['name'] ) ? $this->plain_text( $item['name'] ) : '';
+			$key  = $this->partner_key( $name );
+
+			if ( '' === $key || empty( $item['logo'] ) ) {
+				continue;
+			}
+
+			$logo_url = $this->media_url( $item['logo'] );
+
+			if ( '' !== $logo_url && ! $this->is_placeholder_partner_logo( $logo_url ) ) {
+				$saved_logos[ $key ] = $item['logo'];
 			}
 		}
 
-		if ( empty( $names ) ) {
-			return false;
+		foreach ( $items as $index => $item ) {
+			$key = $this->partner_key( isset( $item['name'] ) ? $this->plain_text( $item['name'] ) : '' );
+
+			if ( '' !== $key && isset( $saved_logos[ $key ] ) ) {
+				$items[ $index ]['logo'] = $saved_logos[ $key ];
+			}
 		}
 
-		$joined = implode( ' | ', $names );
+		return $items;
+	}
 
-		return false !== strpos( $joined, 'Szatmárnémeti Egészségfejlesztési Iroda' )
-			|| false !== strpos( $joined, 'Interreg VI-A' )
-			|| false !== strpos( $joined, 'Egészségügyi Ellátó Központ' );
+	private function is_placeholder_partner_logo( $logo_url ) {
+		return false !== strpos( $logo_url, 'birodepromovare%20%281%29.png' )
+			|| false !== strpos( $logo_url, 'birodepromovare (1).png' );
 	}
 
 	private function normalize_partners( $items ) {
@@ -2421,17 +2438,43 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				continue;
 			}
 
+			$logo_url = $this->media_url( isset( $item['logo'] ) ? $item['logo'] : array() );
+
+			if ( $this->is_leader_partner_name( $name ) && ( '' === $logo_url || $this->is_placeholder_partner_logo( $logo_url ) ) ) {
+				$logo_url = $this->media_url( $this->leader_partner_logo() );
+			}
+
 			$partners[] = array(
-				'logo_url'    => $this->media_url( isset( $item['logo'] ) ? $item['logo'] : array() ),
+				'logo_url'    => $logo_url,
 				'logo_text'   => isset( $item['logo_text'] ) && '' !== $this->plain_text( $item['logo_text'] ) ? $this->plain_text( $item['logo_text'] ) : $this->partner_initials( $name ),
 				'type'        => isset( $item['type'] ) ? $this->plain_text( $item['type'] ) : '',
 				'name'        => $name,
 				'description' => isset( $item['description'] ) ? $this->plain_text( $item['description'] ) : '',
-				'featured'    => isset( $item['featured'] ) && 'yes' === $this->plain_text( $item['featured'] ),
+				'featured'    => $this->is_leader_partner_name( $name ) || ( isset( $item['featured'] ) && 'yes' === $this->plain_text( $item['featured'] ) ),
 			);
 		}
 
 		return $partners;
+	}
+
+	private function is_leader_partner_name( $name ) {
+		return false !== strpos( $name, 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek' );
+	}
+
+	private function partner_key( $name ) {
+		if ( $this->is_leader_partner_name( $name ) ) {
+			return 'leader';
+		}
+
+		if ( false !== strpos( $name, 'Boldog Scheffler János' ) ) {
+			return 'scheffler';
+		}
+
+		if ( false !== strpos( $name, 'Hódmezővásárhelyi-Makói' ) ) {
+			return 'hodmezovasarhely';
+		}
+
+		return '';
 	}
 
 	private function render_partner_card( $partner ) {

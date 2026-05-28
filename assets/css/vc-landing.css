@@ -2265,23 +2265,36 @@
 .efi-partner-card--featured {
 	display: grid;
 	grid-column: span 3;
-	grid-template-columns: 150px minmax(0, 1fr);
-	align-items: center;
+	grid-template-columns: 1fr;
+	align-items: start;
 	min-height: auto;
+	gap: clamp(18px, 3vw, 30px);
 	background:
 		linear-gradient(135deg, #ffffff, rgba(243, 251, 250, 0.92)),
 		#ffffff;
 }
 
+.efi-partner-card--featured .efi-partner-logo {
+	width: min(100%, 820px);
+	height: 140px;
+	padding: clamp(18px, 2.4vw, 28px);
+	justify-self: stretch;
+	background: #ffffff;
+	border: 1px solid rgba(12, 143, 132, 0.12);
+	box-shadow: 0 18px 44px rgba(15, 76, 74, 0.08);
+}
+
 .efi-partner-logo {
 	display: grid;
-	width: 108px;
-	height: 108px;
+	width: 100%;
+	height: 122px;
+	padding: 18px;
 	place-items: center;
-	background: linear-gradient(135deg, #08766e 0%, #0c8f84 48%, #1884c4 100%);
+	background: #ffffff;
+	border: 1px solid rgba(12, 143, 132, 0.12);
 	border-radius: 8px;
-	box-shadow: 0 16px 34px rgba(18, 102, 179, 0.22);
-	color: #ffffff;
+	box-shadow: 0 14px 32px rgba(15, 76, 74, 0.08);
+	color: var(--efi-partners-teal-dark);
 }
 
 .efi-partner-logo span {
@@ -2292,8 +2305,18 @@
 
 .efi-partner-logo img {
 	display: block;
-	max-width: 82%;
-	max-height: 82%;
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+}
+
+.efi-partner-card--featured .efi-partner-logo img {
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
 	object-fit: contain;
 }
 
@@ -2386,8 +2409,12 @@
 	}
 
 	.efi-partner-logo {
-		width: 92px;
-		height: 92px;
+		height: 104px;
+	}
+
+	.efi-partner-card--featured .efi-partner-logo {
+		width: 100%;
+		height: 112px;
 	}
 
 	.efi-partners-note {
@@ -5686,20 +5713,53 @@
 .efi-partner-card--featured {
 	display: grid;
 	grid-column: span 3;
-	grid-template-columns: 150px minmax(0, 1fr);
-	align-items: center;
+	grid-template-columns: 1fr;
+	align-items: start;
 	min-height: auto;
+	gap: clamp(18px, 3vw, 30px);
 	background:
 		radial-gradient(circle at 6% 10%, rgba(43, 191, 208, 0.13), transparent 30%),
 		linear-gradient(135deg, #ffffff, #f3fbfa);
 }
 
 .efi-partner-logo {
-	width: 108px;
-	height: 108px;
+	display: grid;
+	width: 100%;
+	height: 122px;
+	padding: 18px;
+	place-items: center;
 	border-radius: 28px;
-	background: linear-gradient(135deg, #4fc3ea 0%, #1266b3 100%);
-	box-shadow: 0 16px 34px rgba(18, 102, 179, 0.22);
+	background: #ffffff;
+	border: 1px solid rgba(12, 143, 132, 0.12);
+	box-shadow: 0 14px 32px rgba(15, 76, 74, 0.08);
+}
+
+.efi-partner-card--featured .efi-partner-logo {
+	width: min(100%, 820px);
+	height: 140px;
+	padding: clamp(18px, 2.4vw, 28px);
+	justify-self: stretch;
+	border: 1px solid rgba(12, 143, 132, 0.12);
+	border-radius: 28px;
+	background: #ffffff;
+	box-shadow: 0 18px 44px rgba(15, 76, 74, 0.08);
+}
+
+.efi-partner-logo img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+}
+
+.efi-partner-card--featured .efi-partner-logo img {
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
 }
 
 .efi-partner-card h2 {
@@ -6475,9 +6535,14 @@ html.efi-gallery-lightbox-open body {
 	}
 
 	.efi-partner-logo {
-		width: 82px;
-		height: 82px;
+		height: 96px;
 		border-radius: 22px;
+	}
+
+	.efi-partner-card--featured .efi-partner-logo {
+		width: 100%;
+		height: 106px;
+		padding: 14px;
 	}
 
 	.efi-partner-logo span {
