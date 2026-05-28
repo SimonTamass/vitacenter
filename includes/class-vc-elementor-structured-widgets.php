@@ -2310,7 +2310,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 			)
 		);
 
-		$partner_items = $this->partner_items_with_saved_logos( isset( $s['partners'] ) ? $s['partners'] : array() );
+		$partner_items = $this->partner_items_for_render( isset( $s['partners'] ) ? $s['partners'] : array() );
 
 		if ( 'Együtt az egészségesebb közösségekért' === $this->plain_text( $s['title'] ) ) {
 			$s['title'] = esc_html__( 'Partnerek', 'vitacenter-elementor-header' );
@@ -2393,39 +2393,51 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 		return $this->media_default( 'Logo-Szatmari-Szent-Vincarol-nevezett-1030x159.png' );
 	}
 
-	private function partner_items_with_saved_logos( $saved_items ) {
-		$items       = $this->default_partners();
-		$saved_logos = array();
+	private function partner_items_for_render( $saved_items ) {
+		$defaults = array(
+			'leader'            => $this->default_partners()[0],
+			'scheffler'         => $this->default_partners()[1],
+			'hodmezovasarhely'  => $this->default_partners()[2],
+		);
+		$items    = array();
 
 		foreach ( $this->repeater_items( $saved_items ) as $item ) {
 			$name = isset( $item['name'] ) ? $this->plain_text( $item['name'] ) : '';
 			$key  = $this->partner_key( $name );
 
-			if ( '' === $key || empty( $item['logo'] ) ) {
+			if ( '' === $key || ! isset( $defaults[ $key ] ) ) {
 				continue;
 			}
 
-			$logo_url = $this->media_url( $item['logo'] );
+			$merged   = $defaults[ $key ];
+			$logo_url = $this->media_url( isset( $item['logo'] ) ? $item['logo'] : array() );
 
-			if ( '' !== $logo_url && ! $this->is_placeholder_partner_logo( $logo_url ) ) {
-				$saved_logos[ $key ] = $item['logo'];
+			if ( '' !== $logo_url ) {
+				$merged['logo'] = $item['logo'];
+			}
+
+			if ( isset( $item['logo_text'] ) && '' !== $this->plain_text( $item['logo_text'] ) ) {
+				$merged['logo_text'] = $this->plain_text( $item['logo_text'] );
+			}
+
+			if ( isset( $item['description'] ) && '' !== $this->plain_text( $item['description'] ) ) {
+				$merged['description'] = $this->plain_text( $item['description'] );
+			}
+
+			$items[ $key ] = $merged;
+		}
+
+		foreach ( $defaults as $key => $item ) {
+			if ( ! isset( $items[ $key ] ) ) {
+				$items[ $key ] = $item;
 			}
 		}
 
-		foreach ( $items as $index => $item ) {
-			$key = $this->partner_key( isset( $item['name'] ) ? $this->plain_text( $item['name'] ) : '' );
-
-			if ( '' !== $key && isset( $saved_logos[ $key ] ) ) {
-				$items[ $index ]['logo'] = $saved_logos[ $key ];
-			}
-		}
-
-		return $items;
-	}
-
-	private function is_placeholder_partner_logo( $logo_url ) {
-		return false !== strpos( $logo_url, 'birodepromovare%20%281%29.png' )
-			|| false !== strpos( $logo_url, 'birodepromovare (1).png' );
+		return array(
+			$items['leader'],
+			$items['scheffler'],
+			$items['hodmezovasarhely'],
+		);
 	}
 
 	private function normalize_partners( $items ) {
@@ -2439,10 +2451,6 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 			}
 
 			$logo_url = $this->media_url( isset( $item['logo'] ) ? $item['logo'] : array() );
-
-			if ( $this->is_leader_partner_name( $name ) && ( '' === $logo_url || $this->is_placeholder_partner_logo( $logo_url ) ) ) {
-				$logo_url = $this->media_url( $this->leader_partner_logo() );
-			}
 
 			$partners[] = array(
 				'logo_url'    => $logo_url,
@@ -2458,19 +2466,24 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 	}
 
 	private function is_leader_partner_name( $name ) {
-		return false !== strpos( $name, 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek' );
+		$normalized = strtolower( remove_accents( $name ) );
+
+		return false !== strpos( $normalized, 'pali szent vincerol' )
+			|| false !== strpos( $normalized, 'szatmari irgalmas noverek' );
 	}
 
 	private function partner_key( $name ) {
-		if ( $this->is_leader_partner_name( $name ) ) {
+		$normalized = strtolower( remove_accents( $name ) );
+
+		if ( $this->is_leader_partner_name( $normalized ) ) {
 			return 'leader';
 		}
 
-		if ( false !== strpos( $name, 'Boldog Scheffler János' ) ) {
+		if ( false !== strpos( $normalized, 'scheffler' ) ) {
 			return 'scheffler';
 		}
 
-		if ( false !== strpos( $name, 'Hódmezővásárhelyi-Makói' ) ) {
+		if ( false !== strpos( $normalized, 'hodmezovasarhelyi' ) || false !== strpos( $normalized, 'makoi' ) ) {
 			return 'hodmezovasarhely';
 		}
 
