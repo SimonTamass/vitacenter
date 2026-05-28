@@ -2363,6 +2363,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 
 		return array(
 			array(
+				'_id'         => 'vclead1',
 				'logo'        => $leader_logo,
 				'logo_text'   => 'PSV',
 				'type'        => esc_html__( 'Vezető partner', 'vitacenter-elementor-header' ),
@@ -2371,6 +2372,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'featured'    => 'yes',
 			),
 			array(
+				'_id'         => 'vcsche1',
 				'logo'        => $scheffler_logo,
 				'logo_text'   => 'BSJ',
 				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
@@ -2379,6 +2381,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'featured'    => '',
 			),
 			array(
+				'_id'         => 'vchodm1',
 				'logo'        => $healthcare_logo,
 				'logo_text'   => 'HM',
 				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
@@ -2405,7 +2408,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 
 		foreach ( $this->repeater_items( $saved_items ) as $item ) {
 			$name = isset( $item['name'] ) ? $this->plain_text( $item['name'] ) : '';
-			$key  = $this->partner_key( $name );
+			$key  = $this->partner_item_key( $item );
 
 			if ( '' === $key || ! isset( $defaults[ $key ] ) ) {
 				if ( '' !== $name ) {
@@ -2415,19 +2418,23 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				continue;
 			}
 
-			$merged   = $defaults[ $key ];
-			$logo_url = $this->media_url( isset( $item['logo'] ) ? $item['logo'] : array() );
+			$merged   = array_merge( $defaults[ $key ], $item );
+			$logo_url = $this->media_url( isset( $merged['logo'] ) ? $merged['logo'] : array() );
 
-			if ( '' !== $logo_url ) {
-				$merged['logo'] = $item['logo'];
+			if ( '' === $logo_url ) {
+				$merged['logo'] = $defaults[ $key ]['logo'];
 			}
 
-			if ( isset( $item['logo_text'] ) && '' !== $this->plain_text( $item['logo_text'] ) ) {
-				$merged['logo_text'] = $this->plain_text( $item['logo_text'] );
+			if ( ! isset( $merged['logo_text'] ) || '' === $this->plain_text( $merged['logo_text'] ) ) {
+				$merged['logo_text'] = $defaults[ $key ]['logo_text'];
 			}
 
-			if ( isset( $item['description'] ) && '' !== $this->plain_text( $item['description'] ) ) {
-				$merged['description'] = $this->plain_text( $item['description'] );
+			if ( ! isset( $merged['type'] ) || '' === $this->plain_text( $merged['type'] ) ) {
+				$merged['type'] = $defaults[ $key ]['type'];
+			}
+
+			if ( ! isset( $merged['name'] ) || '' === $this->plain_text( $merged['name'] ) ) {
+				$merged['name'] = $defaults[ $key ]['name'];
 			}
 
 			$items[ $key ] = $merged;
@@ -2444,6 +2451,28 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 			$items['scheffler'],
 			$items['hodmezovasarhely'],
 		), $extra_items );
+	}
+
+	private function partner_item_key( $item ) {
+		if ( is_array( $item ) && isset( $item['_id'] ) ) {
+			$id = $this->plain_text( $item['_id'] );
+
+			if ( 'vclead1' === $id ) {
+				return 'leader';
+			}
+
+			if ( 'vcsche1' === $id ) {
+				return 'scheffler';
+			}
+
+			if ( 'vchodm1' === $id ) {
+				return 'hodmezovasarhely';
+			}
+		}
+
+		$name = is_array( $item ) && isset( $item['name'] ) ? $this->plain_text( $item['name'] ) : '';
+
+		return $this->partner_key( $name );
 	}
 
 	private function normalize_partners( $items ) {
@@ -2464,7 +2493,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'type'        => isset( $item['type'] ) ? $this->plain_text( $item['type'] ) : '',
 				'name'        => $name,
 				'description' => isset( $item['description'] ) ? $this->plain_text( $item['description'] ) : '',
-				'featured'    => $this->is_leader_partner_name( $name ) || ( isset( $item['featured'] ) && 'yes' === $this->plain_text( $item['featured'] ) ),
+				'featured'    => 'leader' === $this->partner_item_key( $item ) || $this->is_leader_partner_name( $name ) || ( isset( $item['featured'] ) && 'yes' === $this->plain_text( $item['featured'] ) ),
 			);
 		}
 

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VitaCenter Elementor Widgets
  * Description: Elementor widgets for the VitaCenter header, navigation, and landing page content.
- * Version: 1.4.22
+ * Version: 1.4.23
  * Author: VitaCenter
  * Text Domain: vitacenter-elementor-header
  * Requires Plugins: elementor
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.22' );
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.23' );
 define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
 define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
@@ -44,6 +44,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 		add_action( 'elementor/frontend/after_register_scripts', array( $this, 'register_assets' ) );
 		add_action( 'elementor/elements/categories_registered', array( $this, 'register_category' ) );
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
+		add_action( 'admin_init', array( $this, 'migrate_partners_widget_data' ) );
 		add_action( 'template_redirect', array( $this, 'disable_broken_cookieadmin_banner' ), 0 );
 		add_action( 'wp_footer', array( $this, 'disable_broken_cookieadmin_banner' ), -9999 );
 	}
@@ -132,6 +133,220 @@ final class VitaCenter_Elementor_Header_Plugin {
 		$widgets_manager->register( new VitaCenter_Iskolaerettseg_Widget() );
 		$widgets_manager->register( new VitaCenter_Info_Section_Widget() );
 		$widgets_manager->register( new VitaCenter_Registration_Info_Widget() );
+	}
+
+	public function migrate_partners_widget_data() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return;
+		}
+
+		$migration_version = '1.4.23';
+
+		if ( $migration_version === get_option( 'vc_partners_widget_data_version' ) ) {
+			return;
+		}
+
+		$post_ids = get_posts(
+			array(
+				'post_type'        => 'any',
+				'post_status'      => 'any',
+				'posts_per_page'   => -1,
+				'fields'           => 'ids',
+				'meta_key'         => '_elementor_data',
+				'suppress_filters' => true,
+			)
+		);
+
+		foreach ( $post_ids as $post_id ) {
+			$raw_data = get_post_meta( $post_id, '_elementor_data', true );
+			$data     = $this->decode_elementor_data( $raw_data );
+
+			if ( ! is_array( $data ) ) {
+				continue;
+			}
+
+			$changed = false;
+			$data    = $this->migrate_partners_elements( $data, $changed );
+
+			if ( ! $changed ) {
+				continue;
+			}
+
+			update_post_meta( $post_id, '_elementor_data', wp_slash( wp_json_encode( $data ) ) );
+			clean_post_cache( $post_id );
+		}
+
+		update_option( 'vc_partners_widget_data_version', $migration_version, false );
+	}
+
+	private function decode_elementor_data( $raw_data ) {
+		if ( ! is_string( $raw_data ) || '' === $raw_data ) {
+			return null;
+		}
+
+		$data = json_decode( $raw_data, true );
+
+		if ( is_array( $data ) ) {
+			return $data;
+		}
+
+		$data = json_decode( wp_unslash( $raw_data ), true );
+
+		return is_array( $data ) ? $data : null;
+	}
+
+	private function migrate_partners_elements( $elements, &$changed ) {
+		if ( ! is_array( $elements ) ) {
+			return $elements;
+		}
+
+		foreach ( $elements as $index => $element ) {
+			if ( ! is_array( $element ) ) {
+				continue;
+			}
+
+			if ( isset( $element['widgetType'] ) && 'vitacenter_partners' === $element['widgetType'] ) {
+				$settings = isset( $element['settings'] ) && is_array( $element['settings'] ) ? $element['settings'] : array();
+				$partners = isset( $settings['partners'] ) && is_array( $settings['partners'] ) ? $settings['partners'] : array();
+				$migrated = $this->merge_partners_for_editing( $partners );
+
+				if ( $migrated !== $partners ) {
+					$settings['partners']             = $migrated;
+					$elements[ $index ]['settings']   = $settings;
+					$changed                          = true;
+				}
+			}
+
+			if ( isset( $elements[ $index ]['elements'] ) && is_array( $elements[ $index ]['elements'] ) ) {
+				$elements[ $index ]['elements'] = $this->migrate_partners_elements( $elements[ $index ]['elements'], $changed );
+			}
+		}
+
+		return $elements;
+	}
+
+	private function merge_partners_for_editing( $saved_items ) {
+		$defaults    = $this->default_partners_for_editing();
+		$items       = array();
+		$extra_items = array();
+
+		foreach ( $saved_items as $item ) {
+			if ( ! is_array( $item ) ) {
+				continue;
+			}
+
+			$key = $this->partner_key_for_editing( $item );
+
+			if ( '' === $key || ! isset( $defaults[ $key ] ) ) {
+				$extra_items[] = $item;
+				continue;
+			}
+
+			$merged = array_merge( $defaults[ $key ], $item );
+			$merged['_id'] = $defaults[ $key ]['_id'];
+
+			if ( empty( $merged['logo']['url'] ) ) {
+				$merged['logo'] = $defaults[ $key ]['logo'];
+			}
+
+			if ( empty( $merged['logo_text'] ) ) {
+				$merged['logo_text'] = $defaults[ $key ]['logo_text'];
+			}
+
+			if ( empty( $merged['type'] ) ) {
+				$merged['type'] = $defaults[ $key ]['type'];
+			}
+
+			if ( empty( $merged['name'] ) ) {
+				$merged['name'] = $defaults[ $key ]['name'];
+			}
+
+			$items[ $key ] = $merged;
+		}
+
+		foreach ( $defaults as $key => $item ) {
+			if ( ! isset( $items[ $key ] ) ) {
+				$items[ $key ] = $item;
+			}
+		}
+
+		return array_merge(
+			array(
+				$items['leader'],
+				$items['scheffler'],
+				$items['hodmezovasarhely'],
+			),
+			$extra_items
+		);
+	}
+
+	private function default_partners_for_editing() {
+		return array(
+			'leader' => array(
+				'_id'         => 'vclead1',
+				'logo'        => array( 'url' => $this->source_asset_url( 'Logo-Szatmari-Szent-Vincarol-nevezett-1030x159.png' ) ),
+				'logo_text'   => 'PSV',
+				'type'        => 'Vezető partner',
+				'name'        => 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesülete',
+				'description' => '',
+				'featured'    => 'yes',
+			),
+			'scheffler' => array(
+				'_id'         => 'vcsche1',
+				'logo'        => array( 'url' => $this->source_asset_url( 'Scheffler_logo-200x120.png' ) ),
+				'logo_text'   => 'BSJ',
+				'type'        => 'Projektpartner',
+				'name'        => 'Boldog Scheffler János Központ',
+				'description' => '',
+				'featured'    => '',
+			),
+			'hodmezovasarhely' => array(
+				'_id'         => 'vchodm1',
+				'logo'        => array( 'url' => $this->source_asset_url( 'fekvo_logo.png' ) ),
+				'logo_text'   => 'HM',
+				'type'        => 'Projektpartner',
+				'name'        => 'Hódmezővásárhelyi-Makói Egészségellátó Központ',
+				'description' => '',
+				'featured'    => '',
+			),
+		);
+	}
+
+	private function partner_key_for_editing( $item ) {
+		if ( isset( $item['_id'] ) ) {
+			if ( 'vclead1' === $item['_id'] ) {
+				return 'leader';
+			}
+
+			if ( 'vcsche1' === $item['_id'] ) {
+				return 'scheffler';
+			}
+
+			if ( 'vchodm1' === $item['_id'] ) {
+				return 'hodmezovasarhely';
+			}
+		}
+
+		$name       = isset( $item['name'] ) ? (string) $item['name'] : '';
+		$normalized = strtolower( remove_accents( $name ) );
+
+		if ( false !== strpos( $normalized, 'pali szent vincerol' ) || false !== strpos( $normalized, 'szatmari irgalmas noverek' ) ) {
+			return 'leader';
+		}
+
+		if ( false !== strpos( $normalized, 'scheffler' ) ) {
+			return 'scheffler';
+		}
+
+		if ( false !== strpos( $normalized, 'hodmezovasarhelyi' ) || false !== strpos( $normalized, 'makoi' ) ) {
+			return 'hodmezovasarhely';
+		}
+
+		return '';
+	}
+
+	private function source_asset_url( $file_name ) {
+		return VC_ELEMENTOR_HEADER_URL . 'source/' . rawurlencode( $file_name );
 	}
 
 	public function disable_broken_cookieadmin_banner() {
