@@ -6719,3 +6719,79 @@ html.efi-gallery-lightbox-open body {
 		min-height: 190px;
 	}
 }
+
+/* The Events Calendar: inline event photos as a compact gallery. */
+.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)),
+.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+	gap: clamp(10px, 1.6vw, 16px);
+	align-items: stretch;
+	margin: clamp(28px, 4vw, 42px) 0;
+	padding: clamp(10px, 1.5vw, 14px);
+	background: #f6fbfa;
+	border: 1px solid rgba(12, 143, 132, 0.12);
+	border-radius: 8px;
+	box-shadow: 0 16px 38px rgba(15, 76, 74, 0.07);
+}
+
+.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)) > img,
+.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)) > a,
+.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) > img,
+.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) > a {
+	display: block;
+	min-width: 0;
+	margin: 0 !important;
+	overflow: hidden;
+	border-radius: 8px;
+}
+
+.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)) > a,
+.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) > a {
+	aspect-ratio: 4 / 3;
+}
+
+.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)) > img,
+.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) > img {
+	aspect-ratio: 4 / 3;
+}
+
+.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)) > img,
+.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)) > a > img,
+.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) > img,
+.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) > a > img {
+	display: block;
+	width: 100% !important;
+	max-width: none !important;
+	height: 100% !important;
+	margin: 0 !important;
+	object-fit: cover !important;
+	object-position: center center;
+	border-radius: 8px;
+	box-shadow: 0 10px 24px rgba(15, 76, 74, 0.1);
+	transition: filter 200ms ease, transform 240ms ease;
+}
+
+.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)) > img:hover,
+.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)) > a:hover > img,
+.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) > img:hover,
+.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) > a:hover > img {
+	filter: saturate(1.04);
+	transform: scale(1.02);
+}
+
+@media (max-width: 520px) {
+	.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)),
+	.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) {
+		grid-template-columns: 1fr 1fr;
+		gap: 10px;
+		padding: 10px;
+	}
+}
+
+@media (max-width: 360px) {
+	.tribe_events .tribe-events-single-event-description > p:has(> img:nth-of-type(2)),
+	.tribe_events .tribe-events-single-event-description > p:has(> a:nth-of-type(2) img) {
+		grid-template-columns: 1fr;
+	}
+}
