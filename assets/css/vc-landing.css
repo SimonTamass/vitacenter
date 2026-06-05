@@ -1289,7 +1289,7 @@
 }
 
 .efi-link-button,
-.efi-sidebar-card--cta a {
+.efi-sidebar-card--cta .efi-knowledge-contact-button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -1307,7 +1307,7 @@
 }
 
 .efi-link-button:hover,
-.efi-sidebar-card--cta a:hover {
+.efi-sidebar-card--cta .efi-knowledge-contact-button:hover {
 	box-shadow: 0 18px 34px rgba(12, 143, 132, 0.28);
 	transform: translateY(-2px);
 }
@@ -1349,6 +1349,17 @@
 	grid-template-columns: minmax(0, 1fr) 330px;
 	gap: 26px;
 	align-items: start;
+}
+
+.efi-knowledge-hero--text-only,
+.efi-knowledge-main-grid--no-sidebar,
+.efi-knowledge-featured--article-only {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.efi-knowledge-main-grid--sidebar-only {
+	grid-template-columns: minmax(280px, 420px);
+	justify-content: end;
 }
 
 .efi-knowledge-content {
@@ -1576,10 +1587,84 @@
 	font-weight: 550;
 }
 
-.efi-sidebar-card--cta a {
+.efi-sidebar-card--cta .efi-knowledge-contact-button {
 	background: #ffffff;
 	box-shadow: 0 14px 28px rgba(3, 61, 84, 0.15);
 	color: var(--efi-knowledge-teal-dark) !important;
+}
+
+.efi-knowledge-contact-card {
+	display: grid;
+	gap: 16px;
+}
+
+.efi-knowledge-contact-card__head {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.efi-knowledge-contact-icon {
+	display: grid;
+	width: 42px;
+	height: 42px;
+	place-items: center;
+	background: rgba(255, 255, 255, 0.16);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 8px;
+	color: #ffffff;
+	font-size: 18px;
+	font-weight: 900;
+}
+
+.efi-knowledge-contact-card .efi-card-label {
+	background: rgba(255, 255, 255, 0.14);
+	color: #ffffff;
+}
+
+.efi-sidebar-card--cta.efi-knowledge-contact-card h3,
+.efi-sidebar-card--cta.efi-knowledge-contact-card p {
+	margin: 0;
+}
+
+.efi-knowledge-contact-list {
+	display: grid;
+	gap: 10px;
+}
+
+.efi-knowledge-contact-row {
+	display: grid;
+	gap: 4px;
+	padding: 12px 14px;
+	background: rgba(255, 255, 255, 0.12);
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	border-radius: 8px;
+}
+
+.efi-knowledge-contact-row span {
+	color: rgba(255, 255, 255, 0.72);
+	font-size: 11px;
+	font-weight: 900;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.efi-knowledge-contact-row a,
+.efi-knowledge-contact-row strong {
+	color: #ffffff !important;
+	font-size: 14px;
+	font-weight: 900;
+	line-height: 1.35;
+	overflow-wrap: anywhere;
+	text-decoration: none !important;
+}
+
+.efi-knowledge-contact-row a:hover {
+	color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.efi-sidebar-card--cta .efi-knowledge-contact-button {
+	width: fit-content;
 }
 
 @media (max-width: 1100px) {
@@ -5947,7 +6032,7 @@
 }
 
 .efi-link-button,
-.efi-sidebar-card--cta a {
+.efi-sidebar-card--cta .efi-knowledge-contact-button {
 	border-radius: 16px;
 	background: linear-gradient(100deg, #08766e 0%, #0c8f84 48%, #1884c4 100%);
 	color: #ffffff !important;
@@ -6400,7 +6485,7 @@ html.efi-gallery-lightbox-open body {
 	.efi-contact-hero__button,
 	.efi-contact-submit,
 	.efi-link-button,
-	.efi-sidebar-card--cta a,
+	.efi-sidebar-card--cta .efi-knowledge-contact-button,
 	.efi-gallery-sidebar-card--cta .efi-gallery-contact-button,
 	.efi-event-button,
 	.vc-landing__cta .vc-landing__button {
@@ -6607,7 +6692,7 @@ html.efi-gallery-lightbox-open body {
 	.efi-contact-hero__button,
 	.efi-contact-submit,
 	.efi-link-button,
-	.efi-sidebar-card--cta a,
+	.efi-sidebar-card--cta .efi-knowledge-contact-button,
 	.efi-gallery-sidebar-card--cta .efi-gallery-contact-button,
 	.efi-contact-map__overlay a {
 		width: 100%;
