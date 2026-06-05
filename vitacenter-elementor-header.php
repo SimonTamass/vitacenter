@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VitaCenter Elementor Widgets
  * Description: Elementor widgets for the VitaCenter header, navigation, and landing page content.
- * Version: 1.4.28
+ * Version: 1.4.30
  * Author: VitaCenter
  * Text Domain: vitacenter-elementor-header
  * Requires Plugins: elementor
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.28' );
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.30' );
 define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
 define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
@@ -144,7 +144,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 			return;
 		}
 
-		$migration_version = '1.4.23';
+		$migration_version = '1.4.30';
 
 		if ( $migration_version === get_option( 'vc_partners_widget_data_version' ) ) {
 			return;
@@ -248,6 +248,8 @@ final class VitaCenter_Elementor_Header_Plugin {
 
 			$merged = array_merge( $defaults[ $key ], $item );
 			$merged['_id'] = $defaults[ $key ]['_id'];
+			$merged['type'] = $defaults[ $key ]['type'];
+			$merged['featured'] = $defaults[ $key ]['featured'];
 
 			if ( empty( $merged['logo']['url'] ) ) {
 				$merged['logo'] = $defaults[ $key ]['logo'];
@@ -276,9 +278,9 @@ final class VitaCenter_Elementor_Header_Plugin {
 
 		return array_merge(
 			array(
+				$items['hodmezovasarhely'],
 				$items['leader'],
 				$items['scheffler'],
-				$items['hodmezovasarhely'],
 			),
 			$extra_items
 		);
@@ -286,14 +288,25 @@ final class VitaCenter_Elementor_Header_Plugin {
 
 	private function default_partners_for_editing() {
 		return array(
+			'hodmezovasarhely' => array(
+				'_id'         => 'vchodm1',
+				'logo'        => array( 'url' => $this->source_asset_url( 'fekvo_logo.png' ) ),
+				'logo_text'   => 'HM',
+				'type'        => 'Vezető partner',
+				'name'        => 'Hódmezővásárhelyi-Makói Egészségellátó Központ',
+				'link'        => array( 'url' => '' ),
+				'description' => '',
+				'featured'    => 'yes',
+			),
 			'leader' => array(
 				'_id'         => 'vclead1',
 				'logo'        => array( 'url' => $this->source_asset_url( 'Logo-Szatmari-Szent-Vincarol-nevezett-1030x159.png' ) ),
 				'logo_text'   => 'PSV',
-				'type'        => 'Vezető partner',
+				'type'        => 'Projektpartner',
 				'name'        => 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesülete',
+				'link'        => array( 'url' => '' ),
 				'description' => '',
-				'featured'    => 'yes',
+				'featured'    => '',
 			),
 			'scheffler' => array(
 				'_id'         => 'vcsche1',
@@ -301,15 +314,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 				'logo_text'   => 'BSJ',
 				'type'        => 'Projektpartner',
 				'name'        => 'Boldog Scheffler János Központ',
-				'description' => '',
-				'featured'    => '',
-			),
-			'hodmezovasarhely' => array(
-				'_id'         => 'vchodm1',
-				'logo'        => array( 'url' => $this->source_asset_url( 'fekvo_logo.png' ) ),
-				'logo_text'   => 'HM',
-				'type'        => 'Projektpartner',
-				'name'        => 'Hódmezővásárhelyi-Makói Egészségellátó Központ',
+				'link'        => array( 'url' => '' ),
 				'description' => '',
 				'featured'    => '',
 			),

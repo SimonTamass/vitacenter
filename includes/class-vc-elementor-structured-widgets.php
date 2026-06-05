@@ -2560,6 +2560,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 		$r->add_control( 'logo_text', array( 'label' => esc_html__( 'Logó rövidítés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'EFI' ) );
 		$r->add_control( 'type', array( 'label' => esc_html__( 'Típus', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ) ) );
 		$r->add_control( 'name', array( 'label' => esc_html__( 'Név', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Partner neve', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$r->add_control( 'link', array( 'label' => esc_html__( 'Partner link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '' ) ) );
 		$r->add_control( 'description', array( 'label' => esc_html__( 'Leírás', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => '' ) );
 		$r->add_control( 'featured', array( 'label' => esc_html__( 'Kiemelt partner', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => '' ) );
 		$this->add_control( 'partners', array(
@@ -2641,13 +2642,24 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 
 		return array(
 			array(
+				'_id'         => 'vchodm1',
+				'logo'        => $healthcare_logo,
+				'logo_text'   => 'HM',
+				'type'        => esc_html__( 'Vezető partner', 'vitacenter-elementor-header' ),
+				'name'        => esc_html__( 'Hódmezővásárhelyi-Makói Egészségellátó Központ', 'vitacenter-elementor-header' ),
+				'link'        => array( 'url' => '' ),
+				'description' => '',
+				'featured'    => 'yes',
+			),
+			array(
 				'_id'         => 'vclead1',
 				'logo'        => $leader_logo,
 				'logo_text'   => 'PSV',
-				'type'        => esc_html__( 'Vezető partner', 'vitacenter-elementor-header' ),
+				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
 				'name'        => esc_html__( 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesülete', 'vitacenter-elementor-header' ),
+				'link'        => array( 'url' => '' ),
 				'description' => '',
-				'featured'    => 'yes',
+				'featured'    => '',
 			),
 			array(
 				'_id'         => 'vcsche1',
@@ -2655,15 +2667,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'logo_text'   => 'BSJ',
 				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
 				'name'        => esc_html__( 'Boldog Scheffler János Központ', 'vitacenter-elementor-header' ),
-				'description' => '',
-				'featured'    => '',
-			),
-			array(
-				'_id'         => 'vchodm1',
-				'logo'        => $healthcare_logo,
-				'logo_text'   => 'HM',
-				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
-				'name'        => esc_html__( 'Hódmezővásárhelyi-Makói Egészségellátó Központ', 'vitacenter-elementor-header' ),
+				'link'        => array( 'url' => '' ),
 				'description' => '',
 				'featured'    => '',
 			),
@@ -2677,9 +2681,9 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 	private function partner_items_for_render( $saved_items ) {
 		$default_partners = $this->default_partners();
 		$defaults         = array(
-			'leader'           => $default_partners[0],
-			'scheffler'        => $default_partners[1],
-			'hodmezovasarhely' => $default_partners[2],
+			'hodmezovasarhely' => $default_partners[0],
+			'leader'           => $default_partners[1],
+			'scheffler'        => $default_partners[2],
 		);
 		$items            = array();
 		$extra_items      = array();
@@ -2697,6 +2701,9 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 			}
 
 			$merged   = array_merge( $defaults[ $key ], $item );
+			$merged['_id']      = $defaults[ $key ]['_id'];
+			$merged['type']     = $defaults[ $key ]['type'];
+			$merged['featured'] = $defaults[ $key ]['featured'];
 			$logo_url = $this->media_url( isset( $merged['logo'] ) ? $merged['logo'] : array() );
 
 			if ( '' === $logo_url ) {
@@ -2725,9 +2732,9 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 		}
 
 		return array_merge( array(
+			$items['hodmezovasarhely'],
 			$items['leader'],
 			$items['scheffler'],
-			$items['hodmezovasarhely'],
 		), $extra_items );
 	}
 
@@ -2770,8 +2777,9 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'logo_text'   => isset( $item['logo_text'] ) && '' !== $this->plain_text( $item['logo_text'] ) ? $this->plain_text( $item['logo_text'] ) : $this->partner_initials( $name ),
 				'type'        => isset( $item['type'] ) ? $this->plain_text( $item['type'] ) : '',
 				'name'        => $name,
+				'link'        => isset( $item['link'] ) ? $item['link'] : array( 'url' => '' ),
 				'description' => isset( $item['description'] ) ? $this->plain_text( $item['description'] ) : '',
-				'featured'    => 'leader' === $this->partner_item_key( $item ) || $this->is_leader_partner_name( $name ) || ( isset( $item['featured'] ) && 'yes' === $this->plain_text( $item['featured'] ) ),
+				'featured'    => 'hodmezovasarhely' === $this->partner_item_key( $item ) || $this->is_leader_partner_name( $name ) || ( '' === $this->partner_item_key( $item ) && isset( $item['featured'] ) && 'yes' === $this->plain_text( $item['featured'] ) ),
 			);
 		}
 
@@ -2781,14 +2789,14 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 	private function is_leader_partner_name( $name ) {
 		$normalized = strtolower( remove_accents( $name ) );
 
-		return false !== strpos( $normalized, 'pali szent vincerol' )
-			|| false !== strpos( $normalized, 'szatmari irgalmas noverek' );
+		return false !== strpos( $normalized, 'hodmezovasarhelyi' )
+			|| false !== strpos( $normalized, 'makoi' );
 	}
 
 	private function partner_key( $name ) {
 		$normalized = strtolower( remove_accents( $name ) );
 
-		if ( $this->is_leader_partner_name( $normalized ) ) {
+		if ( false !== strpos( $normalized, 'pali szent vincerol' ) || false !== strpos( $normalized, 'szatmari irgalmas noverek' ) ) {
 			return 'leader';
 		}
 
@@ -2805,19 +2813,21 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 
 	private function render_partner_card( $partner ) {
 		$classes = 'efi-partner-card';
+		$link    = isset( $partner['link'] ) && is_array( $partner['link'] ) ? $partner['link'] : array( 'url' => isset( $partner['link'] ) ? $this->plain_text( $partner['link'] ) : '' );
+		$has_link = ! empty( $link['url'] ) && '' !== $this->plain_text( $link['url'] );
 
 		if ( ! empty( $partner['featured'] ) ) {
 			$classes .= ' efi-partner-card--featured';
 		}
 		?>
 		<article class="<?php echo esc_attr( $classes ); ?>">
-			<div class="efi-partner-logo">
+			<<?php echo $has_link ? 'a' : 'div'; ?> class="efi-partner-logo <?php echo $has_link ? 'efi-partner-logo--link' : ''; ?>"<?php echo $has_link ? ' ' . $this->url_attributes( $link ) : ''; ?>>
 				<?php if ( ! empty( $partner['logo_url'] ) ) : ?>
 					<img src="<?php echo esc_url( $partner['logo_url'] ); ?>" alt="<?php echo esc_attr( $partner['name'] ); ?>">
 				<?php else : ?>
 					<span><?php echo esc_html( $partner['logo_text'] ); ?></span>
 				<?php endif; ?>
-			</div>
+			</<?php echo $has_link ? 'a' : 'div'; ?>>
 			<div class="efi-partner-card__body">
 				<?php if ( '' !== $partner['type'] ) : ?><span class="efi-partner-type"><?php echo esc_html( $partner['type'] ); ?></span><?php endif; ?>
 				<h2><?php echo esc_html( $partner['name'] ); ?></h2>
