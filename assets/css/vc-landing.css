@@ -6874,3 +6874,19 @@ html.efi-gallery-lightbox-open body {
 		grid-template-columns: 1fr;
 	}
 }
+
+/* Contact page: appointment card replaces fixed opening hours. */
+.efi-contact-side-card.efi-contact-side-card--appointment {
+	display: grid;
+	gap: 14px;
+}
+
+.efi-contact-side-card.efi-contact-side-card--appointment h3,
+.efi-contact-side-card.efi-contact-side-card--appointment p {
+	margin: 0;
+}
+
+.efi-contact-side-card.efi-contact-side-card--appointment .efi-map-link {
+	width: fit-content;
+	margin-top: 2px;
+}
