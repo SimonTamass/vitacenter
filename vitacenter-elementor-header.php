@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VitaCenter Elementor Widgets
  * Description: Elementor widgets for the VitaCenter header, navigation, and landing page content.
- * Version: 1.4.30
+ * Version: 1.4.31
  * Author: VitaCenter
  * Text Domain: vitacenter-elementor-header
  * Requires Plugins: elementor
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.30' );
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.31' );
 define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
 define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
@@ -144,7 +144,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 			return;
 		}
 
-		$migration_version = '1.4.30';
+		$migration_version = '1.4.31';
 
 		if ( $migration_version === get_option( 'vc_partners_widget_data_version' ) ) {
 			return;
@@ -294,7 +294,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 				'logo_text'   => 'HM',
 				'type'        => 'Vezető partner',
 				'name'        => 'Hódmezővásárhelyi-Makói Egészségellátó Központ',
-				'link'        => array( 'url' => '' ),
+				'link'        => array( 'url' => '', 'is_external' => true ),
 				'description' => '',
 				'featured'    => 'yes',
 			),
@@ -304,7 +304,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 				'logo_text'   => 'PSV',
 				'type'        => 'Projektpartner',
 				'name'        => 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesülete',
-				'link'        => array( 'url' => '' ),
+				'link'        => array( 'url' => '', 'is_external' => true ),
 				'description' => '',
 				'featured'    => '',
 			),
@@ -314,7 +314,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 				'logo_text'   => 'BSJ',
 				'type'        => 'Projektpartner',
 				'name'        => 'Boldog Scheffler János Központ',
-				'link'        => array( 'url' => '' ),
+				'link'        => array( 'url' => '', 'is_external' => true ),
 				'description' => '',
 				'featured'    => '',
 			),

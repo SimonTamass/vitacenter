@@ -2647,7 +2647,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'logo_text'   => 'HM',
 				'type'        => esc_html__( 'Vezető partner', 'vitacenter-elementor-header' ),
 				'name'        => esc_html__( 'Hódmezővásárhelyi-Makói Egészségellátó Központ', 'vitacenter-elementor-header' ),
-				'link'        => array( 'url' => '' ),
+				'link'        => array( 'url' => '', 'is_external' => true ),
 				'description' => '',
 				'featured'    => 'yes',
 			),
@@ -2657,7 +2657,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'logo_text'   => 'PSV',
 				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
 				'name'        => esc_html__( 'Páli Szent Vincéről Nevezett Szatmári Irgalmas Nővérek Egyesülete', 'vitacenter-elementor-header' ),
-				'link'        => array( 'url' => '' ),
+				'link'        => array( 'url' => '', 'is_external' => true ),
 				'description' => '',
 				'featured'    => '',
 			),
@@ -2667,7 +2667,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 				'logo_text'   => 'BSJ',
 				'type'        => esc_html__( 'Projektpartner', 'vitacenter-elementor-header' ),
 				'name'        => esc_html__( 'Boldog Scheffler János Központ', 'vitacenter-elementor-header' ),
-				'link'        => array( 'url' => '' ),
+				'link'        => array( 'url' => '', 'is_external' => true ),
 				'description' => '',
 				'featured'    => '',
 			),
@@ -2814,6 +2814,7 @@ class VitaCenter_Partners_Widget extends VitaCenter_Structured_Widget_Base {
 	private function render_partner_card( $partner ) {
 		$classes = 'efi-partner-card';
 		$link    = isset( $partner['link'] ) && is_array( $partner['link'] ) ? $partner['link'] : array( 'url' => isset( $partner['link'] ) ? $this->plain_text( $partner['link'] ) : '' );
+		$link['is_external'] = true;
 		$has_link = ! empty( $link['url'] ) && '' !== $this->plain_text( $link['url'] );
 
 		if ( ! empty( $partner['featured'] ) ) {
