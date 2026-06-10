@@ -27,8 +27,8 @@ class VitaCenter_Eletmodtanacsadas_Widget extends VitaCenter_Structured_Widget_B
 		$this->add_control( 'visual_kicker', array( 'label' => esc_html__( 'Vizuál kis cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Személyre szabott támogatás', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'visual_title', array( 'label' => esc_html__( 'Vizuál cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Egészségesebb mindennapok tudatos lépésekkel', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'visual_text', array( 'label' => esc_html__( 'Vizuál szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Pszicho-szociális, táplálkozási és prevenciós tanácsadás egyéni egészségtervvel.', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'visual_stat_one_value', array( 'label' => esc_html__( 'Első stat érték', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( '4h', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'visual_stat_one_label', array( 'label' => esc_html__( 'Első stat címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'naponta', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'visual_stat_one_value', array( 'label' => esc_html__( 'Első stat érték', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'EFI', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'visual_stat_one_label', array( 'label' => esc_html__( 'Első stat címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'iroda', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'visual_stat_two_value', array( 'label' => esc_html__( 'Második stat érték', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( '1:1', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'visual_stat_two_label', array( 'label' => esc_html__( 'Második stat címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'tanácsadás', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'visual_stat_three_value', array( 'label' => esc_html__( 'Harmadik stat érték', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'P', 'vitacenter-elementor-header' ) ) );
@@ -86,9 +86,9 @@ class VitaCenter_Eletmodtanacsadas_Widget extends VitaCenter_Structured_Widget_B
 			'title_field' => '{{{ text }}}',
 			'default' => $this->service_defaults(),
 		) );
-		$this->add_control( 'primary_metric_label', array( 'label' => esc_html__( 'Első kártya jelölés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( '4h', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'primary_metric_title', array( 'label' => esc_html__( 'Első kártya cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Napi elérhetőség', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'primary_metric_text', array( 'label' => esc_html__( 'Első kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Napi 4 órában várják az egészséges életmódra vágyókat', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'primary_metric_label', array( 'label' => esc_html__( 'Első kártya jelölés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Időpont', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'primary_metric_title', array( 'label' => esc_html__( 'Első kártya cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Időpont-egyeztetés', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'primary_metric_text', array( 'label' => esc_html__( 'Első kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A tanácsadás előzetes egyeztetés alapján érhető el.', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'secondary_metric_label', array( 'label' => esc_html__( 'Második kártya jelölés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( '1:1', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'secondary_metric_title', array( 'label' => esc_html__( 'Második kártya cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Személyre szabott terv', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'secondary_metric_text', array( 'label' => esc_html__( 'Második kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Egyéni egészségterv és célzott prevenciós tanácsadás', 'vitacenter-elementor-header' ) ) );
@@ -122,9 +122,12 @@ class VitaCenter_Eletmodtanacsadas_Widget extends VitaCenter_Structured_Widget_B
 
 	protected function render() {
 		$s = wp_parse_args( $this->get_settings_for_display(), $this->defaults() );
+		$s = $this->normalize_appointment_copy( $s );
 
 		$quick_info   = $this->items_or_default( $s, 'quick_info', $this->quick_info_defaults() );
+		$quick_info   = $this->normalize_quick_info_items( $quick_info );
 		$intro        = $this->items_or_default( $s, 'intro', $this->intro_defaults() );
+		$intro        = $this->normalize_intro_items( $intro );
 		$importance   = $this->items_or_default( $s, 'importance', $this->importance_defaults() );
 		$services     = $this->items_or_default( $s, 'services', $this->service_defaults() );
 		$useful_items = $this->items_or_default( $s, 'useful_items', $this->useful_defaults() );
@@ -251,8 +254,8 @@ class VitaCenter_Eletmodtanacsadas_Widget extends VitaCenter_Structured_Widget_B
 			'visual_kicker'               => esc_html__( 'Személyre szabott támogatás', 'vitacenter-elementor-header' ),
 			'visual_title'                => esc_html__( 'Egészségesebb mindennapok tudatos lépésekkel', 'vitacenter-elementor-header' ),
 			'visual_text'                 => esc_html__( 'Pszicho-szociális, táplálkozási és prevenciós tanácsadás egyéni egészségtervvel.', 'vitacenter-elementor-header' ),
-			'visual_stat_one_value'       => esc_html__( '4h', 'vitacenter-elementor-header' ),
-			'visual_stat_one_label'       => esc_html__( 'naponta', 'vitacenter-elementor-header' ),
+			'visual_stat_one_value'       => esc_html__( 'EFI', 'vitacenter-elementor-header' ),
+			'visual_stat_one_label'       => esc_html__( 'iroda', 'vitacenter-elementor-header' ),
 			'visual_stat_two_value'       => esc_html__( '1:1', 'vitacenter-elementor-header' ),
 			'visual_stat_two_label'       => esc_html__( 'tanácsadás', 'vitacenter-elementor-header' ),
 			'visual_stat_three_value'     => esc_html__( 'P', 'vitacenter-elementor-header' ),
@@ -268,9 +271,9 @@ class VitaCenter_Eletmodtanacsadas_Widget extends VitaCenter_Structured_Widget_B
 			'services_subtitle'           => esc_html__( 'A tanácsadás célja, hogy az egészséges életmódra vágyók szakemberek segítségével, személyre szabott támogatással alakíthassák ki mindennapi szokásaikat.', 'vitacenter-elementor-header' ),
 			'services_list_title'         => esc_html__( 'Elérhető támogatási formák', 'vitacenter-elementor-header' ),
 			'services'                    => $this->service_defaults(),
-			'primary_metric_label'        => esc_html__( '4h', 'vitacenter-elementor-header' ),
-			'primary_metric_title'        => esc_html__( 'Napi elérhetőség', 'vitacenter-elementor-header' ),
-			'primary_metric_text'         => esc_html__( 'Napi 4 órában várják az egészséges életmódra vágyókat', 'vitacenter-elementor-header' ),
+			'primary_metric_label'        => esc_html__( 'Időpont', 'vitacenter-elementor-header' ),
+			'primary_metric_title'        => esc_html__( 'Időpont-egyeztetés', 'vitacenter-elementor-header' ),
+			'primary_metric_text'         => esc_html__( 'A tanácsadás előzetes egyeztetés alapján érhető el.', 'vitacenter-elementor-header' ),
 			'secondary_metric_label'      => esc_html__( '1:1', 'vitacenter-elementor-header' ),
 			'secondary_metric_title'      => esc_html__( 'Személyre szabott terv', 'vitacenter-elementor-header' ),
 			'secondary_metric_text'       => esc_html__( 'Egyéni egészségterv és célzott prevenciós tanácsadás', 'vitacenter-elementor-header' ),
@@ -293,7 +296,7 @@ class VitaCenter_Eletmodtanacsadas_Widget extends VitaCenter_Structured_Widget_B
 			array( 'label' => esc_html__( 'Program neve', 'vitacenter-elementor-header' ), 'value' => esc_html__( 'Életmódtanácsadás', 'vitacenter-elementor-header' ) ),
 			array( 'label' => esc_html__( 'Típus', 'vitacenter-elementor-header' ), 'value' => esc_html__( 'Egyéni és csoportos tanácsadás', 'vitacenter-elementor-header' ) ),
 			array( 'label' => esc_html__( 'Fókusz', 'vitacenter-elementor-header' ), 'value' => esc_html__( 'Egészséges életmód és prevenció', 'vitacenter-elementor-header' ) ),
-			array( 'label' => esc_html__( 'Elérhetőség', 'vitacenter-elementor-header' ), 'value' => esc_html__( 'Napi 4 órában', 'vitacenter-elementor-header' ) ),
+			array( 'label' => esc_html__( 'Időpont-egyeztetés', 'vitacenter-elementor-header' ), 'value' => esc_html__( 'Előzetes egyeztetés alapján', 'vitacenter-elementor-header' ) ),
 			array( 'label' => esc_html__( 'Szakemberek', 'vitacenter-elementor-header' ), 'value' => esc_html__( 'Pszichológus, táplálkozási szakértő és más szakemberek', 'vitacenter-elementor-header' ) ),
 			array( 'label' => esc_html__( 'Támogatás', 'vitacenter-elementor-header' ), 'value' => esc_html__( 'Egyéni egészségterv és prevenciós tanácsadás', 'vitacenter-elementor-header' ) ),
 		);
@@ -304,7 +307,7 @@ class VitaCenter_Eletmodtanacsadas_Widget extends VitaCenter_Structured_Widget_B
 			array( 'text' => esc_html__( 'Az Egészségfejlesztő Iroda keretén belül működő felvilágosító munka, kapcsolattartás és egészségnevelés célja egy tudatosabb, a megelőzést és az egészséges életmódot népszerűsítő tevékenység és szemléletmód meghonosítása.', 'vitacenter-elementor-header' ) ),
 			array( 'text' => esc_html__( 'A központ figyelemfelkeltő rendezvényeinek, tájékoztató anyagainak, egészségfelmérési tevékenységeinek, valamint csoportos és egyéni tanácsadásának köszönhetően középtávon javulhatnak a lakosság morbiditási és mortalitási adatai.', 'vitacenter-elementor-header' ) ),
 			array( 'text' => esc_html__( 'Az egészségnevelési és tanácsadói iroda működtetése nagyban hozzájárulhat az egészséges életmód, a prevenció, a korai felismerés és a hatékony terápia megvalósításához.', 'vitacenter-elementor-header' ) ),
-			array( 'text' => esc_html__( 'Napi 4 órában különböző szakemberek, pszichológus, táplálkozási szakértő és más segítő szakemberek pszicho-szociális és táplálkozási tanácsadással, egyéni egészségtervvel, valamint prevenciós támogatással várják az egészséges életmódra vágyókat.', 'vitacenter-elementor-header' ) ),
+			array( 'text' => esc_html__( 'Előzetes időpont-egyeztetés alapján különböző szakemberek, pszichológus, táplálkozási szakértő és más segítő szakemberek pszicho-szociális és táplálkozási tanácsadással, egyéni egészségtervvel, valamint prevenciós támogatással várják az egészséges életmódra vágyókat.', 'vitacenter-elementor-header' ) ),
 		);
 	}
 
@@ -336,6 +339,62 @@ class VitaCenter_Eletmodtanacsadas_Widget extends VitaCenter_Structured_Widget_B
 			array( 'text' => esc_html__( 'Táplálkozási tanácsadás iránt érdeklődőknek', 'vitacenter-elementor-header' ) ),
 			array( 'text' => esc_html__( 'Prevenciós támogatást kereső fiataloknak és felnőtteknek', 'vitacenter-elementor-header' ) ),
 		);
+	}
+
+	private function normalize_appointment_copy( $settings ) {
+		if ( '4h' === $this->plain_text( $settings['visual_stat_one_value'] ) && 'naponta' === $this->plain_text( $settings['visual_stat_one_label'] ) ) {
+			$settings['visual_stat_one_value'] = esc_html__( 'EFI', 'vitacenter-elementor-header' );
+			$settings['visual_stat_one_label'] = esc_html__( 'iroda', 'vitacenter-elementor-header' );
+		}
+
+		if ( '4h' === $this->plain_text( $settings['primary_metric_label'] ) ) {
+			$settings['primary_metric_label'] = esc_html__( 'Időpont', 'vitacenter-elementor-header' );
+		}
+
+		if ( 'Napi elérhetőség' === $this->plain_text( $settings['primary_metric_title'] ) ) {
+			$settings['primary_metric_title'] = esc_html__( 'Időpont-egyeztetés', 'vitacenter-elementor-header' );
+		}
+
+		if ( 'Napi 4 órában várják az egészséges életmódra vágyókat' === $this->plain_text( $settings['primary_metric_text'] ) ) {
+			$settings['primary_metric_text'] = esc_html__( 'A tanácsadás előzetes egyeztetés alapján érhető el.', 'vitacenter-elementor-header' );
+		}
+
+		return $settings;
+	}
+
+	private function normalize_quick_info_items( $items ) {
+		foreach ( $items as $index => $item ) {
+			if ( ! is_array( $item ) ) {
+				continue;
+			}
+
+			$label = isset( $item['label'] ) ? $this->plain_text( $item['label'] ) : '';
+			$value = isset( $item['value'] ) ? $this->plain_text( $item['value'] ) : '';
+
+			if ( 'Elérhetőség' === $label && 'Napi 4 órában' === $value ) {
+				$items[ $index ]['label'] = esc_html__( 'Időpont-egyeztetés', 'vitacenter-elementor-header' );
+				$items[ $index ]['value'] = esc_html__( 'Előzetes egyeztetés alapján', 'vitacenter-elementor-header' );
+			}
+		}
+
+		return $items;
+	}
+
+	private function normalize_intro_items( $items ) {
+		$old_text = esc_html__( 'Napi 4 órában különböző szakemberek, pszichológus, táplálkozási szakértő és más segítő szakemberek pszicho-szociális és táplálkozási tanácsadással, egyéni egészségtervvel, valamint prevenciós támogatással várják az egészséges életmódra vágyókat.', 'vitacenter-elementor-header' );
+		$new_text = esc_html__( 'Előzetes időpont-egyeztetés alapján különböző szakemberek, pszichológus, táplálkozási szakértő és más segítő szakemberek pszicho-szociális és táplálkozási tanácsadással, egyéni egészségtervvel, valamint prevenciós támogatással várják az egészséges életmódra vágyókat.', 'vitacenter-elementor-header' );
+
+		foreach ( $items as $index => $item ) {
+			if ( ! is_array( $item ) || ! isset( $item['text'] ) ) {
+				continue;
+			}
+
+			if ( $old_text === $this->plain_text( $item['text'] ) ) {
+				$items[ $index ]['text'] = $new_text;
+			}
+		}
+
+		return $items;
 	}
 
 	private function items_or_default( $settings, $key, $default ) {
