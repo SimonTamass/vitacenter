@@ -4598,6 +4598,17 @@
 	font-weight: 900;
 }
 
+.vc-mobile-specialist__metric > strong svg {
+	display: block;
+	width: 26px;
+	height: 26px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2.2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
 .vc-mobile-specialist__metric span {
 	display: grid;
 	gap: 5px;

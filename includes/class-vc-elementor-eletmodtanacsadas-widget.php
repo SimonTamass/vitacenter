@@ -188,7 +188,7 @@ class VitaCenter_Eletmodtanacsadas_Widget extends VitaCenter_Structured_Widget_B
 								<?php $this->render_bullet_list( $services ); ?>
 							</div>
 							<div class="vc-mobile-specialist__mini-cards">
-								<?php $this->render_metric_card( $s['primary_metric_label'], $s['primary_metric_title'], $s['primary_metric_text'] ); ?>
+								<?php $this->render_metric_card( $s['primary_metric_label'], $s['primary_metric_title'], $s['primary_metric_text'], 'clock' ); ?>
 								<?php $this->render_metric_card( $s['secondary_metric_label'], $s['secondary_metric_title'], $s['secondary_metric_text'] ); ?>
 							</div>
 						</section>
@@ -478,10 +478,19 @@ class VitaCenter_Eletmodtanacsadas_Widget extends VitaCenter_Structured_Widget_B
 		<?php
 	}
 
-	private function render_metric_card( $label, $title, $text ) {
+	private function render_metric_card( $label, $title, $text, $icon = '' ) {
 		?>
 		<div class="vc-mobile-specialist__metric">
-			<strong><?php echo esc_html( $label ); ?></strong>
+			<strong aria-label="<?php echo esc_attr( $label ); ?>">
+				<?php if ( 'clock' === $icon ) : ?>
+					<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+						<circle cx="12" cy="12" r="10"></circle>
+						<path d="M12 6v6l4 2"></path>
+					</svg>
+				<?php else : ?>
+					<?php echo esc_html( $label ); ?>
+				<?php endif; ?>
+			</strong>
 			<span><b><?php echo esc_html( $title ); ?></b><em><?php echo esc_html( $text ); ?></em></span>
 		</div>
 		<?php
