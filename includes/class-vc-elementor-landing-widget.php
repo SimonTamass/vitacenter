@@ -430,7 +430,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 		);
 
 		$this->add_control( 'contact_phone_label', array( 'label' => esc_html__( 'Telefon címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'contact_phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '+40 261 713 775' ) );
+		$this->add_control( 'contact_phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '0742021316' ) );
 		$this->add_control( 'contact_email_label', array( 'label' => esc_html__( 'E-mail címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'contact_email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'efi@szatmar.ro' ) );
 		$this->add_control( 'contact_address_label', array( 'label' => esc_html__( 'Cím címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Cím', 'vitacenter-elementor-header' ) ) );
@@ -1228,7 +1228,7 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 			$settings,
 			array(
 				'contact_phone_label'   => esc_html__( 'Telefon', 'vitacenter-elementor-header' ),
-				'contact_phone'         => '+40 261 713 775',
+				'contact_phone'         => '0742021316',
 				'contact_email_label'   => esc_html__( 'E-mail', 'vitacenter-elementor-header' ),
 				'contact_email'         => 'efi@szatmar.ro',
 				'contact_address_label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ),

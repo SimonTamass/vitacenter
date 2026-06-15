@@ -544,7 +544,7 @@ class VitaCenter_Registration_Info_Widget extends VitaCenter_Structured_Widget_B
 		$this->start_controls_section( 'content_section', array( 'label' => esc_html__( 'Regisztráció / kapcsolat', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Regisztráció / Időpontfoglalás', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'text', array( 'label' => esc_html__( 'Szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Vegye fel velünk a kapcsolatot bizalommal!', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '+40 261 713 775' ) );
+		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '0742021316' ) );
 		$this->add_control( 'email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'efi@szatmar.ro' ) );
 		$r = new Repeater();
 		$r->add_control( 'label', array( 'label' => esc_html__( 'Mező neve', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Mező', 'vitacenter-elementor-header' ) ) );

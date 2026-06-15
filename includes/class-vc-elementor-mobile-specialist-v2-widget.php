@@ -112,7 +112,7 @@ class VitaCenter_Mobile_Specialist_V2_Widget extends VitaCenter_Structured_Widge
 			'default'     => $this->useful_defaults(),
 		) );
 		$this->add_control( 'contact_title', array( 'label' => esc_html__( 'Kapcsolat cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '+36 30 123 4567' ) );
+		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '0742021316' ) );
 		$this->add_control( 'email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'info@nepegeszseg.hu' ) );
 		$this->add_control( 'hours', array( 'label' => esc_html__( 'Nyitvatartás', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'H–P: 8:00 – 16:00', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'contact_button_text', array( 'label' => esc_html__( 'Kapcsolat gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Érdeklődöm', 'vitacenter-elementor-header' ) ) );
@@ -280,7 +280,7 @@ class VitaCenter_Mobile_Specialist_V2_Widget extends VitaCenter_Structured_Widge
 			'useful_title'             => esc_html__( 'Kinek hasznos?', 'vitacenter-elementor-header' ),
 			'useful_items'             => $this->useful_defaults(),
 			'contact_title'            => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ),
-			'phone'                    => '+36 30 123 4567',
+			'phone'                    => '0742021316',
 			'email'                    => 'info@nepegeszseg.hu',
 			'hours'                    => esc_html__( 'H–P: 8:00 – 16:00', 'vitacenter-elementor-header' ),
 			'contact_button_text'      => esc_html__( 'Érdeklődöm', 'vitacenter-elementor-header' ),

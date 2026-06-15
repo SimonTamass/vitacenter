@@ -91,7 +91,7 @@ namespace {
 		array(
 			'website_link' => '',
 			'address_link' => '',
-			'phone'        => array( '+40 261 713 775' ),
+			'phone'        => array( '0742021316' ),
 			'email'        => array( 'efi@szatmar.ro' ),
 		)
 	);
