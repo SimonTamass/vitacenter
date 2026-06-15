@@ -75,6 +75,12 @@ final class VitaCenter_RO_Text {
 			return $map[ $decoded ];
 		}
 
+		$normalized = str_replace( array( '–', '—', '‑' ), '-', $decoded );
+
+		if ( preg_match( '/\b[HL]\s*-\s*[PV]\b/i', $normalized ) && false !== strpos( $normalized, '8:00' ) && false !== strpos( $normalized, '16:00' ) ) {
+			return 'Programați o consultație!';
+		}
+
 		return $text;
 	}
 
@@ -163,9 +169,11 @@ final class VitaCenter_RO_Text {
 			'Gyakori kérdések' => 'Întrebări frecvente',
 			'Kérdés' => 'Întrebare',
 			'Válasz szövege.' => 'Textul răspunsului.',
-			'Nyitvatartás' => 'Program',
-			'H–P: 8:00 – 16:00' => 'L-V: 8:00 – 16:00',
-			'H-P: 8:00 - 16:00' => 'L-V: 8:00 - 16:00',
+			'Nyitvatartás' => 'Programați o consultație!',
+			'H–P: 8:00 – 16:00' => 'Programați o consultație!',
+			'H-P: 8:00 - 16:00' => 'Programați o consultație!',
+			'L-V: 8:00 – 16:00' => 'Programați o consultație!',
+			'L-V: 8:00 - 16:00' => 'Programați o consultație!',
 			'Zárva' => 'Închis',
 			'Adatvédelem' => 'Protecția datelor',
 			'Impresszum' => 'Impressum',
