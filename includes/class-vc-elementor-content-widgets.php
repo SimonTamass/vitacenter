@@ -22,7 +22,7 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 		$this->add_control( 'intro', array( 'label' => esc_html__( 'Hero szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A projekt célja, hogy Szatmár megye lakosságának egészségi állapotát, prevenciós lehetőségeit és az egészségügyi szolgáltatásokhoz való hozzáférését javítsa.', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'primary_text', array( 'label' => esc_html__( 'Első gomb felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Programok megtekintése', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'primary_link', array( 'label' => esc_html__( 'Első gomb link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#programok' ) ) );
-		$this->add_control( 'secondary_text', array( 'label' => esc_html__( 'Második gomb felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Időpontfoglalás', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'secondary_text', array( 'label' => esc_html__( 'Második gomb felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'secondary_link', array( 'label' => esc_html__( 'Második gomb link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#kapcsolat' ) ) );
 		$this->end_controls_section();
 
@@ -267,7 +267,7 @@ class VitaCenter_Project_Content_Widget extends VitaCenter_Structured_Widget_Bas
 			'intro'                => esc_html__( 'A projekt célja, hogy Szatmár megye lakosságának egészségi állapotát, prevenciós lehetőségeit és az egészségügyi szolgáltatásokhoz való hozzáférését javítsa.', 'vitacenter-elementor-header' ),
 			'primary_text'         => esc_html__( 'Programok megtekintése', 'vitacenter-elementor-header' ),
 			'primary_link'         => array( 'url' => '#programok' ),
-			'secondary_text'       => esc_html__( 'Időpontfoglalás', 'vitacenter-elementor-header' ),
+			'secondary_text'       => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ),
 			'secondary_link'       => array( 'url' => '#kapcsolat' ),
 			'highlights'           => $this->project_highlight_defaults(),
 			'overview_title'       => esc_html__( 'A projektről', 'vitacenter-elementor-header' ),
@@ -542,7 +542,7 @@ class VitaCenter_Registration_Info_Widget extends VitaCenter_Structured_Widget_B
 
 	protected function register_controls() {
 		$this->start_controls_section( 'content_section', array( 'label' => esc_html__( 'Regisztráció / kapcsolat', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Regisztráció / Időpontfoglalás', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'text', array( 'label' => esc_html__( 'Szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Vegye fel velünk a kapcsolatot bizalommal!', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '0742021316' ) );
 		$this->add_control( 'email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'efi@szatmar.ro' ) );

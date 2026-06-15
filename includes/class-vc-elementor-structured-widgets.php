@@ -398,7 +398,7 @@ class VitaCenter_Landing_Hero_Widget extends VitaCenter_Structured_Widget_Base {
 		$this->add_control( 'text', array( 'label' => esc_html__( 'Alcím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Szűrővizsgálatok, tanácsadás és közösségi programok Szatmár megyében - a megelőzés és az egészségtudatos életmód szolgálatában.', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'primary_text', array( 'label' => esc_html__( 'Első gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Programok megtekintése', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'primary_link', array( 'label' => esc_html__( 'Első link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#programok' ) ) );
-		$this->add_control( 'secondary_text', array( 'label' => esc_html__( 'Második gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Időpontfoglalás', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'secondary_text', array( 'label' => esc_html__( 'Második gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'secondary_link', array( 'label' => esc_html__( 'Második link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#kapcsolat' ) ) );
 		$this->add_control( 'badge', array( 'label' => esc_html__( 'Lebegő ikon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::MEDIA, 'default' => $this->media_default( 'ChatGPT Image Apr 27, 2026, 02_20_41 PM (5).png' ) ) );
 		$this->end_controls_section();
@@ -2875,7 +2875,7 @@ class VitaCenter_Contact_Widget extends VitaCenter_Structured_Widget_Base {
 		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Lépjen kapcsolatba velünk', 'vitacenter-elementor-header' ), 'label_block' => true ) );
 		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Kérdése van programjainkkal, szűréseinkkel vagy tanácsadási lehetőségeinkkel kapcsolatban? Keressen minket bizalommal, munkatársaink készséggel állnak rendelkezésére.', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'hero_card_title', array( 'label' => esc_html__( 'Kiemelt kártya cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Egészsége nem várhat.', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'hero_card_text', array( 'label' => esc_html__( 'Kiemelt kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Foglaljon időpontot, érdeklődjön programjainkról, vagy kérjen további tájékoztatást.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'hero_card_text', array( 'label' => esc_html__( 'Kiemelt kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'call_button_text', array( 'label' => esc_html__( 'Telefon gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Telefonhívás indítása', 'vitacenter-elementor-header' ) ) );
 		$this->end_controls_section();
 
@@ -2896,10 +2896,10 @@ class VitaCenter_Contact_Widget extends VitaCenter_Structured_Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'side_section', array( 'label' => esc_html__( 'Oldalsáv', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'hours_label', array( 'label' => esc_html__( 'Időpont kártya címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Ügyfélfogadás', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'hours_label', array( 'label' => esc_html__( 'Időpont kártya címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'hours_title', array( 'label' => esc_html__( 'Időpont kártya cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'appointment_text', array( 'label' => esc_html__( 'Időpont kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A programokon és tanácsadásokon való részvételhez kérjük, egyeztessen időpontot telefonon vagy e-mailben.', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'appointment_button_text', array( 'label' => esc_html__( 'Időpont gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'appointment_text', array( 'label' => esc_html__( 'Időpont kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'appointment_button_text', array( 'label' => esc_html__( 'Időpont gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'appointment_link', array( 'label' => esc_html__( 'Időpont gomb link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '' ) ) );
 		$this->add_control( 'map_label', array( 'label' => esc_html__( 'Megközelítés címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Megközelítés', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'map_title', array( 'label' => esc_html__( 'Megközelítés cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Hol talál minket?', 'vitacenter-elementor-header' ) ) );
@@ -2993,7 +2993,7 @@ class VitaCenter_Contact_Widget extends VitaCenter_Structured_Widget_Base {
 			'title'            => esc_html__( 'Lépjen kapcsolatba velünk', 'vitacenter-elementor-header' ),
 			'intro'            => esc_html__( 'Kérdése van programjainkkal, szűréseinkkel vagy tanácsadási lehetőségeinkkel kapcsolatban? Keressen minket bizalommal, munkatársaink készséggel állnak rendelkezésére.', 'vitacenter-elementor-header' ),
 			'hero_card_title'  => esc_html__( 'Egészsége nem várhat.', 'vitacenter-elementor-header' ),
-			'hero_card_text'   => esc_html__( 'Foglaljon időpontot, érdeklődjön programjainkról, vagy kérjen további tájékoztatást.', 'vitacenter-elementor-header' ),
+			'hero_card_text'   => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ),
 			'call_button_text' => esc_html__( 'Telefonhívás indítása', 'vitacenter-elementor-header' ),
 			'phone'            => '0742021316',
 			'email'            => 'efi@szatmar.ro',
@@ -3005,10 +3005,10 @@ class VitaCenter_Contact_Widget extends VitaCenter_Structured_Widget_Base {
 			'form_shortcode'   => '',
 			'form_action'      => '#',
 			'submit_text'      => esc_html__( 'Üzenet küldése', 'vitacenter-elementor-header' ),
-			'hours_label'      => esc_html__( 'Ügyfélfogadás', 'vitacenter-elementor-header' ),
+			'hours_label'      => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ),
 			'hours_title'      => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ),
-			'appointment_text' => esc_html__( 'A programokon és tanácsadásokon való részvételhez kérjük, egyeztessen időpontot telefonon vagy e-mailben.', 'vitacenter-elementor-header' ),
-			'appointment_button_text' => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ),
+			'appointment_text' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ),
+			'appointment_button_text' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ),
 			'appointment_link' => array( 'url' => '' ),
 			'weekday_hours'    => '8:00 - 16:00',
 			'saturday_hours'   => esc_html__( 'Zárva', 'vitacenter-elementor-header' ),
@@ -3054,7 +3054,7 @@ class VitaCenter_Contact_Widget extends VitaCenter_Structured_Widget_Base {
 			</div>
 			<div class="efi-form-row">
 				<label><span><?php echo esc_html__( 'Telefon', 'vitacenter-elementor-header' ); ?></span><input type="tel" name="phone" placeholder="0742021316"></label>
-				<label><span><?php echo esc_html__( 'Téma', 'vitacenter-elementor-header' ); ?></span><select name="topic"><option value=""><?php echo esc_html__( 'Válasszon témát', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Programok', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Időpontfoglalás', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Szűrővizsgálatok', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Tanácsadás', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Egyéb kérdés', 'vitacenter-elementor-header' ); ?></option></select></label>
+				<label><span><?php echo esc_html__( 'Téma', 'vitacenter-elementor-header' ); ?></span><select name="topic"><option value=""><?php echo esc_html__( 'Válasszon témát', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Programok', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Szűrővizsgálatok', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Tanácsadás', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Egyéb kérdés', 'vitacenter-elementor-header' ); ?></option></select></label>
 			</div>
 			<label><span><?php echo esc_html__( 'Üzenet', 'vitacenter-elementor-header' ); ?></span><textarea name="message" rows="6" placeholder="<?php echo esc_attr__( 'Írja meg kérdését vagy üzenetét...', 'vitacenter-elementor-header' ); ?>" required></textarea></label>
 			<button type="submit" class="efi-contact-submit"><span><?php echo esc_html( $this->plain_text( $settings['submit_text'] ) ); ?></span><span aria-hidden="true">&#8594;</span></button>
