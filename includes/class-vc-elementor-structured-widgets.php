@@ -1255,7 +1255,7 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 		$this->add_control( 'cta_label', array( 'label' => esc_html__( 'Kapcsolat címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_title', array( 'label' => esc_html__( 'Kapcsolat cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_text', array( 'label' => esc_html__( 'Kapcsolat szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
-		$this->add_control( 'cta_phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '+36 30 123 4567', 'condition' => array( 'show_cta' => 'yes' ) ) );
+		$this->add_control( 'cta_phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '0742021316', 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'contact@vitacenter.ro', 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_button_text', array( 'label' => esc_html__( 'Kapcsolat gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Érdeklődöm', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_link', array( 'label' => esc_html__( 'Kapcsolat link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '/kapcsolat' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
@@ -1461,7 +1461,7 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 			'cta_label'            => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ),
 			'cta_title'            => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ),
 			'cta_text'             => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ),
-			'cta_phone'            => '+36 30 123 4567',
+			'cta_phone'            => '0742021316',
 			'cta_email'            => 'contact@vitacenter.ro',
 			'cta_button_text'      => esc_html__( 'Érdeklődöm', 'vitacenter-elementor-header' ),
 			'cta_link'             => array( 'url' => '/kapcsolat' ),
@@ -1695,8 +1695,8 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 			$text = esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' );
 		}
 
-		if ( '+40 261 713 775' === $phone ) {
-			$phone = '+36 30 123 4567';
+		if ( in_array( $phone, array( '+40 261 713 775', '+36 30 123 4567', '+40 744 920 xxx' ), true ) ) {
+			$phone = '0742021316';
 			$phone_href = $this->knowledge_phone_href( $phone );
 		}
 
@@ -1943,7 +1943,7 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 		$this->add_control( 'cta_label', array( 'label' => esc_html__( 'Kapcsolat címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_title', array( 'label' => esc_html__( 'Kapcsolat cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Van megosztható fotója?', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_text', array( 'label' => esc_html__( 'Kapcsolat szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Programjainkhoz kapcsolódó képeket vagy videókat a kapcsolat oldalon keresztül is elküldhet.', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
-		$this->add_control( 'cta_phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '+40 261 713 775', 'condition' => array( 'show_cta' => 'yes' ) ) );
+		$this->add_control( 'cta_phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '0742021316', 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'efi@szatmar.ro', 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_button_text', array( 'label' => esc_html__( 'Kapcsolat gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_link', array( 'label' => esc_html__( 'Kapcsolat link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '/kapcsolat' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
@@ -2103,7 +2103,7 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 			'cta_label'        => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ),
 			'cta_title'        => esc_html__( 'Van megosztható fotója?', 'vitacenter-elementor-header' ),
 			'cta_text'         => esc_html__( 'Programjainkhoz kapcsolódó képeket vagy videókat a kapcsolat oldalon keresztül is elküldhet.', 'vitacenter-elementor-header' ),
-			'cta_phone'        => '+40 261 713 775',
+			'cta_phone'        => '0742021316',
 			'cta_email'        => 'efi@szatmar.ro',
 			'cta_button_text'  => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ),
 			'cta_link'         => array( 'url' => '/kapcsolat' ),
@@ -2343,7 +2343,7 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 			<?php endif; ?>
 
 			<?php if ( $has_gallery && count( $gallery_urls ) > 1 ) : ?>
-				<small class="efi-gallery-photo-count"><?php echo esc_html( count( $gallery_urls ) ); ?> kép</small>
+				<small class="efi-gallery-photo-count"><?php echo esc_html( count( $gallery_urls ) ); ?> <?php echo esc_html__( 'kép', 'vitacenter-elementor-header' ); ?></small>
 			<?php endif; ?>
 
 			<?php if ( $show_play ) : ?>
@@ -2880,7 +2880,7 @@ class VitaCenter_Contact_Widget extends VitaCenter_Structured_Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'contact_section', array( 'label' => esc_html__( 'Elérhetőségek', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '+40 261 713 775' ) );
+		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '0742021316' ) );
 		$this->add_control( 'email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'efi@szatmar.ro' ) );
 		$this->add_control( 'address', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Szatmárnémeti, Vasile Lucaciu u. 21.', 'vitacenter-elementor-header' ), 'label_block' => true ) );
 		$this->add_control( 'map_link', array( 'label' => esc_html__( 'Térkép link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => 'https://www.google.com/maps/search/?api=1&query=Szatm%C3%A1rn%C3%A9meti%2C%20Vasile%20Lucaciu%20u.%2021', 'is_external' => true ) ) );
@@ -2995,7 +2995,7 @@ class VitaCenter_Contact_Widget extends VitaCenter_Structured_Widget_Base {
 			'hero_card_title'  => esc_html__( 'Egészsége nem várhat.', 'vitacenter-elementor-header' ),
 			'hero_card_text'   => esc_html__( 'Foglaljon időpontot, érdeklődjön programjainkról, vagy kérjen további tájékoztatást.', 'vitacenter-elementor-header' ),
 			'call_button_text' => esc_html__( 'Telefonhívás indítása', 'vitacenter-elementor-header' ),
-			'phone'            => '+40 261 713 775',
+			'phone'            => '0742021316',
 			'email'            => 'efi@szatmar.ro',
 			'address'          => esc_html__( 'Szatmárnémeti, Vasile Lucaciu u. 21.', 'vitacenter-elementor-header' ),
 			'map_link'         => array( 'url' => 'https://www.google.com/maps/search/?api=1&query=Szatm%C3%A1rn%C3%A9meti%2C%20Vasile%20Lucaciu%20u.%2021', 'is_external' => true ),
@@ -3053,7 +3053,7 @@ class VitaCenter_Contact_Widget extends VitaCenter_Structured_Widget_Base {
 				<label><span><?php echo esc_html__( 'E-mail', 'vitacenter-elementor-header' ); ?></span><input type="email" name="email" placeholder="email@pelda.ro" required></label>
 			</div>
 			<div class="efi-form-row">
-				<label><span><?php echo esc_html__( 'Telefon', 'vitacenter-elementor-header' ); ?></span><input type="tel" name="phone" placeholder="+40 ..."></label>
+				<label><span><?php echo esc_html__( 'Telefon', 'vitacenter-elementor-header' ); ?></span><input type="tel" name="phone" placeholder="0742021316"></label>
 				<label><span><?php echo esc_html__( 'Téma', 'vitacenter-elementor-header' ); ?></span><select name="topic"><option value=""><?php echo esc_html__( 'Válasszon témát', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Programok', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Időpontfoglalás', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Szűrővizsgálatok', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Tanácsadás', 'vitacenter-elementor-header' ); ?></option><option><?php echo esc_html__( 'Egyéb kérdés', 'vitacenter-elementor-header' ); ?></option></select></label>
 			</div>
 			<label><span><?php echo esc_html__( 'Üzenet', 'vitacenter-elementor-header' ); ?></span><textarea name="message" rows="6" placeholder="<?php echo esc_attr__( 'Írja meg kérdését vagy üzenetét...', 'vitacenter-elementor-header' ); ?>" required></textarea></label>
@@ -3140,7 +3140,7 @@ class VitaCenter_Landing_Contact_Widget extends VitaCenter_Structured_Widget_Bas
 		$this->start_controls_section( 'contact_section', array( 'label' => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'show_notice', array( 'label' => esc_html__( 'EU nyilatkozat mutatása', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
 		$this->add_control( 'notice_text', array( 'label' => esc_html__( 'Nyilatkozat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Jelen weboldal tartalma nem feltétlenül tükrözi az Európai Unió hivatalos álláspontját.', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '+40 261 713 775' ) );
+		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '0742021316' ) );
 		$this->add_control( 'email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'efi@szatmar.ro' ) );
 		$this->add_control( 'address', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Szatmárnémeti, Vasile Lucaciu u. 21.', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'button_text', array( 'label' => esc_html__( 'Extra link felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '' ) );
@@ -3163,7 +3163,7 @@ class VitaCenter_Landing_Contact_Widget extends VitaCenter_Structured_Widget_Bas
 			array(
 				'show_notice'  => 'yes',
 				'notice_text'  => esc_html__( 'Jelen weboldal tartalma nem feltétlenül tükrözi az Európai Unió hivatalos álláspontját.', 'vitacenter-elementor-header' ),
-				'phone'        => '+40 261 713 775',
+				'phone'        => '0742021316',
 				'email'        => 'efi@szatmar.ro',
 				'address'      => esc_html__( 'Szatmárnémeti, Vasile Lucaciu u. 21.', 'vitacenter-elementor-header' ),
 				'button_text'  => '',
@@ -3329,7 +3329,7 @@ class VitaCenter_Legal_Footer_Widget extends VitaCenter_Structured_Widget_Base {
 		$this->add_control( 'address', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => $this->footer_text( 'Szatm&aacute;rn&eacute;meti, &#536;tefan cel Mare utca 13. sz&aacute;m' ) ) );
 		$this->add_control( 'address_link', array( 'label' => esc_html__( 'Cím link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL ) );
 		$this->add_control( 'phone_label', array( 'label' => esc_html__( 'Címke - telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '+40 744 920 xxx' ) );
+		$this->add_control( 'phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '0742021316' ) );
 		$this->add_control( 'email_label', array( 'label' => esc_html__( 'Címke - e-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'contact@vitacenter.ro' ) );
 		$this->end_controls_section();
@@ -3356,7 +3356,7 @@ class VitaCenter_Legal_Footer_Widget extends VitaCenter_Structured_Widget_Base {
 				'address'       => $this->footer_text( 'Szatm&aacute;rn&eacute;meti, &#536;tefan cel Mare utca 13. sz&aacute;m' ),
 				'address_link'  => array( 'url' => '' ),
 				'phone_label'   => esc_html__( 'Telefon', 'vitacenter-elementor-header' ),
-				'phone'         => '+40 744 920 xxx',
+				'phone'         => '0742021316',
 				'email_label'   => esc_html__( 'E-mail', 'vitacenter-elementor-header' ),
 				'email'         => 'contact@vitacenter.ro',
 			)

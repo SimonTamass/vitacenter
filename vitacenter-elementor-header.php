@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VitaCenter Elementor Widgets
  * Description: Elementor widgets for the VitaCenter header, navigation, and landing page content.
- * Version: 1.4.34
+ * Version: 1.4.35
  * Author: VitaCenter
  * Text Domain: vitacenter-elementor-header
  * Requires Plugins: elementor
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.34' );
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.35' );
 define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
 define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
@@ -107,6 +107,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-egeszsegfejlesztesi-iroda-widget.php';
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-eletmodtanacsadas-widget.php';
 		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-iskolaerettseg-widget.php';
+		require_once VC_ELEMENTOR_HEADER_PATH . 'includes/class-vc-elementor-ro-widgets.php';
 
 		$widgets_manager->register( new VitaCenter_Elementor_Header_Widget() );
 		$widgets_manager->register( new VitaCenter_Elementor_Landing_Widget() );
@@ -137,6 +138,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 		$widgets_manager->register( new VitaCenter_Iskolaerettseg_Widget() );
 		$widgets_manager->register( new VitaCenter_Info_Section_Widget() );
 		$widgets_manager->register( new VitaCenter_Registration_Info_Widget() );
+		VitaCenter_RO_Widgets::register( $widgets_manager );
 	}
 
 	public function migrate_partners_widget_data() {
