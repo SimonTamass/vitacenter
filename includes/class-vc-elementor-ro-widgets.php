@@ -63,6 +63,11 @@ final class VitaCenter_RO_Text {
 
 	public static function translate_text( $text ) {
 		$text = (string) $text;
+
+		if ( 'É' === $text ) {
+			return 'S';
+		}
+
 		$map  = self::map();
 
 		if ( isset( $map[ $text ] ) ) {
@@ -81,7 +86,188 @@ final class VitaCenter_RO_Text {
 			return 'Programați o consultație!';
 		}
 
+		$fallback = self::translate_control_label_fallback( $decoded );
+		if ( $fallback !== $decoded ) {
+			return $fallback;
+		}
+
 		return $text;
+	}
+
+	public static function translate_markup( $html ) {
+		$map = self::map();
+		uksort(
+			$map,
+			static function ( $a, $b ) {
+				return strlen( $b ) <=> strlen( $a );
+			}
+		);
+
+		foreach ( $map as $source => $target ) {
+			if ( '' === $source || $source === $target ) {
+				continue;
+			}
+
+			$html = str_replace( $source, $target, $html );
+			$html = str_replace( htmlspecialchars( $source, ENT_QUOTES, 'UTF-8' ), htmlspecialchars( $target, ENT_QUOTES, 'UTF-8' ), $html );
+		}
+
+		$html = preg_replace( '/\b[HL]\s*[-–—‑]\s*[PV]\s*:\s*8:00\s*[-–—‑]\s*16:00\b/u', 'Programați o consultație!', $html );
+		$html = preg_replace( '/>\s*É\s*</u', '>S<', $html );
+
+		return $html;
+	}
+
+	private static function translate_control_label_fallback( $text ) {
+		if ( preg_match( '~^(#|/|https?://)~i', $text ) || preg_match( '/^\d{4}\./', $text ) ) {
+			return $text;
+		}
+
+		if ( ! preg_match( '/[áéíóöőúüűÁÉÍÓÖŐÚÜŰ]|\b(cím|Cím|szöveg|Szöveg|gomb|Gomb|link|kártya|Kártya|címke|Címke|megjelenít|mutatása|felirat|Felirat|háttér|Háttér|szín|Szín|menü|Menü|galéria|Galéria|kép|Kép|fotó|Fotó|videó|Videó|esemény|Esemény|program|Program|szekció|Szekció|mező|Mező|űrlap|Űrlap|oldal|Oldal|oldalsáv|Oldalsáv|lábléc|Lábléc|tartalom|Tartalom|logó|Logó|bevezető|Bevezető|lista|Lista|elem|Elem|kérdés|Kérdés|válasz|Válasz|letölt|Letölt|stílus|Stílus|tipográfia|Tipográfia|távolság|Távolság|térköz|Térköz|adat|Adat|honlap|Honlap|nyilatkozat|Nyilatkozat|akcentus|Akcentus|aktív|Aktív|kézi|Kézi|mobil|Mobil|hero|Hero)\b/u', $text ) ) {
+			return $text;
+		}
+
+		$phrases = array(
+			'Adatvédelem' => 'Protecția datelor',
+			'Ajánlott célcsoportok' => 'Grupuri țintă recomandate',
+			'Ajánlás' => 'Recomandare',
+			'Alapból nyitva' => 'Deschis implicit',
+			'Alsó' => 'Inferior',
+			'Felső' => 'Superior',
+			'Aktív' => 'Activ',
+			'Automatikus felismerés' => 'Detectare automată',
+			'Bekezdések' => 'Paragrafe',
+			'Bekezdés' => 'Paragraf',
+			'Bevezető' => 'Introducere',
+			'Cikkek' => 'Articole',
+			'Cikk' => 'Articol',
+			'Célok' => 'Obiective',
+			'Cél' => 'Obiectiv',
+			'Címke' => 'Etichetă',
+			'Címsor' => 'Titlu',
+			'Cím' => 'Titlu',
+			'Dátum' => 'Dată',
+			'Elrendezés' => 'Layout',
+			'Elsődleges' => 'Primar',
+			'Első' => 'Primul',
+			'Második' => 'Al doilea',
+			'Harmadik' => 'Al treilea',
+			'Elérhetőség' => 'Date de contact',
+			'Előnyök' => 'Beneficii',
+			'Előny' => 'Beneficiu',
+			'Eseménykezelő' => 'Manager de evenimente',
+			'Eseménykártyák' => 'Carduri evenimente',
+			'Esemény' => 'Eveniment',
+			'Fejléc' => 'Antet',
+			'Felirat' => 'Text',
+			'Fontossági' => 'Importanță',
+			'Fontosság' => 'Importanță',
+			'Footer' => 'Subsol',
+			'Fotó- és videógaléria' => 'Galerie foto și video',
+			'Fókuszpontok' => 'Puncte de focus',
+			'Fókuszpont' => 'Punct de focus',
+			'Fő tartalom' => 'Conținut principal',
+			'Galéria' => 'Galerie',
+			'Gomb' => 'Buton',
+			'Háttérkép' => 'Imagine de fundal',
+			'Háttér' => 'Fundal',
+			'Honlap' => 'Site web',
+			'Időpont' => 'Programare',
+			'Ikon' => 'Icon',
+			'Kategóriák' => 'Categorii',
+			'Kategória' => 'Categorie',
+			'Kiemelt' => 'Evidențiat',
+			'Kiemelések' => 'Evidențieri',
+			'Kis' => 'Mic',
+			'Kártyák' => 'Carduri',
+			'Kártya' => 'Card',
+			'Kép' => 'Imagine',
+			'Kézi' => 'Manual',
+			'Kérdések' => 'Întrebări',
+			'Kérdés' => 'Întrebare',
+			'Landing' => 'Landing',
+			'Lebegő' => 'Plutitor',
+			'Lejátszás' => 'Redare',
+			'Letöltések' => 'Descărcări',
+			'Letölthető' => 'Descărcabil',
+			'Link' => 'Link',
+			'Lista' => 'Listă',
+			'Logó' => 'Logo',
+			'Lábléc' => 'Subsol',
+			'Megjegyzés' => 'Notă',
+			'Megjelenített' => 'Afișat',
+			'Megjelenítése' => 'Afișare',
+			'Megjelenítés' => 'Afișare',
+			'Megközelítés' => 'Acces',
+			'Megvalósítás' => 'Implementare',
+			'Menüpont' => 'Element de meniu',
+			'Menüsor' => 'Bară de meniu',
+			'Menü' => 'Meniu',
+			'Mező' => 'Câmp',
+			'Mini' => 'Mini',
+			'Mobil' => 'Mobil',
+			'Morzsa navigáció' => 'Navigare breadcrumb',
+			'Média' => 'Media',
+			'Nagy' => 'Mare',
+			'Naptár' => 'Calendar',
+			'Nyilatkozat' => 'Declarație',
+			'Nyíl' => 'Săgeată',
+			'Oldalsáv' => 'Bară laterală',
+			'Oldal' => 'Pagină',
+			'Programjaink' => 'Activitățile noastre',
+			'Programkártyák' => 'Carduri program',
+			'Programleírás' => 'Descriere program',
+			'Programnév' => 'Nume program',
+			'Programról' => 'Despre program',
+			'Program' => 'Program',
+			'Projekt' => 'Proiect',
+			'Regisztráció' => 'Înregistrare',
+			'Rizikó' => 'Risc',
+			'Rövid' => 'Scurt',
+			'Soron következő' => 'Următorul',
+			'Sorszám' => 'Număr',
+			'Statikus' => 'Static',
+			'Sticky' => 'Sticky',
+			'Stratégiai' => 'Strategic',
+			'Stílus' => 'Stil',
+			'Szekció' => 'Secțiune',
+			'Szolgáltatásról' => 'Despre serviciu',
+			'Szám' => 'Număr',
+			'Szélesség' => 'Lățime',
+			'Szöveg' => 'Text',
+			'Szövegszín' => 'Culoare text',
+			'Szín' => 'Culoare',
+			'Tartalom' => 'Conținut',
+			'Tipográfia' => 'Tipografie',
+			'Távolság' => 'Distanță',
+			'Térköz' => 'Spațiere',
+			'Típus' => 'Tip',
+			'Válasz' => 'Răspuns',
+			'Videó' => 'Video',
+			'Vizuális' => 'Vizual',
+			'Űrlap' => 'Formular',
+			'érték' => 'valoare',
+			'Érték' => 'Valoare',
+			'jelölés' => 'marcaj',
+			'Jelölés' => 'Marcaj',
+			'felirata' => 'text',
+			'felirat' => 'text',
+			'címe' => 'titlu',
+			'cím' => 'titlu',
+			'link' => 'link',
+			'mutatása' => 'afișare',
+			'forrása' => 'sursă',
+			'forrás' => 'sursă',
+			'kulcs' => 'cheie',
+			'szöveg' => 'text',
+			'elemek' => 'elemente',
+			'elem' => 'element',
+			'kiválasztása' => 'selectare',
+			'kártyák' => 'carduri',
+			'kártya' => 'card',
+		);
+
+		return strtr( $text, $phrases );
 	}
 
 	private static function map() {
@@ -149,6 +335,7 @@ final class VitaCenter_RO_Text {
 			'A programról' => 'Despre program',
 			'A szolgáltatásról' => 'Despre serviciu',
 			'Miért fontos?' => 'De ce este important?',
+			'Miért hasznos?' => 'De ce este util?',
 			'Kinek ajánlott?' => 'Cui se adresează?',
 			'Kinek hasznos?' => 'Cui îi este util?',
 			'Célcsoport' => 'Grup țintă',
@@ -188,6 +375,107 @@ final class VitaCenter_RO_Text {
 			'Egészségfejlesztési Iroda' => 'Birou de Promovare și Protecție a Sănătății',
 			'Partner logó' => 'Logo partener',
 			'Fő navigáció' => 'Navigație principală',
+			'Online űrlap mezői' => 'Câmpurile formularului online',
+			'Áttekintés' => 'Prezentare generală',
+			'Fő cél' => 'Scop principal',
+			'útmutatók és anyagok' => 'ghiduri și materiale',
+			'Közösség' => 'Comunitate',
+			'Szűrővizsgálatok' => 'Screeninguri',
+			'Közösségi programok' => 'Programe comunitare',
+			'Egészségügyi események' => 'Evenimente de sănătate',
+			'Carei, Közösségi Központ' => 'Carei, Centrul Comunitar',
+			'Szatmárnémeti' => 'Satu Mare',
+			'Szatmárnémeti, Megyeháza' => 'Satu Mare, Palatul Administrativ',
+			'Nagykároly, Művelődési Ház' => 'Carei, Casa de Cultură',
+			'2025. június 5. 10:00' => '5 iunie 2025, 10:00',
+			'2025. június 18-20.' => '18-20 iunie 2025',
+			'2025. június 28. 14:00' => '28 iunie 2025, 14:00',
+			'JÚN' => 'IUN',
+			'Nyitórendezvény' => 'Eveniment de deschidere',
+			'Szűrési napok' => 'Zile de screening',
+			'Akcentus kék' => 'Accent albastru',
+			'Archívum' => 'Arhivă',
+			'Ciklusoktatás összefoglaló' => 'Rezumat educație privind ciclul menstrual',
+			'Mobil szűrés összefoglaló' => 'Rezumat screening mobil',
+			'Életmódtanácsadás összefoglaló' => 'Rezumat consiliere stil de viață',
+			'Csak jövőbeli események' => 'Doar evenimente viitoare',
+			'Dekor háttér' => 'Fundal decorativ',
+			'Demográfiai kihívások kezelése' => 'Gestionarea provocărilor demografice',
+			'Egészségi állapot javítása' => 'Îmbunătățirea stării de sănătate',
+			'EFI logó' => 'Logo EFI',
+			'EFI logó szélessége' => 'Lățime logo EFI',
+			'EFI név tipográfia' => 'Tipografie nume EFI',
+			'EFI szöveg színe' => 'Culoare text EFI',
+			'GYIK megjelenítése' => 'Afișare întrebări frecvente',
+			'Hasznosság' => 'Utilitate',
+			'Hatások' => 'Efecte',
+			'Hero háttérkép' => 'Imagine de fundal hero',
+			'Hero megjelenítése' => 'Afișare hero',
+			'Információk' => 'Informații',
+			'Elem' => 'Element',
+			'Interreg Románia-Magyarország' => 'Interreg România-Ungaria',
+			'Intézmény' => 'Instituție',
+			'Jobb oldali logók' => 'Logo-uri din dreapta',
+			'Kapcsolatfelvétel megjelenítése' => 'Afișare contact',
+			'Kapcsolat gomb' => 'Buton contact',
+			'Kapcsolati információk' => 'Informații de contact',
+			'Kapcsolat link' => 'Link contact',
+			'Kapcsolat oldal' => 'Pagină contact',
+			'Kapcsolat és alsó sáv' => 'Contact și bară inferioară',
+			'Kapcsolódó mobil szűrés' => 'Screening mobil conex',
+			'Kiemelt elemek' => 'Elemente evidențiate',
+			'Kiemelt partner' => 'Partener principal',
+			'Kiemelt programok' => 'Programe evidențiate',
+			'Közelgő esemény' => 'Eveniment viitor',
+			'Közösségi alapú ellátás' => 'Îngrijire bazată pe comunitate',
+			'Landing stílus' => 'Stil landing',
+			'Magyarország Kormánya' => 'Guvernul Ungariei',
+			'Mini téma' => 'Subiect mini',
+			'Napi 4 órában' => '4 ore pe zi',
+			'Napi 4 órában várják az egészséges életmódra vágyókat' => 'Disponibil 4 ore pe zi pentru persoanele care doresc un stil de viață sănătos',
+			'Napi elérhetőség' => 'Disponibilitate zilnică',
+			'Oktatás' => 'Educație',
+			'Orvosi vizsgálat' => 'Consultație medicală',
+			'Prevenció és életmódprogramok' => 'Prevenție și programe de stil de viață',
+			'Program szekciók' => 'Secțiuni program',
+			'Program' => 'Program',
+			'Sticky fejléc' => 'Antet sticky',
+			'Szív / egészség' => 'Inimă / sănătate',
+			'Szűrés' => 'Screening',
+			'Szűrések listája' => 'Lista screeningurilor',
+			'Szűrési tevékenységek' => 'Activități de screening',
+			'Szűrők' => 'Filtre',
+			'Szűrők megjelenítése' => 'Afișare filtre',
+			'Telefon gomb' => 'Buton telefon',
+			'Tevékenység' => 'Activitate',
+			'Tudástár oldal' => 'Pagină centru de cunoștințe',
+			'Tudástár oldalsáv' => 'Bară laterală centru de cunoștințe',
+			'Támogatási formák' => 'Forme de sprijin',
+			'Támogatói és partner logók' => 'Logo-uri sponsori și parteneri',
+			'Témák' => 'Subiecte',
+			'Térkép gomb' => 'Buton hartă',
+			'Térkép link' => 'Link hartă',
+			'Több képes galéria' => 'Galerie cu mai multe imagini',
+			'Válassz menüt' => 'Alegeți meniul',
+			'WordPress menü' => 'Meniu WordPress',
+			'Összes cikk megtekintése' => 'Vezi toate articolele',
+			'Összes esemény megtekintése' => 'Vezi toate evenimentele',
+			'Összes link' => 'Link toate',
+			'Útvonal gomb' => 'Buton traseu',
+			'Üzenetek' => 'Mesaje',
+			'Együtt az egészségesebb közösségekért' => 'Împreună pentru comunități mai sănătoase',
+			'Projektünk szakmai és intézményi partnereink együttműködésével valósul meg.' => 'Proiectul nostru se realizează prin colaborarea partenerilor profesionali și instituționali.',
+			'Várható előnyök' => 'Beneficii așteptate',
+			'Kapcsolódó program' => 'Program conex',
+			'Tervezett résztvevők' => 'Participanți planificați',
+			'1000 személy szűrése' => 'Screening pentru 1.000 de persoane',
+			'Helyszínek / háziorvosok' => 'Locații / medici de familie',
+			'Biztosított onkológiai szűrések' => 'Screeninguri oncologice asigurate',
+			'10 háziorvos és szakorvosok' => '10 medici de familie și medici specialiști',
+			'onkológiai terület' => 'domenii oncologice',
+			'Szakellátás közelebb vitele a vidéki közösségekhez' => 'Aducerea serviciilor de specialitate mai aproape de comunitățile rurale',
+			'Korai onkológiai szűrések helyben' => 'Screeninguri oncologice timpurii disponibile local',
+			'10 háziorvosnál, vidéki településeken' => 'La 10 medici de familie, în localități rurale',
 
 			// Landing and project.
 			"Szűrés. Prevenció. Egészséges életmód.\nEgyütt a hosszabb életért!" => "Screening. Prevenție. Stil de viață sănătos.\nÎmpreună pentru o viață mai lungă!",
@@ -688,10 +976,19 @@ trait VitaCenter_RO_Widget_Trait {
 		VitaCenter_RO_Text::begin_filter();
 
 		try {
-			parent::render();
+			ob_start();
+			try {
+				parent::render();
+				$html = ob_get_clean();
+			} catch ( \Throwable $exception ) {
+				ob_end_clean();
+				throw $exception;
+			}
 		} finally {
 			VitaCenter_RO_Text::end_filter();
 		}
+
+		echo VitaCenter_RO_Text::translate_markup( $html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function get_settings_for_display( $setting_key = null ) {
