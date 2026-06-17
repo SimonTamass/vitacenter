@@ -1941,11 +1941,11 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 		) );
 		$this->add_control( 'show_cta', array( 'label' => esc_html__( 'Kapcsolatfelvétel megjelenítése', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
 		$this->add_control( 'cta_label', array( 'label' => esc_html__( 'Kapcsolat címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
-		$this->add_control( 'cta_title', array( 'label' => esc_html__( 'Kapcsolat cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Van megosztható fotója?', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
-		$this->add_control( 'cta_text', array( 'label' => esc_html__( 'Kapcsolat szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Programjainkhoz kapcsolódó képeket vagy videókat a kapcsolat oldalon keresztül is elküldhet.', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
+		$this->add_control( 'cta_title', array( 'label' => esc_html__( 'Kapcsolat cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
+		$this->add_control( 'cta_text', array( 'label' => esc_html__( 'Kapcsolat szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_phone', array( 'label' => esc_html__( 'Telefon', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => '0742021316', 'condition' => array( 'show_cta' => 'yes' ) ) );
-		$this->add_control( 'cta_email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'efi@szatmar.ro', 'condition' => array( 'show_cta' => 'yes' ) ) );
-		$this->add_control( 'cta_button_text', array( 'label' => esc_html__( 'Kapcsolat gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
+		$this->add_control( 'cta_email', array( 'label' => esc_html__( 'E-mail', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => 'contact@vitacenter.ro', 'condition' => array( 'show_cta' => 'yes' ) ) );
+		$this->add_control( 'cta_button_text', array( 'label' => esc_html__( 'Kapcsolat gomb', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Érdeklődöm', 'vitacenter-elementor-header' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->add_control( 'cta_link', array( 'label' => esc_html__( 'Kapcsolat link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '/kapcsolat' ), 'condition' => array( 'show_cta' => 'yes' ) ) );
 		$this->end_controls_section();
 	}
@@ -2101,11 +2101,11 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 			'categories'       => $this->default_gallery_categories(),
 			'show_cta'         => 'yes',
 			'cta_label'        => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ),
-			'cta_title'        => esc_html__( 'Van megosztható fotója?', 'vitacenter-elementor-header' ),
-			'cta_text'         => esc_html__( 'Programjainkhoz kapcsolódó képeket vagy videókat a kapcsolat oldalon keresztül is elküldhet.', 'vitacenter-elementor-header' ),
+			'cta_title'        => esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' ),
+			'cta_text'         => esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' ),
 			'cta_phone'        => '0742021316',
-			'cta_email'        => 'efi@szatmar.ro',
-			'cta_button_text'  => esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ),
+			'cta_email'        => 'contact@vitacenter.ro',
+			'cta_button_text'  => esc_html__( 'Érdeklődöm', 'vitacenter-elementor-header' ),
 			'cta_link'         => array( 'url' => '/kapcsolat' ),
 		);
 	}
@@ -2426,42 +2426,63 @@ class VitaCenter_Video_Gallery_Widget extends VitaCenter_Structured_Widget_Base 
 	}
 
 	private function render_gallery_contact_card( $settings ) {
-		$label      = isset( $settings['cta_label'] ) ? $this->plain_text( $settings['cta_label'] ) : '';
-		$title      = isset( $settings['cta_title'] ) ? $this->plain_text( $settings['cta_title'] ) : '';
-		$text       = isset( $settings['cta_text'] ) ? $this->plain_text( $settings['cta_text'] ) : '';
-		$phone      = isset( $settings['cta_phone'] ) ? $this->plain_text( $settings['cta_phone'] ) : '';
-		$email      = isset( $settings['cta_email'] ) ? $this->plain_text( $settings['cta_email'] ) : '';
-		$phone_href = $this->gallery_phone_href( $phone );
-		$email_href = $this->gallery_email_href( $email );
+		$title       = isset( $settings['cta_title'] ) ? $this->plain_text( $settings['cta_title'] ) : '';
+		$text        = isset( $settings['cta_text'] ) ? $this->plain_text( $settings['cta_text'] ) : '';
+		$phone       = isset( $settings['cta_phone'] ) ? $this->plain_text( $settings['cta_phone'] ) : '';
+		$email       = isset( $settings['cta_email'] ) ? $this->plain_text( $settings['cta_email'] ) : '';
+		$link        = isset( $settings['cta_link'] ) && is_array( $settings['cta_link'] ) ? $settings['cta_link'] : array( 'url' => isset( $settings['cta_link'] ) ? $this->plain_text( $settings['cta_link'] ) : '' );
+		$button_text = isset( $settings['cta_button_text'] ) ? $this->plain_text( $settings['cta_button_text'] ) : '';
+		$phone_href  = $this->gallery_phone_href( $phone );
+		$email_href  = $this->gallery_email_href( $email );
+
+		if ( '' === $title || esc_html__( 'Van megosztható fotója?', 'vitacenter-elementor-header' ) === $title ) {
+			$title = esc_html__( 'Kapcsolat', 'vitacenter-elementor-header' );
+		}
+
+		if ( '' === $text || esc_html__( 'Programjainkhoz kapcsolódó képeket vagy videókat a kapcsolat oldalon keresztül is elküldhet.', 'vitacenter-elementor-header' ) === $text ) {
+			$text = esc_html__( 'Egyeztessen időpontot!', 'vitacenter-elementor-header' );
+		}
+
+		if ( in_array( $phone, array( '+40 261 713 775', '+36 30 123 4567', '+40 744 920 xxx' ), true ) ) {
+			$phone = '0742021316';
+			$phone_href = $this->gallery_phone_href( $phone );
+		}
+
+		if ( 'efi@szatmar.ro' === $email ) {
+			$email = 'contact@vitacenter.ro';
+			$email_href = $this->gallery_email_href( $email );
+		}
+
+		if ( '' === $button_text || esc_html__( 'Kapcsolatfelvétel', 'vitacenter-elementor-header' ) === $button_text ) {
+			$button_text = esc_html__( 'Érdeklődöm', 'vitacenter-elementor-header' );
+		}
+
+		if ( empty( $link['url'] ) && '' !== $phone_href ) {
+			$link['url'] = $phone_href;
+		}
 		?>
 		<div class="efi-gallery-sidebar-card efi-gallery-sidebar-card--cta efi-gallery-contact-card">
-			<div class="efi-gallery-contact-card__head">
-				<span class="efi-gallery-contact-icon" aria-hidden="true">&#9993;</span>
-				<?php if ( '' !== $label ) : ?><span class="efi-gallery-card-label"><?php echo esc_html( $label ); ?></span><?php endif; ?>
-			</div>
-
-			<?php if ( '' !== $title ) : ?><h3><?php echo esc_html( $title ); ?></h3><?php endif; ?>
-			<?php if ( '' !== $text ) : ?><p><?php echo esc_html( $text ); ?></p><?php endif; ?>
+			<h3><?php echo esc_html( $title ); ?></h3>
 
 			<?php if ( '' !== $phone || '' !== $email ) : ?>
-				<div class="efi-gallery-contact-list">
+				<div class="efi-gallery-contact-lines">
 					<?php if ( '' !== $phone ) : ?>
-						<div class="efi-gallery-contact-row">
-							<span><?php echo esc_html__( 'Telefon', 'vitacenter-elementor-header' ); ?></span>
+						<p class="efi-gallery-contact-line">
 							<?php if ( '' !== $phone_href ) : ?><a href="<?php echo esc_url( $phone_href ); ?>"><?php echo esc_html( $phone ); ?></a><?php else : ?><strong><?php echo esc_html( $phone ); ?></strong><?php endif; ?>
-						</div>
+						</p>
 					<?php endif; ?>
 
 					<?php if ( '' !== $email ) : ?>
-						<div class="efi-gallery-contact-row">
-							<span><?php echo esc_html__( 'E-mail', 'vitacenter-elementor-header' ); ?></span>
+						<p class="efi-gallery-contact-line">
 							<?php if ( '' !== $email_href ) : ?><a href="<?php echo esc_url( $email_href ); ?>"><?php echo esc_html( $email ); ?></a><?php else : ?><strong><?php echo esc_html( $email ); ?></strong><?php endif; ?>
-						</div>
+						</p>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
 
-			<?php $this->render_gallery_link_button( $settings['cta_button_text'], $settings['cta_link'] ); ?>
+			<?php if ( '' !== $text ) : ?><p class="efi-gallery-contact-note"><?php echo esc_html( $text ); ?></p><?php endif; ?>
+
+			<?php $this->render_gallery_link_button( $button_text, $link ); ?>
 		</div>
 		<?php
 	}

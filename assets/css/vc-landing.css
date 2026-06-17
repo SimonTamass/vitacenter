@@ -2255,6 +2255,70 @@
 	transform: translateY(-2px);
 }
 
+.efi-gallery-sidebar-card--cta.efi-gallery-contact-card {
+	display: grid;
+	gap: 14px;
+	padding: clamp(22px, 3vw, 26px);
+	background: #ffffff;
+	border: 1px solid rgba(12, 143, 132, 0.13);
+	border-radius: 8px;
+	box-shadow: 0 18px 44px rgba(15, 76, 74, 0.08);
+	color: var(--efi-gallery-text);
+}
+
+.efi-gallery-sidebar-card--cta.efi-gallery-contact-card h3 {
+	margin: 0;
+	color: var(--efi-gallery-text);
+	font-size: 21px;
+	font-weight: 950;
+	letter-spacing: 0;
+	line-height: 1.16;
+}
+
+.efi-gallery-contact-lines {
+	display: grid;
+	gap: 12px;
+	margin-top: 8px;
+}
+
+.efi-gallery-sidebar-card--cta.efi-gallery-contact-card .efi-gallery-contact-line,
+.efi-gallery-sidebar-card--cta.efi-gallery-contact-card .efi-gallery-contact-note {
+	margin: 0;
+}
+
+.efi-gallery-sidebar-card--cta.efi-gallery-contact-card .efi-gallery-contact-line a,
+.efi-gallery-sidebar-card--cta.efi-gallery-contact-card .efi-gallery-contact-line strong,
+.efi-gallery-sidebar-card--cta.efi-gallery-contact-card .efi-gallery-contact-note {
+	color: #66787f !important;
+	font-size: 15px;
+	font-weight: 850;
+	line-height: 1.45;
+	overflow-wrap: anywhere;
+	text-decoration: none !important;
+}
+
+.efi-gallery-sidebar-card--cta.efi-gallery-contact-card .efi-gallery-contact-note {
+	margin-top: 2px;
+}
+
+.efi-gallery-contact-line a:hover {
+	color: var(--efi-gallery-teal) !important;
+}
+
+.efi-gallery-sidebar-card--cta.efi-gallery-contact-card .efi-gallery-contact-button {
+	width: 100%;
+	min-height: 56px;
+	margin-top: 10px;
+	border-radius: 999px;
+	background: linear-gradient(100deg, #0ca89e 0%, #0c9e9e 48%, #0b87bf 100%);
+	box-shadow: 0 16px 34px rgba(12, 143, 132, 0.22);
+	color: #ffffff !important;
+}
+
+.efi-gallery-sidebar-card--cta.efi-gallery-contact-card .efi-gallery-contact-button span[aria-hidden="true"] {
+	display: none;
+}
+
 @media (max-width: 1100px) {
 	.efi-gallery-hero,
 	.efi-gallery-main-grid {
