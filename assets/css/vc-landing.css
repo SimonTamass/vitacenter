@@ -7092,3 +7092,20 @@ html.efi-gallery-lightbox-open body {
 	width: fit-content;
 	margin-top: 2px;
 }
+
+/* The Events Calendar: translate CSS-injected single event labels. */
+html[lang^="en"] .tribe-events-single-event-title::before {
+	content: "Event" !important;
+}
+
+html[lang^="ro"] .tribe-events-single-event-title::before {
+	content: "Eveniment" !important;
+}
+
+html[lang^="en"] .tribe-events-schedule > div::before {
+	content: "Date" !important;
+}
+
+html[lang^="ro"] .tribe-events-schedule > div::before {
+	content: "Dată" !important;
+}
