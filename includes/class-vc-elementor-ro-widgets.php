@@ -294,6 +294,7 @@ final class VitaCenter_RO_Text {
 			'Programjaink' => 'Activitățile noastre',
 			'Programok' => 'Programe',
 			'Események' => 'Evenimente',
+			'ESEMÉNY' => 'EVENIMENT',
 			'Közelgő események' => 'Evenimente viitoare',
 			'Elmúlt események' => 'Evenimente desfășurate',
 			'Elmúlt esemény' => 'Eveniment desfășurat',
@@ -327,6 +328,7 @@ final class VitaCenter_RO_Text {
 			'További információ' => 'Informații suplimentare',
 			'Programok megtekintése' => 'Vezi programele',
 			'Időpontfoglalás' => 'Programați o consultație!',
+			'IDŐPONT' => 'DATĂ',
 			'Regisztráció / Időpontfoglalás' => 'Programați o consultație!',
 			'Kapcsolatfelvétel' => 'Contactați-ne',
 			'Érdeklődöm' => 'Mă interesează',
@@ -705,6 +707,7 @@ final class VitaCenter_RO_Text {
 			'Korai felismerés a sikeres iskolakezdésért' => 'Depistare timpurie pentru un început școlar reușit',
 			'óvoda' => 'grădinițe',
 			'gyermek' => 'copii',
+			'Gyermek' => 'Copii',
 			'óvónő' => 'educatori',
 			'Iskolaérettséget vizsgáló szűrés' => 'Screening pentru pregătirea școlară',
 			'Nagycsoportos óvodás gyermekek' => 'Copii preșcolari din grupa mare',
@@ -742,6 +745,7 @@ final class VitaCenter_RO_Text {
 			'Óvónőknek és óvodai közösségeknek' => 'Educatorilor și comunităților preșcolare',
 
 			// Knowledge, gallery, partners and contact.
+			'CIKKEK' => 'ARTICOLE',
 			'Hasznos információk az egészségesebb mindennapokért' => 'Informații utile pentru sănătatea dumneavoastră',
 			'Cikkek, letölthető anyagok és gyakori kérdések a prevenció, az egészséges életmód és a közösségi egészségfejlesztés témáiban.' => 'În această secțiune veți găsi articole, materiale informative și resurse educaționale dedicate promovării sănătății și prevenirii bolilor.',
 			'Kiemelt téma' => 'Temă principală',

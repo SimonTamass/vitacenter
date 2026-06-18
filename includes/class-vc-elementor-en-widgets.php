@@ -468,6 +468,7 @@ final class VitaCenter_EN_Text {
 			'Programjaink' => 'Our Programs',
 			'Programok' => 'Programs',
 			'Események' => 'Events',
+			'ESEMÉNY' => 'EVENT',
 			'Közelgő események' => 'Upcoming Events',
 			'Elmúlt események' => 'Past Events',
 			'Elmúlt esemény' => 'Past Event',
@@ -505,6 +506,7 @@ final class VitaCenter_EN_Text {
 			'Szűrések megtekintése' => 'View Screenings',
 			'Programok megtekintése' => 'View Programs',
 			'Időpontfoglalás' => 'Book an Appointment',
+			'IDŐPONT' => 'DATE',
 			'Regisztráció / Időpontfoglalás' => 'Registration / Appointment Booking',
 			'Kapcsolatfelvétel' => 'Contact Us',
 			'Érdeklődöm' => 'I’m Interested',
@@ -793,6 +795,7 @@ final class VitaCenter_EN_Text {
 
 			// Events, gallery, partners, knowledge and contact.
 			'ESEMÉNYEK' => 'EVENTS',
+			'CIKKEK' => 'ARTICLES',
 			'Vegyen részt egészségügyi szűréseinken, workshopjainkon és közösségi programjainkon!' => 'Take part in our health screenings, workshops, and community programs!',
 			'Itt találhat információkat a projekt keretében szervezett eseményekről, valamint az egészségfejlesztési, prevenciós és közösségépítő alkalmakról.' => 'Here you can find information about events organized within the project, along with opportunities to participate in health promotion, prevention, and community development activities.',
 			'Upcoming Events' => 'Upcoming Events',
@@ -965,6 +968,7 @@ final class VitaCenter_EN_Text {
 			'Grafomotoros éretlenség' => 'Graphomotor Immaturity',
 			'Gyakorlati tanácsok a mindennapokra.' => 'Practical advice for everyday life.',
 			'Gyakorlati tanácsok, letölthető anyagok és GYIK a tudatosabb mindennapokhoz.' => 'Practical advice, downloadable materials, and FAQ for more conscious everyday life.',
+			'Gyermek' => 'Children',
 			'Gyors elérhetőség' => 'Quick Contact',
 			'Ha kitöltöd, a beépített statikus űrlap helyett ez jelenik meg.' => 'If completed, this will be displayed instead of the built-in static form.',
 			'Hagyd üresen automatikus felismeréshez. Támogatott példák: _EventVenueID, _event_location_id, location.' => 'Leave empty for automatic detection. Supported examples: _EventVenueID, _event_location_id, location.',

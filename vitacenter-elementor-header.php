@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VitaCenter Elementor Widgets
  * Description: Elementor widgets for the VitaCenter header, navigation, and landing page content.
- * Version: 1.4.37
+ * Version: 1.4.39
  * Author: VitaCenter
  * Text Domain: vitacenter-elementor-header
  * Requires Plugins: elementor
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.37' );
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.39' );
 define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
 define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
@@ -46,6 +46,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
 		add_action( 'admin_init', array( $this, 'migrate_partners_widget_data' ) );
 		add_action( 'template_redirect', array( $this, 'disable_broken_cookieadmin_banner' ), 0 );
+		add_action( 'template_redirect', array( $this, 'register_event_label_translation' ), 1 );
 		add_action( 'wp_footer', array( $this, 'disable_broken_cookieadmin_banner' ), -9999 );
 	}
 
@@ -397,6 +398,95 @@ final class VitaCenter_Elementor_Header_Plugin {
 				}
 			}
 		}
+	}
+
+	public function register_event_label_translation() {
+		if ( ! function_exists( 'is_singular' ) || ! is_singular( 'tribe_events' ) || empty( $this->get_event_label_replacements() ) ) {
+			return;
+		}
+
+		add_filter( 'the_content', array( $this, 'translate_event_content_labels' ), 20 );
+	}
+
+	public function translate_event_content_labels( $content ) {
+		if ( ! is_string( $content ) || '' === $content ) {
+			return $content;
+		}
+
+		foreach ( $this->get_event_label_replacements() as $source => $target ) {
+			$content = str_replace( $source, $target, $content );
+			$content = str_replace( htmlspecialchars( $source, ENT_QUOTES, 'UTF-8' ), htmlspecialchars( $target, ENT_QUOTES, 'UTF-8' ), $content );
+		}
+
+		return $content;
+	}
+
+	private function get_event_label_replacements() {
+		if ( $this->is_english_request() ) {
+			return array(
+				'ESEMÉNY' => 'EVENT',
+				'IDŐPONT' => 'DATE',
+			);
+		}
+
+		if ( $this->is_romanian_request() ) {
+			return array(
+				'ESEMÉNY' => 'EVENIMENT',
+				'IDŐPONT' => 'DATĂ',
+			);
+		}
+
+		return array();
+	}
+
+	private function is_english_request() {
+		if ( function_exists( 'pll_current_language' ) && 'en' === strtolower( (string) pll_current_language( 'slug' ) ) ) {
+			return true;
+		}
+
+		if ( defined( 'ICL_LANGUAGE_CODE' ) && 'en' === strtolower( (string) ICL_LANGUAGE_CODE ) ) {
+			return true;
+		}
+
+		$request_lang = isset( $_GET['lang'] ) && is_scalar( $_GET['lang'] ) ? sanitize_key( wp_unslash( $_GET['lang'] ) ) : '';
+		if ( 'en' === $request_lang ) {
+			return true;
+		}
+
+		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
+		$request_path = parse_url( $request_uri, PHP_URL_PATH );
+		if ( is_string( $request_path ) && preg_match( '~(?:^|/)en(?:/|$)~i', $request_path ) ) {
+			return true;
+		}
+
+		$locale = function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
+
+		return 0 === strpos( strtolower( (string) $locale ), 'en' );
+	}
+
+	private function is_romanian_request() {
+		if ( function_exists( 'pll_current_language' ) && 'ro' === strtolower( (string) pll_current_language( 'slug' ) ) ) {
+			return true;
+		}
+
+		if ( defined( 'ICL_LANGUAGE_CODE' ) && 'ro' === strtolower( (string) ICL_LANGUAGE_CODE ) ) {
+			return true;
+		}
+
+		$request_lang = isset( $_GET['lang'] ) && is_scalar( $_GET['lang'] ) ? sanitize_key( wp_unslash( $_GET['lang'] ) ) : '';
+		if ( 'ro' === $request_lang ) {
+			return true;
+		}
+
+		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
+		$request_path = parse_url( $request_uri, PHP_URL_PATH );
+		if ( is_string( $request_path ) && preg_match( '~(?:^|/)ro(?:/|$)~i', $request_path ) ) {
+			return true;
+		}
+
+		$locale = function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
+
+		return 0 === strpos( strtolower( (string) $locale ), 'ro' );
 	}
 
 	public function admin_notice_missing_elementor() {
