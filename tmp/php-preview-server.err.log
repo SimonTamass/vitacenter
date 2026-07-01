@@ -50,3 +50,12 @@
 [Wed Jul  1 11:27:49 2026] 127.0.0.1:58747 Accepted
 [Wed Jul  1 11:27:49 2026] 127.0.0.1:58747 [200]: GET /tmp/knowledge-preview.php
 [Wed Jul  1 11:27:49 2026] 127.0.0.1:58747 Closing
+[Wed Jul  1 11:34:51 2026] 127.0.0.1:51482 Accepted
+[Wed Jul  1 11:34:51 2026] 127.0.0.1:51482 [200]: GET /tmp/knowledge-preview.php
+[Wed Jul  1 11:34:51 2026] 127.0.0.1:51482 Closing
+[Wed Jul  1 11:34:51 2026] 127.0.0.1:60131 Accepted
+[Wed Jul  1 11:34:51 2026] 127.0.0.1:63756 Accepted
+[Wed Jul  1 11:34:51 2026] 127.0.0.1:60131 [200]: GET /assets/css/vc-landing.css
+[Wed Jul  1 11:34:51 2026] 127.0.0.1:63756 [200]: GET /assets/js/vc-landing.js
+[Wed Jul  1 11:34:51 2026] 127.0.0.1:60131 Closing
+[Wed Jul  1 11:34:51 2026] 127.0.0.1:63756 Closing

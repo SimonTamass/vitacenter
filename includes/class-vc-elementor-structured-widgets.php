@@ -1586,6 +1586,10 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 	}
 
 	private function normalize_knowledge_downloads( $items ) {
+		if ( $this->knowledge_download_items_should_use_defaults( $items ) ) {
+			$items = $this->default_knowledge_downloads();
+		}
+
 		$downloads = array();
 
 		foreach ( $this->repeater_items( $items ) as $item ) {
@@ -1608,6 +1612,81 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 		}
 
 		return $downloads;
+	}
+
+	private function knowledge_download_items_should_use_defaults( $items ) {
+		$items = $this->repeater_items( $items );
+
+		if ( 10 === count( $items ) && $this->knowledge_download_items_are_bilingual_defaults( $items ) ) {
+			return true;
+		}
+
+		if ( 3 !== count( $items ) ) {
+			return false;
+		}
+
+		foreach ( $items as $item ) {
+			if ( isset( $item['show_item'] ) && 'yes' !== $this->plain_text( $item['show_item'] ) ) {
+				return false;
+			}
+
+			$url = $this->knowledge_download_item_url( $item );
+
+			if ( '' !== $url && '#' !== $url ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private function knowledge_download_items_are_bilingual_defaults( $items ) {
+		$expected_files = array(
+			'borrak-hu-2026.pdf',
+			'borrak-ro-2026.pdf',
+			'mellrak-hu-2026.pdf',
+			'mellrak-ro-2026.pdf',
+			'prosztatarak-hu-2026.pdf',
+			'prosztatarak-ro-2026.pdf',
+			'sziv-hu-2026.pdf',
+			'sziv-ro-2026.pdf',
+			'vastagbelrak-hu-2026.pdf',
+			'vastagbelrak-ro-2026.pdf',
+		);
+		$files = array();
+
+		foreach ( $items as $item ) {
+			$url = $this->knowledge_download_item_url( $item );
+
+			if ( '' === $url ) {
+				return false;
+			}
+
+			$path = parse_url( $url, PHP_URL_PATH );
+
+			if ( ! is_string( $path ) || '' === $path ) {
+				return false;
+			}
+
+			$files[] = basename( $path );
+		}
+
+		sort( $files );
+		sort( $expected_files );
+
+		return $expected_files === $files;
+	}
+
+	private function knowledge_download_item_url( $item ) {
+		if ( ! is_array( $item ) || ! isset( $item['link'] ) ) {
+			return '';
+		}
+
+		if ( is_array( $item['link'] ) ) {
+			return isset( $item['link']['url'] ) ? $this->plain_text( $item['link']['url'] ) : '';
+		}
+
+		return $this->plain_text( $item['link'] );
 	}
 
 	private function normalize_knowledge_faqs( $items ) {

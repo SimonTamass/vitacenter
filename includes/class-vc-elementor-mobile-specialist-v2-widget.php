@@ -429,6 +429,10 @@ class VitaCenter_Mobile_Specialist_V2_Widget extends VitaCenter_Structured_Widge
 	private function render_contact_line( $text ) {
 		$text = $this->plain_text( $text );
 
+		if ( in_array( $text, array( '+36 30 123 4567', '+40 261 713 775', '+40 744 920 xxx' ), true ) ) {
+			$text = '0742021316';
+		}
+
 		if ( '' === $text ) {
 			return;
 		}
