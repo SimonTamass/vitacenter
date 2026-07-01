@@ -14,7 +14,17 @@ abstract class VitaCenter_Structured_Widget_Base extends Widget_Base {
 	}
 
 	protected function source_asset_url( $file_name ) {
-		return VC_ELEMENTOR_HEADER_URL . 'source/' . rawurlencode( $this->plain_text( $file_name ) );
+		$path     = str_replace( '\\', '/', $this->plain_text( $file_name ) );
+		$segments = array_values(
+			array_filter(
+				explode( '/', $path ),
+				static function ( $segment ) {
+					return '' !== $segment;
+				}
+			)
+		);
+
+		return VC_ELEMENTOR_HEADER_URL . 'source/' . implode( '/', array_map( 'rawurlencode', $segments ) );
 	}
 
 	protected function media_default( $file_name ) {
@@ -1143,20 +1153,20 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 		$this->start_controls_section( 'hero_section', array( 'label' => esc_html__( 'Hero', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'show_hero', array( 'label' => esc_html__( 'Hero megjelenítése', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
 		$this->add_control( 'eyebrow', array( 'label' => esc_html__( 'Kis címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Tudástár', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Hasznos információk az egészségesebb mindennapokért', 'vitacenter-elementor-header' ), 'label_block' => true ) );
-		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Cikkek, letölthető anyagok és gyakori kérdések a prevenció, az egészséges életmód és a közösségi egészségfejlesztés témáiban.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Hasznos információk és letölthető szűrési anyagok', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$this->add_control( 'intro', array( 'label' => esc_html__( 'Bevezető', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Közérthető PDF tájékoztatók a prevenció, a szűrések és az egészségtudatos döntések támogatásához.', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'show_hero_visual', array( 'label' => esc_html__( 'Vizuális kártya megjelenítése', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
-		$this->add_control( 'visual_title', array( 'label' => esc_html__( 'Vizuális kártya cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Prevenció', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'visual_text', array( 'label' => esc_html__( 'Vizuális kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'útmutatók és anyagok', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'visual_title', array( 'label' => esc_html__( 'Vizuális kártya cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Szűrési anyagok', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'visual_text', array( 'label' => esc_html__( 'Vizuális kártya szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'PDF tájékoztatók', 'vitacenter-elementor-header' ) ) );
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'featured_section', array( 'label' => esc_html__( 'Kiemelt tartalom', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'show_featured', array( 'label' => esc_html__( 'Kiemelt blokk megjelenítése', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
 		$this->add_control( 'featured_label', array( 'label' => esc_html__( 'Címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Kiemelt téma', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'featured_title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Prevenció fontossága', 'vitacenter-elementor-header' ), 'label_block' => true ) );
-		$this->add_control( 'featured_text', array( 'label' => esc_html__( 'Szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A megelőzés segít időben felismerni a kockázatokat, támogatja az egészségtudatos döntéseket és hozzájárulhat a hosszabb, aktívabb élethez.', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'featured_button_text', array( 'label' => esc_html__( 'Gomb felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Elolvasom', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'featured_link', array( 'label' => esc_html__( 'Gomb link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#' ) ) );
+		$this->add_control( 'featured_title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Szűrési tájékoztatók egy helyen', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$this->add_control( 'featured_text', array( 'label' => esc_html__( 'Szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Letölthető tájékoztatók bőr-, mell-, prosztata- és vastagbélrák szűrésről, valamint a szív- és érrendszeri egészségről.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'featured_button_text', array( 'label' => esc_html__( 'Gomb felirat', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Letöltések megtekintése', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'featured_link', array( 'label' => esc_html__( 'Gomb link', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#tudastar-letoltesek' ) ) );
 		$this->add_control( 'show_mini_cards', array( 'label' => esc_html__( 'Mini kártyák megjelenítése', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
 
 		$r = new Repeater();
@@ -1199,8 +1209,8 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 		$this->start_controls_section( 'downloads_section', array( 'label' => esc_html__( 'Letöltések', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'show_downloads', array( 'label' => esc_html__( 'Letöltések megjelenítése', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
 		$this->add_control( 'downloads_label', array( 'label' => esc_html__( 'Szekció címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Letöltések', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'downloads_title', array( 'label' => esc_html__( 'Szekció cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Letölthető anyagok', 'vitacenter-elementor-header' ) ) );
-		$this->add_control( 'downloads_intro', array( 'label' => esc_html__( 'Szekció szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Tájékoztatók, útmutatók és programismertetők egy helyen.', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'downloads_title', array( 'label' => esc_html__( 'Szekció cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Letölthető szűrési anyagok', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'downloads_intro', array( 'label' => esc_html__( 'Szekció szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'A szűrési és prevenciós témák PDF formátumban érhetők el.', 'vitacenter-elementor-header' ) ) );
 
 		$downloads = new Repeater();
 		$downloads->add_control( 'show_item', array( 'label' => esc_html__( 'Megjelenítés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
@@ -1360,7 +1370,7 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 								<?php endif; ?>
 
 								<?php if ( $show_downloads ) : ?>
-									<section class="efi-knowledge-section" aria-label="<?php echo esc_attr__( 'Letölthető anyagok', 'vitacenter-elementor-header' ); ?>">
+									<section id="tudastar-letoltesek" class="efi-knowledge-section" aria-label="<?php echo esc_attr__( 'Letölthető anyagok', 'vitacenter-elementor-header' ); ?>">
 										<?php $this->render_knowledge_section_heading( $s['downloads_label'], $s['downloads_title'], $s['downloads_intro'] ); ?>
 										<?php if ( ! empty( $downloads ) ) : ?>
 											<div class="efi-download-list">
@@ -1426,17 +1436,17 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 		return array(
 			'show_hero'            => 'yes',
 			'eyebrow'              => esc_html__( 'Tudástár', 'vitacenter-elementor-header' ),
-			'title'                => esc_html__( 'Hasznos információk az egészségesebb mindennapokért', 'vitacenter-elementor-header' ),
-			'intro'                => esc_html__( 'Cikkek, letölthető anyagok és gyakori kérdések a prevenció, az egészséges életmód és a közösségi egészségfejlesztés témáiban.', 'vitacenter-elementor-header' ),
+			'title'                => esc_html__( 'Hasznos információk és letölthető szűrési anyagok', 'vitacenter-elementor-header' ),
+			'intro'                => esc_html__( 'Közérthető PDF tájékoztatók a prevenció, a szűrések és az egészségtudatos döntések támogatásához.', 'vitacenter-elementor-header' ),
 			'show_hero_visual'     => 'yes',
-			'visual_title'         => esc_html__( 'Prevenció', 'vitacenter-elementor-header' ),
-			'visual_text'          => esc_html__( 'útmutatók és anyagok', 'vitacenter-elementor-header' ),
+			'visual_title'         => esc_html__( 'Szűrési anyagok', 'vitacenter-elementor-header' ),
+			'visual_text'          => esc_html__( 'PDF tájékoztatók', 'vitacenter-elementor-header' ),
 			'show_featured'        => 'yes',
 			'featured_label'       => esc_html__( 'Kiemelt téma', 'vitacenter-elementor-header' ),
-			'featured_title'       => esc_html__( 'Prevenció fontossága', 'vitacenter-elementor-header' ),
-			'featured_text'        => esc_html__( 'A megelőzés segít időben felismerni a kockázatokat, támogatja az egészségtudatos döntéseket és hozzájárulhat a hosszabb, aktívabb élethez.', 'vitacenter-elementor-header' ),
-			'featured_button_text' => esc_html__( 'Elolvasom', 'vitacenter-elementor-header' ),
-			'featured_link'        => array( 'url' => '#' ),
+			'featured_title'       => esc_html__( 'Szűrési tájékoztatók egy helyen', 'vitacenter-elementor-header' ),
+			'featured_text'        => esc_html__( 'Letölthető tájékoztatók bőr-, mell-, prosztata- és vastagbélrák szűrésről, valamint a szív- és érrendszeri egészségről.', 'vitacenter-elementor-header' ),
+			'featured_button_text' => esc_html__( 'Letöltések megtekintése', 'vitacenter-elementor-header' ),
+			'featured_link'        => array( 'url' => '#tudastar-letoltesek' ),
 			'show_mini_cards'      => 'yes',
 			'mini_cards'           => $this->default_knowledge_mini_cards(),
 			'show_articles'        => 'yes',
@@ -1446,8 +1456,8 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 			'articles'             => $this->default_knowledge_articles(),
 			'show_downloads'       => 'yes',
 			'downloads_label'      => esc_html__( 'Letöltések', 'vitacenter-elementor-header' ),
-			'downloads_title'      => esc_html__( 'Letölthető anyagok', 'vitacenter-elementor-header' ),
-			'downloads_intro'      => esc_html__( 'Tájékoztatók, útmutatók és programismertetők egy helyen.', 'vitacenter-elementor-header' ),
+			'downloads_title'      => esc_html__( 'Letölthető szűrési anyagok', 'vitacenter-elementor-header' ),
+			'downloads_intro'      => esc_html__( 'A szűrési és prevenciós témák PDF formátumban érhetők el.', 'vitacenter-elementor-header' ),
 			'downloads'            => $this->default_knowledge_downloads(),
 			'show_faq'             => 'yes',
 			'faq_label'            => esc_html__( 'GYIK', 'vitacenter-elementor-header' ),
@@ -1484,11 +1494,26 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 	}
 
 	private function default_knowledge_downloads() {
+		$is_ro       = 'ro' === $this->knowledge_download_language();
+		$label       = $is_ro ? 'RO' : 'HU';
+		$file_suffix = $is_ro ? 'ro' : 'hu';
+		$text        = $is_ro ? esc_html__( 'Román nyelvű PDF, 2026', 'vitacenter-elementor-header' ) : esc_html__( 'Magyar nyelvű PDF, 2026', 'vitacenter-elementor-header' );
+
 		return array(
-			array( 'show_item' => 'yes', 'label' => 'PDF', 'title' => esc_html__( 'Prevenciós tájékoztató', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Letölthető dokumentum', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
-			array( 'show_item' => 'yes', 'label' => 'PDF', 'title' => esc_html__( 'Egészséges életmód útmutató', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Letölthető dokumentum', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
-			array( 'show_item' => 'yes', 'label' => 'PDF', 'title' => esc_html__( 'Szűrővizsgálati kisokos', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Letölthető dokumentum', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
+			array( 'show_item' => 'yes', 'label' => $label, 'title' => esc_html__( 'Bőrrák szűrési tájékoztató', 'vitacenter-elementor-header' ), 'text' => $text, 'link' => $this->knowledge_document_link( 'borrak-' . $file_suffix . '-2026.pdf' ) ),
+			array( 'show_item' => 'yes', 'label' => $label, 'title' => esc_html__( 'Mellrák szűrési tájékoztató', 'vitacenter-elementor-header' ), 'text' => $text, 'link' => $this->knowledge_document_link( 'mellrak-' . $file_suffix . '-2026.pdf' ) ),
+			array( 'show_item' => 'yes', 'label' => $label, 'title' => esc_html__( 'Prosztatarák szűrési tájékoztató', 'vitacenter-elementor-header' ), 'text' => $text, 'link' => $this->knowledge_document_link( 'prosztatarak-' . $file_suffix . '-2026.pdf' ) ),
+			array( 'show_item' => 'yes', 'label' => $label, 'title' => esc_html__( 'Szív- és érrendszeri tájékoztató', 'vitacenter-elementor-header' ), 'text' => $text, 'link' => $this->knowledge_document_link( 'sziv-' . $file_suffix . '-2026.pdf' ) ),
+			array( 'show_item' => 'yes', 'label' => $label, 'title' => esc_html__( 'Vastagbélrák szűrési tájékoztató', 'vitacenter-elementor-header' ), 'text' => $text, 'link' => $this->knowledge_document_link( 'vastagbelrak-' . $file_suffix . '-2026.pdf' ) ),
 		);
+	}
+
+	protected function knowledge_download_language() {
+		return 'hu';
+	}
+
+	private function knowledge_document_link( $file_name ) {
+		return array( 'url' => $this->source_asset_url( 'tudastar/' . $file_name ) );
 	}
 
 	private function default_knowledge_faqs() {

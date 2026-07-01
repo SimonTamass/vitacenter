@@ -1346,7 +1346,17 @@ class VitaCenter_Elementor_Landing_Widget extends Widget_Base {
 	}
 
 	private function source_asset_url( $file_name ) {
-		return VC_ELEMENTOR_HEADER_URL . 'source/' . rawurlencode( $this->plain_text( $file_name ) );
+		$path     = str_replace( '\\', '/', $this->plain_text( $file_name ) );
+		$segments = array_values(
+			array_filter(
+				explode( '/', $path ),
+				static function ( $segment ) {
+					return '' !== $segment;
+				}
+			)
+		);
+
+		return VC_ELEMENTOR_HEADER_URL . 'source/' . implode( '/', array_map( 'rawurlencode', $segments ) );
 	}
 
 	private function get_url_attributes( $url_control ) {

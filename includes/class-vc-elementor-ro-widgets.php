@@ -748,13 +748,26 @@ final class VitaCenter_RO_Text {
 			// Knowledge, gallery, partners and contact.
 			'CIKKEK' => 'ARTICOLE',
 			'Hasznos információk az egészségesebb mindennapokért' => 'Informații utile pentru sănătatea dumneavoastră',
+			'Hasznos információk és letölthető szűrési anyagok' => 'Informații utile și materiale de screening descărcabile',
 			'Cikkek, letölthető anyagok és gyakori kérdések a prevenció, az egészséges életmód és a közösségi egészségfejlesztés témáiban.' => 'În această secțiune veți găsi articole, materiale informative și resurse educaționale dedicate promovării sănătății și prevenirii bolilor.',
+			'Közérthető, magyar és román nyelvű PDF tájékoztatók a prevenció, a szűrések és az egészségtudatos döntések támogatásához.' => 'Materiale PDF clare, în maghiară și română, pentru sprijinirea prevenției, screeningurilor și deciziilor conștiente privind sănătatea.',
+			'Közérthető PDF tájékoztatók a prevenció, a szűrések és az egészségtudatos döntések támogatásához.' => 'Materiale PDF clare pentru sprijinirea prevenției, screeningurilor și deciziilor conștiente privind sănătatea.',
+			'Szűrési anyagok' => 'Materiale de screening',
+			'HU és RO PDF-ek' => 'PDF-uri HU și RO',
+			'PDF tájékoztatók' => 'Materiale PDF informative',
 			'Kiemelt téma' => 'Temă principală',
 			'Prevenció fontossága' => 'Importanța prevenției',
 			'A megelőzés segít időben felismerni a kockázatokat, támogatja az egészségtudatos döntéseket és hozzájárulhat a hosszabb, aktívabb élethez.' => 'Prevenția ajută la identificarea timpurie a riscurilor, sprijină deciziile conștiente privind sănătatea și poate contribui la o viață mai lungă și mai activă.',
+			'Szűrési tájékoztatók egy helyen' => 'Materiale informative despre screening într-un singur loc',
+			'Letölthető, kétnyelvű tájékoztatók bőr-, mell-, prosztata- és vastagbélrák szűrésről, valamint a szív- és érrendszeri egészségről.' => 'Materiale informative bilingve descărcabile despre screeningul cancerului de piele, mamar, de prostată și colorectal, precum și despre sănătatea cardiovasculară.',
+			'Letölthető tájékoztatók bőr-, mell-, prosztata- és vastagbélrák szűrésről, valamint a szív- és érrendszeri egészségről.' => 'Materiale informative descărcabile despre screeningul cancerului de piele, mamar, de prostată și colorectal, precum și despre sănătatea cardiovasculară.',
+			'Letöltések megtekintése' => 'Vezi descărcările',
 			'Friss tudnivalók' => 'Informații noi',
 			'Ide érkeznek majd a szakmai és ismeretterjesztő tartalmak.' => 'Aici vor fi publicate materiale profesionale și informative.',
 			'Tájékoztatók, útmutatók és programismertetők egy helyen.' => 'Informații, ghiduri și prezentări ale programelor într-un singur loc.',
+			'Letölthető szűrési anyagok' => 'Materiale de screening descărcabile',
+			'A PDF-ek magyar és román nyelven érhetők el a legfontosabb szűrési és prevenciós témákban.' => 'PDF-urile sunt disponibile în limbile maghiară și română pentru cele mai importante teme de screening și prevenție.',
+			'A szűrési és prevenciós témák PDF formátumban érhetők el.' => 'Temele de screening și prevenție sunt disponibile în format PDF.',
 			'Demográfiai kihívások' => 'Provocări demografice',
 			'Egészséges életmód útmutató' => 'Ghid pentru un stil de viață sănătos',
 			'Rövid áttekintés közösségi szinten.' => 'Scurtă prezentare la nivel comunitar.',
@@ -765,6 +778,13 @@ final class VitaCenter_RO_Text {
 			'Egyszerű, követhető szokások a mindennapi egészség támogatásához.' => 'Obiceiuri simple și ușor de urmat pentru susținerea sănătății zilnice.',
 			'Prevenciós tájékoztató' => 'Material informativ despre prevenție',
 			'Szűrővizsgálati kisokos' => 'Ghid pentru screening',
+			'Bőrrák szűrési tájékoztató' => 'Material informativ screening cancer de piele',
+			'Mellrák szűrési tájékoztató' => 'Material informativ screening cancer mamar',
+			'Prosztatarák szűrési tájékoztató' => 'Material informativ screening cancer de prostată',
+			'Szív- és érrendszeri tájékoztató' => 'Material informativ sănătate cardiovasculară',
+			'Vastagbélrák szűrési tájékoztató' => 'Material informativ screening cancer colorectal',
+			'Magyar nyelvű PDF, 2026' => 'PDF în limba maghiară, 2026',
+			'Román nyelvű PDF, 2026' => 'PDF în limba română, 2026',
 			'Kik vehetnek részt a programokon?' => 'Cine poate participa la programe?',
 			'A programok célcsoportja témánként eltérő, de több szolgáltatás fiataloknak, felnőtteknek és családoknak is szól.' => 'Grupul țintă diferă în funcție de temă, dar mai multe servicii se adresează tinerilor, adulților și familiilor.',
 			'Ingyenesek a szűrések és tanácsadások?' => 'Screeningurile și consilierile sunt gratuite?',
@@ -1087,6 +1107,7 @@ class VitaCenter_RO_Knowledge_Widget extends VitaCenter_Knowledge_Widget {
 	use VitaCenter_RO_Widget_Trait;
 	protected $vc_ro_title = 'VitaCenter Tudástár';
 	public function get_name() { return 'vitacenter_ro_knowledge'; }
+	protected function knowledge_download_language() { return 'ro'; }
 }
 
 class VitaCenter_RO_Video_Gallery_Widget extends VitaCenter_Video_Gallery_Widget {

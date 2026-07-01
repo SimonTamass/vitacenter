@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VitaCenter Elementor Widgets
  * Description: Elementor widgets for the VitaCenter header, navigation, and landing page content.
- * Version: 1.4.40
+ * Version: 1.4.42
  * Author: VitaCenter
  * Text Domain: vitacenter-elementor-header
  * Requires Plugins: elementor
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.40' );
+define( 'VC_ELEMENTOR_HEADER_VERSION', '1.4.42' );
 define( 'VC_ELEMENTOR_HEADER_FILE', __FILE__ );
 define( 'VC_ELEMENTOR_HEADER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VC_ELEMENTOR_HEADER_URL', plugin_dir_url( __FILE__ ) );
@@ -45,6 +45,7 @@ final class VitaCenter_Elementor_Header_Plugin {
 		add_action( 'elementor/elements/categories_registered', array( $this, 'register_category' ) );
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
 		add_action( 'admin_init', array( $this, 'migrate_partners_widget_data' ) );
+		add_action( 'admin_init', array( $this, 'migrate_knowledge_downloads_widget_data' ) );
 		add_action( 'template_redirect', array( $this, 'disable_broken_cookieadmin_banner' ), 0 );
 		add_action( 'template_redirect', array( $this, 'register_event_label_translation' ), 1 );
 		add_action( 'wp_footer', array( $this, 'disable_broken_cookieadmin_banner' ), -9999 );
@@ -188,6 +189,50 @@ final class VitaCenter_Elementor_Header_Plugin {
 		update_option( 'vc_partners_widget_data_version', $migration_version, false );
 	}
 
+	public function migrate_knowledge_downloads_widget_data() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return;
+		}
+
+		$migration_version = '1.4.42';
+
+		if ( $migration_version === get_option( 'vc_knowledge_downloads_widget_data_version' ) ) {
+			return;
+		}
+
+		$post_ids = get_posts(
+			array(
+				'post_type'        => 'any',
+				'post_status'      => 'any',
+				'posts_per_page'   => -1,
+				'fields'           => 'ids',
+				'meta_key'         => '_elementor_data',
+				'suppress_filters' => true,
+			)
+		);
+
+		foreach ( $post_ids as $post_id ) {
+			$raw_data = get_post_meta( $post_id, '_elementor_data', true );
+			$data     = $this->decode_elementor_data( $raw_data );
+
+			if ( ! is_array( $data ) ) {
+				continue;
+			}
+
+			$changed = false;
+			$data    = $this->migrate_knowledge_downloads_elements( $data, $changed );
+
+			if ( ! $changed ) {
+				continue;
+			}
+
+			update_post_meta( $post_id, '_elementor_data', wp_slash( wp_json_encode( $data ) ) );
+			clean_post_cache( $post_id );
+		}
+
+		update_option( 'vc_knowledge_downloads_widget_data_version', $migration_version, false );
+	}
+
 	private function decode_elementor_data( $raw_data ) {
 		if ( ! is_string( $raw_data ) || '' === $raw_data ) {
 			return null;
@@ -232,6 +277,128 @@ final class VitaCenter_Elementor_Header_Plugin {
 		}
 
 		return $elements;
+	}
+
+	private function migrate_knowledge_downloads_elements( $elements, &$changed ) {
+		if ( ! is_array( $elements ) ) {
+			return $elements;
+		}
+
+		foreach ( $elements as $index => $element ) {
+			if ( ! is_array( $element ) ) {
+				continue;
+			}
+
+			if ( isset( $element['widgetType'] ) && in_array( $element['widgetType'], array( 'vitacenter_knowledge', 'vitacenter_ro_knowledge', 'vitacenter_en_knowledge' ), true ) ) {
+				$settings  = isset( $element['settings'] ) && is_array( $element['settings'] ) ? $element['settings'] : array();
+				$downloads = isset( $settings['downloads'] ) && is_array( $settings['downloads'] ) ? $settings['downloads'] : array();
+
+				if ( $this->should_replace_knowledge_downloads( $downloads ) ) {
+					$language = 'vitacenter_ro_knowledge' === $element['widgetType'] ? 'ro' : 'hu';
+
+					$settings['show_downloads']  = 'yes';
+					$settings['downloads_label'] = 'Letöltések';
+					$settings['downloads_title'] = 'Letölthető szűrési anyagok';
+					$settings['downloads_intro'] = 'A szűrési és prevenciós témák PDF formátumban érhetők el.';
+					$settings['downloads']       = $this->knowledge_download_defaults( $language );
+
+					$featured_link     = isset( $settings['featured_link'] ) && is_array( $settings['featured_link'] ) ? $settings['featured_link'] : array( 'url' => isset( $settings['featured_link'] ) ? (string) $settings['featured_link'] : '' );
+					$featured_link_url = isset( $featured_link['url'] ) ? trim( (string) $featured_link['url'] ) : '';
+
+					if ( '' === $featured_link_url || '#' === $featured_link_url ) {
+						$settings['featured_link']        = array( 'url' => '#tudastar-letoltesek' );
+						$settings['featured_button_text'] = 'Letöltések megtekintése';
+					}
+
+					$elements[ $index ]['settings'] = $settings;
+					$changed                        = true;
+				}
+			}
+
+			if ( isset( $elements[ $index ]['elements'] ) && is_array( $elements[ $index ]['elements'] ) ) {
+				$elements[ $index ]['elements'] = $this->migrate_knowledge_downloads_elements( $elements[ $index ]['elements'], $changed );
+			}
+		}
+
+		return $elements;
+	}
+
+	private function should_replace_knowledge_downloads( $downloads ) {
+		if ( empty( $downloads ) ) {
+			return true;
+		}
+
+		if ( 10 === count( $downloads ) && $this->knowledge_downloads_are_bilingual_defaults( $downloads ) ) {
+			return true;
+		}
+
+		if ( count( $downloads ) > 3 ) {
+			return false;
+		}
+
+		foreach ( $downloads as $download ) {
+			if ( ! is_array( $download ) ) {
+				continue;
+			}
+
+			$link = isset( $download['link'] ) && is_array( $download['link'] ) ? $download['link'] : array();
+			$url  = isset( $link['url'] ) ? trim( (string) $link['url'] ) : '';
+
+			if ( '' !== $url && '#' !== $url ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private function knowledge_downloads_are_bilingual_defaults( $downloads ) {
+		$expected_files = array(
+			'borrak-hu-2026.pdf',
+			'borrak-ro-2026.pdf',
+			'mellrak-hu-2026.pdf',
+			'mellrak-ro-2026.pdf',
+			'prosztatarak-hu-2026.pdf',
+			'prosztatarak-ro-2026.pdf',
+			'sziv-hu-2026.pdf',
+			'sziv-ro-2026.pdf',
+			'vastagbelrak-hu-2026.pdf',
+			'vastagbelrak-ro-2026.pdf',
+		);
+
+		$urls = array();
+
+		foreach ( $downloads as $download ) {
+			if ( ! is_array( $download ) || empty( $download['link']['url'] ) ) {
+				return false;
+			}
+
+			$urls[] = basename( parse_url( (string) $download['link']['url'], PHP_URL_PATH ) );
+		}
+
+		sort( $urls );
+		sort( $expected_files );
+
+		return $expected_files === $urls;
+	}
+
+	private function knowledge_download_defaults( $language = 'hu' ) {
+		$is_ro       = 'ro' === $language;
+		$label       = $is_ro ? 'RO' : 'HU';
+		$file_suffix = $is_ro ? 'ro' : 'hu';
+		$text        = $is_ro ? 'Román nyelvű PDF, 2026' : 'Magyar nyelvű PDF, 2026';
+
+		return array(
+			array( 'show_item' => 'yes', 'label' => $label, 'title' => 'Bőrrák szűrési tájékoztató', 'text' => $text, 'link' => $this->knowledge_document_link( 'borrak-' . $file_suffix . '-2026.pdf' ) ),
+			array( 'show_item' => 'yes', 'label' => $label, 'title' => 'Mellrák szűrési tájékoztató', 'text' => $text, 'link' => $this->knowledge_document_link( 'mellrak-' . $file_suffix . '-2026.pdf' ) ),
+			array( 'show_item' => 'yes', 'label' => $label, 'title' => 'Prosztatarák szűrési tájékoztató', 'text' => $text, 'link' => $this->knowledge_document_link( 'prosztatarak-' . $file_suffix . '-2026.pdf' ) ),
+			array( 'show_item' => 'yes', 'label' => $label, 'title' => 'Szív- és érrendszeri tájékoztató', 'text' => $text, 'link' => $this->knowledge_document_link( 'sziv-' . $file_suffix . '-2026.pdf' ) ),
+			array( 'show_item' => 'yes', 'label' => $label, 'title' => 'Vastagbélrák szűrési tájékoztató', 'text' => $text, 'link' => $this->knowledge_document_link( 'vastagbelrak-' . $file_suffix . '-2026.pdf' ) ),
+		);
+	}
+
+	private function knowledge_document_link( $file_name ) {
+		return array( 'url' => $this->source_asset_url( 'tudastar/' . $file_name ) );
 	}
 
 	private function merge_partners_for_editing( $saved_items ) {
@@ -360,7 +527,17 @@ final class VitaCenter_Elementor_Header_Plugin {
 	}
 
 	private function source_asset_url( $file_name ) {
-		return VC_ELEMENTOR_HEADER_URL . 'source/' . rawurlencode( $file_name );
+		$path     = str_replace( '\\', '/', trim( (string) $file_name ) );
+		$segments = array_values(
+			array_filter(
+				explode( '/', $path ),
+				static function ( $segment ) {
+					return '' !== $segment;
+				}
+			)
+		);
+
+		return VC_ELEMENTOR_HEADER_URL . 'source/' . implode( '/', array_map( 'rawurlencode', $segments ) );
 	}
 
 	public function disable_broken_cookieadmin_banner() {

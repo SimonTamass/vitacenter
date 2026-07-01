@@ -1,0 +1,52 @@
+[Wed Jul  1 11:17:04 2026] PHP 8.3.25 Development Server (http://127.0.0.1:8088) started
+[Wed Jul  1 11:17:23 2026] 127.0.0.1:62249 Accepted
+[Wed Jul  1 11:17:23 2026] 127.0.0.1:62249 [200]: GET /tmp/knowledge-preview.php
+[Wed Jul  1 11:17:23 2026] 127.0.0.1:62249 Closing
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:50418 Accepted
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:50418 [200]: GET /tmp/knowledge-preview.php
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:50418 Closing
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:55077 Accepted
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:60545 Accepted
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:55077 [200]: GET /assets/css/vc-landing.css
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:60545 [200]: GET /assets/js/vc-landing.js
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:55077 Closing
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:60545 Closing
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:51557 Accepted
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:51557 [404]: GET /favicon.ico - No such file or directory
+[Wed Jul  1 11:18:06 2026] 127.0.0.1:51557 Closing
+[Wed Jul  1 11:19:30 2026] 127.0.0.1:52044 Accepted
+[Wed Jul  1 11:19:30 2026] 127.0.0.1:64509 Accepted
+[Wed Jul  1 11:19:30 2026] 127.0.0.1:64509 [200]: GET /tmp/knowledge-preview.php
+[Wed Jul  1 11:19:30 2026] 127.0.0.1:64509 Closing
+[Wed Jul  1 11:19:30 2026] 127.0.0.1:61867 Accepted
+[Wed Jul  1 11:19:30 2026] 127.0.0.1:64995 Accepted
+[Wed Jul  1 11:19:30 2026] 127.0.0.1:61867 [200]: GET /assets/css/vc-landing.css
+[Wed Jul  1 11:19:30 2026] 127.0.0.1:64995 [200]: GET /assets/js/vc-landing.js
+[Wed Jul  1 11:19:30 2026] 127.0.0.1:61867 Closing
+[Wed Jul  1 11:19:30 2026] 127.0.0.1:64995 Closing
+[Wed Jul  1 11:19:55 2026] 127.0.0.1:49605 Accepted
+[Wed Jul  1 11:19:55 2026] 127.0.0.1:63708 Accepted
+[Wed Jul  1 11:19:55 2026] 127.0.0.1:49605 [200]: GET /tmp/knowledge-preview.php
+[Wed Jul  1 11:19:55 2026] 127.0.0.1:49605 Closing
+[Wed Jul  1 11:19:55 2026] 127.0.0.1:63708 [200]: GET /assets/css/vc-landing.css
+[Wed Jul  1 11:19:55 2026] 127.0.0.1:50104 Accepted
+[Wed Jul  1 11:19:55 2026] 127.0.0.1:50104 [200]: GET /assets/js/vc-landing.js
+[Wed Jul  1 11:19:55 2026] 127.0.0.1:63708 Closing
+[Wed Jul  1 11:19:55 2026] 127.0.0.1:50104 Closing
+[Wed Jul  1 11:19:56 2026] 127.0.0.1:59612 Accepted
+[Wed Jul  1 11:19:56 2026] 127.0.0.1:59612 [404]: GET /favicon.ico - No such file or directory
+[Wed Jul  1 11:19:56 2026] 127.0.0.1:59612 Closing
+[Wed Jul  1 11:20:55 2026] 127.0.0.1:52044 Closed without sending a request; it was probably just an unused speculative preconnection
+[Wed Jul  1 11:20:55 2026] 127.0.0.1:52044 Closing
+[Wed Jul  1 11:27:28 2026] 127.0.0.1:64094 Accepted
+[Wed Jul  1 11:27:28 2026] 127.0.0.1:64094 [200]: GET /tmp/knowledge-preview.php
+[Wed Jul  1 11:27:28 2026] 127.0.0.1:64094 Closing
+[Wed Jul  1 11:27:28 2026] 127.0.0.1:60319 Accepted
+[Wed Jul  1 11:27:28 2026] 127.0.0.1:51809 Accepted
+[Wed Jul  1 11:27:28 2026] 127.0.0.1:60319 [200]: GET /assets/css/vc-landing.css
+[Wed Jul  1 11:27:28 2026] 127.0.0.1:51809 [200]: GET /assets/js/vc-landing.js
+[Wed Jul  1 11:27:28 2026] 127.0.0.1:60319 Closing
+[Wed Jul  1 11:27:28 2026] 127.0.0.1:51809 Closing
+[Wed Jul  1 11:27:49 2026] 127.0.0.1:58747 Accepted
+[Wed Jul  1 11:27:49 2026] 127.0.0.1:58747 [200]: GET /tmp/knowledge-preview.php
+[Wed Jul  1 11:27:49 2026] 127.0.0.1:58747 Closing
