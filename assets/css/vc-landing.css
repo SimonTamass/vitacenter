@@ -1738,8 +1738,7 @@
 }
 
 @media (max-width: 820px) {
-	.efi-article-grid,
-	.efi-knowledge-video-grid {
+	.efi-article-grid {
 		grid-template-columns: 1fr;
 	}
 
@@ -1769,6 +1768,10 @@
 
 	.efi-download-item {
 		grid-template-columns: 52px minmax(0, 1fr);
+	}
+
+	.efi-knowledge-video-grid {
+		grid-template-columns: 1fr;
 	}
 
 	.efi-download-icon {
@@ -6575,8 +6578,7 @@ html.efi-gallery-lightbox-open body {
 }
 
 @media (max-width: 820px) {
-	.efi-article-grid,
-	.efi-knowledge-video-grid {
+	.efi-article-grid {
 		grid-template-columns: 1fr;
 	}
 
@@ -6635,6 +6637,10 @@ html.efi-gallery-lightbox-open body {
 	.efi-featured-article,
 	.efi-gallery-featured-card--large {
 		grid-column: span 1;
+	}
+
+	.efi-knowledge-video-grid {
+		grid-template-columns: 1fr;
 	}
 
 	.efi-gallery-lightbox {
