@@ -795,6 +795,7 @@ final class VitaCenter_EN_Text {
 
 			// Events, gallery, partners, knowledge and contact.
 			'ESEMÉNYEK' => 'EVENTS',
+			'Cikkek' => 'Articles',
 			'CIKKEK' => 'ARTICLES',
 			'Vegyen részt egészségügyi szűréseinken, workshopjainkon és közösségi programjainkon!' => 'Take part in our health screenings, workshops, and community programs!',
 			'Itt találhat információkat a projekt keretében szervezett eseményekről, valamint az egészségfejlesztési, prevenciós és közösségépítő alkalmakról.' => 'Here you can find information about events organized within the project, along with opportunities to participate in health promotion, prevention, and community development activities.',

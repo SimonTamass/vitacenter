@@ -746,6 +746,7 @@ final class VitaCenter_RO_Text {
 			'Óvónőknek és óvodai közösségeknek' => 'Educatorilor și comunităților preșcolare',
 
 			// Knowledge, gallery, partners and contact.
+			'Cikkek' => 'Articole',
 			'CIKKEK' => 'ARTICOLE',
 			'Hasznos információk az egészségesebb mindennapokért' => 'Informații utile pentru sănătatea dumneavoastră',
 			'Hasznos információk és letölthető szűrési anyagok' => 'Informații utile și materiale de screening descărcabile',
