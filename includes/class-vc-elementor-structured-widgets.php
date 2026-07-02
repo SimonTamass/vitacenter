@@ -1206,6 +1206,31 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 		) );
 		$this->end_controls_section();
 
+		$this->start_controls_section( 'videos_section', array( 'label' => esc_html__( 'Videók', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'show_videos', array( 'label' => esc_html__( 'Videók megjelenítése', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
+		$this->add_control( 'videos_label', array( 'label' => esc_html__( 'Szekció címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Videók', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'videos_title', array( 'label' => esc_html__( 'Szekció cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Beágyazott videók', 'vitacenter-elementor-header' ) ) );
+		$this->add_control( 'videos_intro', array( 'label' => esc_html__( 'Szekció szöveg', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => esc_html__( 'Videós tartalmak a prevencióhoz, szűrésekhez és egészségtudatos döntésekhez.', 'vitacenter-elementor-header' ) ) );
+
+		$videos = new Repeater();
+		$videos->add_control( 'show_item', array( 'label' => esc_html__( 'Megjelenítés', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
+		$videos->add_control( 'title', array( 'label' => esc_html__( 'Cím', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Videó címe', 'vitacenter-elementor-header' ), 'label_block' => true ) );
+		$videos->add_control( 'text', array( 'label' => esc_html__( 'Leírás', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXTAREA, 'default' => '' ) );
+		$videos->add_control( 'embed', array(
+			'label' => esc_html__( 'Videó URL vagy iframe kód', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::TEXTAREA,
+			'default' => '',
+			'description' => esc_html__( 'YouTube/Vimeo URL-t vagy iframe beágyazási kódot is elfogad.', 'vitacenter-elementor-header' ),
+		) );
+		$this->add_control( 'videos', array(
+			'label' => esc_html__( 'Videók', 'vitacenter-elementor-header' ),
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $videos->get_controls(),
+			'title_field' => '{{{ title }}}',
+			'default' => $this->default_knowledge_videos(),
+		) );
+		$this->end_controls_section();
+
 		$this->start_controls_section( 'downloads_section', array( 'label' => esc_html__( 'Letöltések', 'vitacenter-elementor-header' ) ) );
 		$this->add_control( 'show_downloads', array( 'label' => esc_html__( 'Letöltések megjelenítése', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ) );
 		$this->add_control( 'downloads_label', array( 'label' => esc_html__( 'Szekció címke', 'vitacenter-elementor-header' ), 'type' => Controls_Manager::TEXT, 'default' => esc_html__( 'Letöltések', 'vitacenter-elementor-header' ) ) );
@@ -1280,6 +1305,7 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 		$show_featured    = 'yes' === $this->plain_text( $s['show_featured'] );
 		$show_mini_cards  = $show_featured && 'yes' === $this->plain_text( $s['show_mini_cards'] );
 		$show_articles    = 'yes' === $this->plain_text( $s['show_articles'] );
+		$show_videos      = 'yes' === $this->plain_text( $s['show_videos'] );
 		$show_downloads   = 'yes' === $this->plain_text( $s['show_downloads'] );
 		$show_faq         = 'yes' === $this->plain_text( $s['show_faq'] );
 		$show_sidebar     = 'yes' === $this->plain_text( $s['show_sidebar'] );
@@ -1287,10 +1313,11 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 		$show_cta         = $show_sidebar && 'yes' === $this->plain_text( $s['show_cta'] );
 		$mini_cards       = $show_mini_cards ? $this->normalize_knowledge_mini_cards( isset( $s['mini_cards'] ) ? $s['mini_cards'] : array() ) : array();
 		$articles         = $show_articles ? $this->normalize_knowledge_articles( isset( $s['articles'] ) ? $s['articles'] : array() ) : array();
+		$videos           = $show_videos ? $this->normalize_knowledge_videos( isset( $s['videos'] ) ? $s['videos'] : array() ) : array();
 		$downloads        = $show_downloads ? $this->normalize_knowledge_downloads( isset( $s['downloads'] ) ? $s['downloads'] : array() ) : array();
 		$faqs             = $show_faq ? $this->normalize_knowledge_faqs( isset( $s['faqs'] ) ? $s['faqs'] : array() ) : array();
 		$categories       = $show_categories ? $this->normalize_knowledge_categories( isset( $s['categories'] ) ? $s['categories'] : array() ) : array();
-		$has_main_content = $show_articles || $show_downloads || $show_faq;
+		$has_main_content = $show_articles || ! empty( $videos ) || $show_downloads || $show_faq;
 		$has_sidebar_content = $show_sidebar && ( ( $show_categories && ! empty( $categories ) ) || $show_cta );
 		$main_grid_classes   = 'efi-knowledge-main-grid';
 		$featured_classes    = 'efi-knowledge-featured';
@@ -1366,6 +1393,27 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 												<?php endforeach; ?>
 											</div>
 										<?php endif; ?>
+									</section>
+								<?php endif; ?>
+
+								<?php if ( ! empty( $videos ) ) : ?>
+									<section id="tudastar-videok" class="efi-knowledge-section efi-knowledge-section--videos" aria-label="<?php echo esc_attr__( 'Videók', 'vitacenter-elementor-header' ); ?>">
+										<?php $this->render_knowledge_section_heading( $s['videos_label'], $s['videos_title'], $s['videos_intro'] ); ?>
+										<div class="efi-knowledge-video-grid">
+											<?php foreach ( $videos as $video ) : ?>
+												<article class="efi-knowledge-video-card">
+													<div class="efi-knowledge-video-embed">
+														<?php echo $video['embed_html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+													</div>
+													<?php if ( '' !== $video['title'] || '' !== $video['text'] ) : ?>
+														<div class="efi-knowledge-video-body">
+															<?php if ( '' !== $video['title'] ) : ?><h3><?php echo esc_html( $video['title'] ); ?></h3><?php endif; ?>
+															<?php if ( '' !== $video['text'] ) : ?><p><?php echo esc_html( $video['text'] ); ?></p><?php endif; ?>
+														</div>
+													<?php endif; ?>
+												</article>
+											<?php endforeach; ?>
+										</div>
 									</section>
 								<?php endif; ?>
 
@@ -1454,6 +1502,11 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 			'articles_title'       => esc_html__( 'Friss tudnivalók', 'vitacenter-elementor-header' ),
 			'articles_intro'       => esc_html__( 'Ide érkeznek majd a szakmai és ismeretterjesztő tartalmak.', 'vitacenter-elementor-header' ),
 			'articles'             => $this->default_knowledge_articles(),
+			'show_videos'          => 'yes',
+			'videos_label'         => esc_html__( 'Videók', 'vitacenter-elementor-header' ),
+			'videos_title'         => esc_html__( 'Beágyazott videók', 'vitacenter-elementor-header' ),
+			'videos_intro'         => esc_html__( 'Videós tartalmak a prevencióhoz, szűrésekhez és egészségtudatos döntésekhez.', 'vitacenter-elementor-header' ),
+			'videos'               => $this->default_knowledge_videos(),
 			'show_downloads'       => 'yes',
 			'downloads_label'      => esc_html__( 'Letöltések', 'vitacenter-elementor-header' ),
 			'downloads_title'      => esc_html__( 'Letölthető szűrési anyagok', 'vitacenter-elementor-header' ),
@@ -1491,6 +1544,10 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 			array( 'show_item' => 'yes', 'icon' => 'D', 'category' => esc_html__( 'Közösség', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Demográfiai kihívások', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Miért fontos a családok, fiatalok és közösségek egészségének támogatása?', 'vitacenter-elementor-header' ), 'link_text' => esc_html__( 'Tovább olvasom', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
 			array( 'show_item' => 'yes', 'icon' => 'É', 'category' => esc_html__( 'Életmód', 'vitacenter-elementor-header' ), 'title' => esc_html__( 'Egészséges életmód útmutató', 'vitacenter-elementor-header' ), 'text' => esc_html__( 'Egyszerű, követhető szokások a mindennapi egészség támogatásához.', 'vitacenter-elementor-header' ), 'link_text' => esc_html__( 'Tovább olvasom', 'vitacenter-elementor-header' ), 'link' => array( 'url' => '#' ) ),
 		);
+	}
+
+	private function default_knowledge_videos() {
+		return array();
 	}
 
 	private function default_knowledge_downloads() {
@@ -1583,6 +1640,149 @@ class VitaCenter_Knowledge_Widget extends VitaCenter_Structured_Widget_Base {
 		}
 
 		return $articles;
+	}
+
+	private function normalize_knowledge_videos( $items ) {
+		$videos = array();
+
+		foreach ( $this->repeater_items( $items ) as $item ) {
+			if ( isset( $item['show_item'] ) && 'yes' !== $this->plain_text( $item['show_item'] ) ) {
+				continue;
+			}
+
+			$title      = isset( $item['title'] ) ? $this->plain_text( $item['title'] ) : '';
+			$embed_html = $this->knowledge_video_embed_html( isset( $item['embed'] ) ? $item['embed'] : '', $title );
+
+			if ( '' === $embed_html ) {
+				continue;
+			}
+
+			$videos[] = array(
+				'title'      => $title,
+				'text'       => isset( $item['text'] ) ? $this->plain_text( $item['text'] ) : '',
+				'embed_html' => $embed_html,
+			);
+		}
+
+		return $videos;
+	}
+
+	private function knowledge_video_embed_html( $source, $title = '' ) {
+		$source = $this->plain_text( $source );
+
+		if ( '' === $source ) {
+			return '';
+		}
+
+		$iframe_src = $this->knowledge_video_iframe_src( $source );
+		$embed_url  = '' === $iframe_src ? $this->knowledge_video_url_to_embed_url( $source ) : '';
+
+		if ( '' === $iframe_src && '' !== $embed_url && $embed_url !== html_entity_decode( $source, ENT_QUOTES, 'UTF-8' ) ) {
+			$iframe_src = $embed_url;
+		}
+
+		if ( '' === $iframe_src && false === strpos( $source, '<' ) && function_exists( 'wp_oembed_get' ) ) {
+			$oembed = wp_oembed_get( $source );
+
+			if ( is_string( $oembed ) && '' !== trim( $oembed ) ) {
+				$iframe_src = $this->knowledge_video_iframe_src( $oembed );
+			}
+		}
+
+		if ( '' === $iframe_src ) {
+			$iframe_src = $embed_url;
+		}
+
+		return $this->knowledge_video_iframe_html( $iframe_src, $title );
+	}
+
+	private function knowledge_video_iframe_src( $html ) {
+		$html = $this->plain_text( $html );
+
+		if ( '' === $html ) {
+			return '';
+		}
+
+		if ( preg_match( '/<iframe\b[^>]*\bsrc=(["\'])(.*?)\1/i', $html, $matches ) ) {
+			return $this->knowledge_video_url_to_embed_url( html_entity_decode( $matches[2], ENT_QUOTES, 'UTF-8' ) );
+		}
+
+		return '';
+	}
+
+	private function knowledge_video_url_to_embed_url( $url ) {
+		$url = html_entity_decode( $this->plain_text( $url ), ENT_QUOTES, 'UTF-8' );
+
+		if ( 0 === strpos( $url, '//' ) ) {
+			$url = 'https:' . $url;
+		}
+
+		if ( ! preg_match( '~^https?://~i', $url ) ) {
+			return '';
+		}
+
+		$parts = parse_url( $url );
+
+		if ( ! is_array( $parts ) || empty( $parts['host'] ) ) {
+			return '';
+		}
+
+		$host  = strtolower( preg_replace( '/^www\./', '', $parts['host'] ) );
+		$path  = isset( $parts['path'] ) ? trim( $parts['path'], '/' ) : '';
+		$query = array();
+
+		if ( ! empty( $parts['query'] ) ) {
+			parse_str( $parts['query'], $query );
+		}
+
+		if ( in_array( $host, array( 'youtu.be', 'youtube.com', 'youtube-nocookie.com', 'm.youtube.com' ), true ) ) {
+			$video_id = '';
+
+			if ( 'youtu.be' === $host && '' !== $path ) {
+				$segments = explode( '/', $path );
+				$video_id = reset( $segments );
+			} elseif ( preg_match( '~(?:embed|shorts|live)/([^/?#]+)~', $path, $matches ) ) {
+				$video_id = $matches[1];
+			} elseif ( ! empty( $query['v'] ) ) {
+				$video_id = is_array( $query['v'] ) ? reset( $query['v'] ) : $query['v'];
+			}
+
+			$video_id = preg_replace( '/[^A-Za-z0-9_-]/', '', (string) $video_id );
+
+			if ( '' !== $video_id ) {
+				return 'https://www.youtube-nocookie.com/embed/' . rawurlencode( $video_id );
+			}
+		}
+
+		if ( false !== strpos( $host, 'vimeo.com' ) ) {
+			foreach ( explode( '/', $path ) as $segment ) {
+				if ( ctype_digit( $segment ) ) {
+					return 'https://player.vimeo.com/video/' . rawurlencode( $segment );
+				}
+			}
+		}
+
+		return $url;
+	}
+
+	private function knowledge_video_iframe_html( $src, $title = '' ) {
+		$src = $this->knowledge_video_url_to_embed_url( $src );
+
+		if ( '' === $src ) {
+			return '';
+		}
+
+		$title = $this->plain_text( $title );
+
+		if ( '' === $title ) {
+			$title = esc_html__( 'Beágyazott videó', 'vitacenter-elementor-header' );
+		}
+
+		return sprintf(
+			'<iframe src="%1$s" title="%2$s" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+			esc_url( $src ),
+			esc_attr( $title )
+		);
 	}
 
 	private function normalize_knowledge_downloads( $items ) {
